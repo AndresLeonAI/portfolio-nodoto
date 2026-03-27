@@ -62,7 +62,7 @@
 
           <div
             id="profile-container"
-            class="relative col-span-4 mt-10 h-[20vh] max-w-lg flex-col rounded-lg select-none sm:mt-0 sm:h-full md:flex md:h-[50vh]"
+            class="relative col-span-6 mt-10 h-[30vh] flex-col rounded-lg select-none sm:mt-0 sm:h-full md:flex md:h-[65vh]"
           >
             <div class="overlay bg-flax-smoke-50 absolute inset-0 z-2"></div>
             <img
@@ -75,7 +75,7 @@
 
           <!-- content-end justify-self-end  -->
           <div
-            class="relative col-span-8 size-full overflow-clip text-end sm:col-span-4"
+            class="relative col-span-8 size-full overflow-clip text-end sm:col-span-2"
           >
             <div
               id="available-for-work"
