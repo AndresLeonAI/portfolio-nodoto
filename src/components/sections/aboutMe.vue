@@ -51,12 +51,18 @@
           class="text-flax-smoke-300 mt-[5%] flex justify-start gap-10 sm:gap-20"
         >
           <p class="heading-6 text-flax-smoke-300/85 text-center text-nowrap">
-            ( MANIFIESTO )
+            ______
           </p>
           <p class="heading-6 font-fancy w-full text-balance sm:max-w-[40ch]">
             Nuestra obsesión es el diseño web ultra-personalizado. No construimos sitios; forjamos máquinas de conversión. El diseño estandarizado es un gasto, el diseño basado en psicología cognitiva es una inversión exponencial.<br /><br />
             El silencio visual es lujo. Nuestra estética monocromática elimina el ruido y obliga a la perfección en estructura y ritmo. Si no eleva el impacto o la conversión, se destruye.
           </p>
+        </div>
+        
+        <div class="mt-14 sm:mt-16 sm:pl-[6.5rem] md:pl-[6.5rem] lg:pl-[6.5rem] relative origin-left overflow-hidden sm:scale-125">
+          <div id="about-cta-btn" class="flex items-center">
+            <Button label="Inicia tu Transformación" url="https://wa.me/967775367671" class="!bg-flax-smoke-200 !text-[#0B0B0A] after:!text-[#0B0B0A] ring-1 ring-flax-smoke-200/50" />
+          </div>
         </div>
       </div>
     </div>
@@ -72,6 +78,8 @@
   import { profile2 } from '@/assets/images';
   import { textSplitterIntoChar } from '@/functions';
   import { onBeforeMount, onMounted, ref } from 'vue';
+  import { Button } from '@/components/common';
+  import gsap from 'gsap';
 
   const aboutMe = ref('ٍSelected Projects /');
 
@@ -97,6 +105,13 @@
       0,
       () => {
         xToZero('#down-arrow-2');
+        gsap.from('#about-cta-btn', {
+          y: '100%',
+          opacity: 0,
+          duration: 1,
+          ease: 'power4.out',
+          delay: 0.5,
+        });
       },
     );
 

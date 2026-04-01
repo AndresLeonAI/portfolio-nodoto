@@ -38,7 +38,7 @@
             </div>
 
             <p class="sr-only">
-              Arquitectos de comportamiento humano. Esculpimos ecosistemas digitales de alto impacto. Diseño web ultra-personalizado de alta conversión para negocios que lideran su industria.
+               EN NODOTO diseñamos webs que convierten visitantes en clientes. Arquitectura digital estratégica, experiencias ultra-personalizadas y resultados medibles para negocios que dominan su industria.
             </p>
             <p
               v-html="whoAmI"
@@ -109,7 +109,7 @@
   // import { dataCalConfig, dataCalLink, dataCalNamespace } from '@/data';
 
   const whoAmI = ref(
-    'Arquitectos de comportamiento humano. Esculpimos ecosistemas digitales de alto impacto. Diseño web ultra-personalizado de alta conversión para negocios que lideran su industria.',
+    'EN NODOTO diseñamos webs que convierten visitantes en clientes. Arquitectura digital estratégica, experiencias ultra-personalizadas y resultados medibles para negocios que dominan su industria.',
   );
   const AvailableForWorkDate = ref('');
 
