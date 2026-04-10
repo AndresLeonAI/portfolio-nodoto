@@ -58,6 +58,12 @@ layer(base);
   font-family: var(--font-fancy) !important;
 }
 
+@utility font-editorial {
+  font-family: 'Playfair Display', serif !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+}
+
 @utility light-theme {
   @apply bg-flax-smoke-50 text-flax-smoke-800;
 }

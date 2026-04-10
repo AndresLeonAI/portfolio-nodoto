@@ -4,7 +4,7 @@
     class="column-gap relative mt-[10%] grid w-full grid-cols-12 gap-2 max-md:min-h-svh lg:h-[85svh]"
   >
     <!-- For larger devices, show one person at a time with index -->
-    <template v-if="!isSmallScreen">
+    <div v-show="!isSmallScreen" class="contents">
       <div
         class="columns-gap relative col-span-full flex flex-col max-lg:h-fit lg:col-span-6 lg:h-full"
       >
@@ -33,7 +33,7 @@
           <div class="heading-5 flex w-2/12 items-center gap-3 overflow-clip">
             <p
               id="current-index"
-              class="-translate-y-full will-change-transform"
+              class="will-change-transform"
             >
               {{ index + 1 }}
             </p>
@@ -69,13 +69,13 @@
         />
         <div
           id="quote-overlay"
-          class="bg-flax-smoke-500 absolute inset-0 z-50 rounded-lg"
+          class="bg-flax-smoke-500 absolute inset-0 z-50 rounded-lg translate-y-full"
         ></div>
       </div>
-    </template>
+    </div>
 
     <!-- For smaller devices, show all people at once -->
-    <template v-else>
+    <div v-show="isSmallScreen" class="contents">
       <div class="col-span-full">
         <template v-for="(p, i) in people" :key="i">
           <div class="mt-10 grid w-full grid-cols-5 items-start sm:grid-cols-4">
@@ -121,12 +121,12 @@
           </div>
         </template>
       </div>
-    </template>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { esmail, mohammad } from '@/assets/images';
+  import { profile, profile2 } from '@/assets/images';
   import { Button } from '../common';
   import { computed, onMounted, ref } from 'vue';
   import { useWindowSize } from '@vueuse/core';
@@ -262,18 +262,18 @@
     {
       quote:
         'La implementación de NODOTO no es diseño, es ingeniería de conversión pura. Transformaron nuestra interfaz estática en una máquina de adquisición de clientes con fricción cero y estética impecable.',
-      author: 'Mohammad AL-Sulami',
-      position: 'Director de Operaciones',
+      author: 'Cliente NODOTO',
+      position: 'Director Vetas B2B',
       tags: ['Sistemas High-Ticket', 'Optimización CRO', 'Arquitectura UI'],
-      profile: mohammad,
+      profile: profile,
     },
     {
       quote:
         'Colaborar con NODOTO es asegurar precisión quirúrgica. Su enfoque en la psicología cognitiva del usuario eliminó el ruido de nuestra marca y escaló el ROI métrica por métrica.',
-      author: 'Esmail Atta',
-      position: 'CEO, Axon Ecosistemas',
+      author: 'Cliente NODOTO',
+      position: 'Operaciones Tech',
       tags: ['Neuro-Diseño', 'Escalabilidad', 'Marca Luxury'],
-      profile: esmail,
+      profile: profile2,
     },
   ];
 </script>

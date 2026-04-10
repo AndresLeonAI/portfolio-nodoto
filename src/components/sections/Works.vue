@@ -18,15 +18,13 @@
       >
         <p
           class="heading-6 text-flax-smoke-300/85 col-span-4 text-center text-nowrap lg:col-start-2"
+          v-html="casesSubtitle"
         >
-          (
-          <span class="inline sm:hidden">{{ selectedWorksProps.length }} </span>
-          CASOS DE ESTUDIO )
         </p>
         <p
           class="heading-4 font-fancy col-span-8 w-full text-balance sm:font-semibold lg:col-span-7"
+          v-html="casesDesc"
         >
-          Arquitecturas de conversión desplegadas para marcas élite. Precisión clínica, estética suprema y fricción cero.
         </p>
       </div>
     </div>
@@ -79,13 +77,9 @@
               </div>
             </div>
             <div>
-              <p class="heading-6 font-title! mt-[2%] mb-[1%] leading-none">
-                {{ work.category }}
-              </p>
+              <p class="heading-6 font-title! mt-[2%] mb-[1%] leading-none" v-html="work.categoryHtml"></p>
               <div class="items-center justify-between sm:flex">
-                <h3 class="heading-3 font-title! font-bold uppercase">
-                  {{ work.name }}
-                </h3>
+                <h3 class="heading-3 font-title! font-bold uppercase" v-html="work.nameHtml"></h3>
                 <div class="flex gap-1.5 select-none">
                   <p
                     class="border-flax-smoke-300 hover:bg-flax-smoke-300 hover:text-flax-smoke-900 rounded-full border px-4 py-2 transition-[background-color,color] duration-500 ease-in-out"
@@ -110,9 +104,9 @@
 </template>
 
 <script setup lang="ts">
-  import { animateSplitText } from '@/animations';
   import { textSplitterIntoChar } from '@/functions';
   import { computed, onBeforeMount, onMounted, ref, useTemplateRef } from 'vue';
+  import { useGsap } from '@/composables/useGsap';
   import gsap from 'gsap';
   import { useWindowSize } from '@vueuse/core';
   import { work1, work2, work3, work4, work5 } from '@/assets/videos';
@@ -140,7 +134,12 @@
     tl.reverse();
   };
 
-  const selectedWorksProps = [
+  const { ctx, initCtx } = useGsap();
+
+  const casesSubtitle = ref('');
+  const casesDesc = ref('');
+
+  const selectedWorksPropsRaw = [
     {
       name: 'Madar',
       category: 'Arquitectura B2B',
@@ -188,6 +187,12 @@
       year: '2024',
     },
   ];
+
+  const selectedWorksProps = selectedWorksPropsRaw.map(work => ({
+    ...work,
+    categoryHtml: textSplitterIntoChar(work.category, true, false),
+    nameHtml: textSplitterIntoChar(work.name, true, false)
+  }));
 
   // Reusable function to handle forward scroll animation
   const createForwardTimeline = (
@@ -251,7 +256,9 @@
     });
   };
   onBeforeMount(() => {
-    selectedWorks.value = textSplitterIntoChar('Despliegues / ', true);
+    selectedWorks.value = textSplitterIntoChar('Despliegues / ', true, false);
+    casesSubtitle.value = textSplitterIntoChar(`( <span class="inline sm:hidden">${selectedWorksProps.length} </span> CASOS DE ESTUDIO )`, true, false);
+    casesDesc.value = textSplitterIntoChar('Arquitecturas de conversión desplegadas para marcas élite. Precisión clínica, estética suprema y fricción cero.', true, false);
   });
 
   onMounted(() => {
@@ -272,13 +279,52 @@
       observer.observe(video);
     });
 
-    animateSplitText(
-      '#selectedWorks .letters',
-      '#selected-works-text',
-      0.7,
-      0.01,
-      0,
-    );
+    // animateSplitText('#selectedWorks .letters', '#selected-works-text', 0.7, 0.01, 0); => Eliminado en favor de SOTD loop
+
+    initCtx(ref(document.querySelector('#works') as HTMLElement));
+    
+    ctx.value!.add(() => {
+      // 1. Animación del Header (Despliegues + Subtitles)
+      const introLetters = document.querySelectorAll('#selectedWorks .letters, #selected-works-text .letters');
+      if (introLetters.length) {
+        gsap.set(introLetters, { y: '120%', rotateX: -20, opacity: 0, willChange: 'transform, opacity' });
+        gsap.to(introLetters, {
+          y: '0%',
+          rotateX: 0,
+          opacity: 1,
+          stagger: 0.012,
+          duration: 1.2,
+          ease: 'expo.out',
+          scrollTrigger: {
+            trigger: '#selectedWorks',
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          }
+        });
+      }
+
+      // 2. Animación Cinetica Pura en Works Cards
+      const worksCards = document.querySelectorAll('#works .work-card');
+      worksCards.forEach(card => {
+        const textElements = card.querySelectorAll('.letters');
+        if (textElements.length) {
+          gsap.set(textElements, { y: '120%', rotateX: -20, opacity: 0, willChange: 'transform, opacity' });
+          gsap.to(textElements, {
+            y: '0%',
+            rotateX: 0,
+            opacity: 1,
+            stagger: 0.012,
+            duration: 1.2,
+            ease: 'expo.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse',
+            }
+          });
+        }
+      });
+    });
 
     // Apply GSAP animations to each div
     if (!isSmallScreen.value)
