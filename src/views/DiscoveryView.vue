@@ -50,26 +50,23 @@
 
               <!-- Title -->
               <h1
-                class="mb-8 font-fancy text-[clamp(2.5rem,5vw,4.5rem)] font-extrabold leading-[0.92] tracking-tight text-[#111111]"
-              >
-                <span class="block">Tu</span>
-                <span class="font-editorial block">Evolución</span>
-                <span class="block">Comienza Aquí.</span>
-              </h1>
+                class="kinetic-hero-text mb-8 font-fancy text-[clamp(2.5rem,5vw,4.5rem)] font-extrabold leading-[0.92] tracking-tight text-[#111111]"
+                style="perspective: 1000px;"
+                v-html="heroTitleHtml"
+              ></h1>
 
               <!-- Body copy -->
               <p
-                class="mt-8 max-w-[38ch] text-[clamp(0.95rem,1.15vw,1.15rem)] leading-[1.75] text-[#111111]/50"
-              >
-                Selecciona el horario que mejor se adapte a tu agenda. En esta sesión de
-                <span class="font-editorial text-[1.05em] text-[#111111]">30 minutos</span>,
-                auditaremos tu arquitectura digital y trazaremos la hoja de ruta hacia tu
-                dominancia en el mercado.
-              </p>
+                class="kinetic-hero-text mt-8 max-w-[38ch] text-[clamp(0.95rem,1.15vw,1.15rem)] leading-[1.75] text-[#111111]/50"
+                style="perspective: 1000px;"
+                v-html="heroDesc1Html"
+              ></p>
 
-              <p class="mt-4 max-w-[38ch] text-[clamp(0.9rem,1.1vw,1.05rem)] leading-[1.75] text-[#111111]/40">
-                Sin compromisos, solo claridad absoluta.
-              </p>
+              <p 
+                class="kinetic-hero-text mt-4 max-w-[38ch] text-[clamp(0.9rem,1.1vw,1.05rem)] leading-[1.75] text-[#111111]/40"
+                style="perspective: 1000px;"
+                v-html="heroDesc2Html"
+              ></p>
             </div>
 
             <!-- Trust anchors -->
@@ -208,11 +205,17 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, onBeforeMount, onUnmounted, ref } from 'vue';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import { textSplitterIntoChar } from '@/functions';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// ─── Reactive Text HTML ──────────────────────────────────────────────────────
+const heroTitleHtml = ref('');
+const heroDesc1Html = ref('');
+const heroDesc2Html = ref('');
 
 // ─── Time & Clock Engine ─────────────────────────────────────────────────────
 const currentTime = ref('');
@@ -249,6 +252,20 @@ const massiveTextRef = ref<HTMLElement | null>(null);
 // ─── GSAP Context ────────────────────────────────────────────────────────────
 let ctx: gsap.Context | null = null;
 
+onBeforeMount(() => {
+  heroTitleHtml.value = 
+    `<span class="block">${textSplitterIntoChar('Tu', true, false)}</span>` +
+    `<span class="font-editorial block">${textSplitterIntoChar('Evolución', true, false)}</span>` +
+    `<span class="block">${textSplitterIntoChar('Comienza Aquí.', true, false)}</span>`;
+
+  heroDesc1Html.value = 
+    textSplitterIntoChar('Selecciona el horario que mejor se adapte a tu agenda. En esta sesión de ', true, false) +
+    `<span class="font-editorial text-[1.05em] text-[#111111] leading-none" style="display:inline-block; margin-inline: 0.15rem; transform: translateY(1px);">${textSplitterIntoChar('30 minutos', true, false)}</span>` +
+    textSplitterIntoChar(', auditaremos tu arquitectura digital y trazaremos la hoja de ruta hacia tu dominancia en el mercado.', true, false);
+
+  heroDesc2Html.value = textSplitterIntoChar('Sin compromisos, solo claridad absoluta.', true, false);
+});
+
 onMounted(() => {
   // Start clock
   updateClock();
@@ -270,13 +287,28 @@ onMounted(() => {
     });
 
     // Entrance: Hero Text block
-    tl.from(heroTextRef.value, { 
-      y: 50, 
-      opacity: 0, 
-      duration: 1.2, 
-      stagger: 0.15, 
-      ease: 'expo.out' 
-    }, "-=0.6");
+    const heroLetters = heroTextRef.value?.querySelectorAll('.kinetic-hero-text .letters');
+    if (heroLetters && heroLetters.length) {
+      gsap.set(heroLetters, { y: '120%', rotateX: -20, opacity: 0, willChange: 'transform, opacity' });
+      
+      tl.to(heroLetters, {
+        y: '0%',
+        rotateX: 0,
+        opacity: 1,
+        stagger: 0.015,
+        duration: 1.2,
+        ease: 'power4.out',
+      }, "-=0.4");
+    } else {
+      // Fallback
+      tl.from(heroTextRef.value, { 
+        y: 50, 
+        opacity: 0, 
+        duration: 1.2, 
+        stagger: 0.15, 
+        ease: 'expo.out' 
+      }, "-=0.6");
+    }
 
     // Entrance: Trust anchors & Line & caption
     tl.from([trustRef.value, lineRef.value, calendarCaptionRef.value], {
@@ -364,6 +396,23 @@ onUnmounted(() => {
 /* Ensure iframe loads without flash */
 iframe {
   color-scheme: light;
+}
+
+/* ═══════════════════════════════════ */
+/* KINETIC TEXT PERFORMANCE           */
+/* ═══════════════════════════════════ */
+.kinetic-hero-text :deep(.letters) {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.kinetic-hero-text :deep(.text-nowrap) {
+  overflow: clip;
+  display: inline-block;
+  padding-top: 0.1em;
+  padding-bottom: 0.25em;
+  margin-bottom: -0.35em;
 }
 </style>
 
