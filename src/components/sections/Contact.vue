@@ -35,7 +35,7 @@
             :data-cal-config="dataCalConfig"
             label="Get in touch"
           /> -->
-          <Button label="Agenda un Discovery Estratégico" url="https://wa.me/967775367671" />
+          <Button label="Agenda un Discovery Estratégico" @click="router.push('/discovery')" />
         </div>
       </div>
       <div
@@ -85,9 +85,12 @@
   import Link from '../Link.vue';
   import { contact } from '@/assets/videos';
   import { onBeforeMount, onMounted, ref } from 'vue';
+  import { useRouter } from 'vue-router';
   import { textSplitterIntoChar } from '@/functions';
   import { animateSplitText } from '@/animations';
   // import { dataCalConfig, dataCalLink, dataCalNamespace } from '@/data';
+
+  const router = useRouter();
 
   const makeItHappen = ref("Inicia el Protocolo");
   onBeforeMount(() => {

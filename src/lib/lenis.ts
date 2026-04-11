@@ -6,13 +6,12 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Smooth scroll singleton
 const lenis = new Lenis({
-  duration: 0.8,
+  lerp: 0.08, // Physics premium (smoothWheel implícito)
 });
 
-function raf(time: number) {
-  lenis.raf(time);
-  ScrollTrigger.update();
-  requestAnimationFrame(raf);
-}
+// Integración arquitectónica: GSAP manda, Lenis obedece
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((time) => lenis.raf(time * 1000));
+gsap.ticker.lagSmoothing(0);
 
-export { lenis, raf };
+export { lenis };

@@ -55,7 +55,7 @@
                   class="contact"
                   label="Get in touch"
                 /> -->
-                <Button label="Inicia el Protocolo de Inmersión" url="https://wa.me/967775367671" />
+                <Button label="Inicia el Protocolo de Inmersión" @click="router.push('/discovery')" />
               </div>
             </div>
           </div>
@@ -102,11 +102,14 @@
 
 <script setup lang="ts">
   import { onBeforeMount, ref } from 'vue';
+  import { useRouter } from 'vue-router';
   import { MyName, Star } from '../design';
   import { Button } from '@/components/common';
   import { leonUiMockup } from '@/assets/images';
   import { getAvailableForWorkDate, textSplitterIntoChar } from '@/functions';
   // import { dataCalConfig, dataCalLink, dataCalNamespace } from '@/data';
+
+  const router = useRouter();
 
   const whoAmI = ref(
     'EN NODOTO diseñamos webs que convierten visitantes en clientes. Arquitectura digital estratégica, experiencias ultra-personalizadas y resultados medibles para negocios que dominan su industria.',

@@ -2,7 +2,7 @@
   <section 
     ref="diagnosisSection" 
     id="the-diagnosis" 
-    class="relative z-20 bg-[#F9F9F9] w-full min-h-screen py-24 sm:py-32 overflow-hidden shadow-[0_-20px_60px_rgba(0,0,0,0.6)]"
+    class="relative z-20 bg-[#E7DBCB] w-full min-h-screen py-24 sm:py-32 overflow-hidden shadow-[0_-20px_60px_rgba(0,0,0,0.6)]"
   >
     <!-- Grid Bento Mágico -->
     <div class="relative z-10 mx-auto px-4 sm:px-8 max-w-[100rem]">

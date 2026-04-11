@@ -24,7 +24,7 @@
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-12 sm:gap-6">
         
         <!-- Celda Principal: Manifiesto (Col 1-8) -->
-        <div class="authority-bento-card col-span-1 flex flex-col justify-between border border-black/5 bg-[#F9F9F9]/90 backdrop-blur-[16px] p-8 sm:p-12 lg:col-span-8 lg:p-16 relative overflow-hidden shadow-[inset_0_1px_1px_rgba(255,255,255,0.8),_0_8px_32px_rgba(0,0,0,0.05)]">
+        <div class="authority-bento-card col-span-1 flex flex-col justify-between border border-black/5 bg-[#E7DBCB]/90 backdrop-blur-[16px] p-8 sm:p-12 lg:col-span-8 lg:p-16 relative overflow-hidden shadow-[inset_0_1px_1px_rgba(255,255,255,0.8),_0_8px_32px_rgba(0,0,0,0.05)]">
           
           <!-- Textura de Ruido (Densidad Premium) -->
           <div class="absolute inset-0 z-0 opacity-[0.05] mix-blend-overlay pointer-events-none">
@@ -118,7 +118,7 @@
       <!-- ═══════════════════════════════════════════════════════ -->
       <!-- FASE 2 — MARQUESINA BENTO (Panorámica 100%)            -->
       <!-- ═══════════════════════════════════════════════════════ -->
-      <div ref="marqueeCardRef" class="authority-bento-card flex flex-col gap-8 border border-black/5 bg-[#F9F9F9]/90 p-6 sm:gap-12 sm:p-10 lg:p-12 overflow-hidden shadow-[inset_0_1px_1px_rgba(255,255,255,0.8),_0_8px_32px_rgba(0,0,0,0.05)]">
+      <div ref="marqueeCardRef" class="authority-bento-card flex flex-col gap-8 border border-black/5 bg-[#E7DBCB]/90 p-6 sm:gap-12 sm:p-10 lg:p-12 overflow-hidden shadow-[inset_0_1px_1px_rgba(255,255,255,0.8),_0_8px_32px_rgba(0,0,0,0.05)]">
         
         <div class="flex items-center justify-between px-2 sm:px-4">
           <p
@@ -162,7 +162,7 @@
           @mousemove="onMouseMove"
           @mouseleave="onMouseLeave"
           @mouseenter="onMouseEnter"
-          class="group relative flex items-center justify-center overflow-hidden rounded-full bg-[#E5E5E5] px-12 py-6 sm:px-16 sm:py-8 shadow-[0_20px_50px_rgba(0,0,0,0.2)] cursor-pointer z-20"
+          class="group relative flex items-center justify-center overflow-hidden rounded-full bg-[#E7DBCB] px-12 py-6 sm:px-16 sm:py-8 shadow-[0_20px_50px_rgba(0,0,0,0.2)] cursor-pointer z-20"
         >
           <!-- Sweep Reveal Background -->
           <div class="absolute inset-x-0 bottom-0 top-0 bg-[#0B0B0A] origin-bottom scale-y-0 transition-transform duration-[600ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-y-100"></div>

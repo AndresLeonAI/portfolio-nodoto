@@ -2,13 +2,10 @@
   <section
     ref="sectionRef"
     id="faq-section"
-    class="relative w-full overflow-hidden bg-[#F9F9F9] py-24 sm:py-32 lg:py-40"
+    class="relative w-full overflow-hidden bg-[#E7DBCB] py-24 sm:py-32 lg:py-40"
   >
     <!-- Atmospheric noise layer (ultra-subtle on light) -->
-    <div
-      class="pointer-events-none absolute inset-0 opacity-[0.018]"
-      style="background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.75%22 numOctaves=%221%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E')"
-    />
+    <div class="layer-atmosphere pointer-events-none z-0"></div>
 
     <div class="relative z-10 mx-auto max-w-[100rem] px-[3%]">
       <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-20">
@@ -117,7 +114,7 @@
       </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
     <!-- CTA MONOLÍTICO                                                     -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <div
@@ -136,16 +133,15 @@
         <!-- CTA Button -->
         <a
           ref="ctaBtnRef"
-          href="https://wa.me/967775367671"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/discovery"
+          @click.prevent="$router.push('/discovery')"
           class="group relative inline-flex w-full max-w-2xl cursor-pointer select-none items-center justify-center overflow-hidden rounded-full bg-[#111111] px-10 py-7 text-center sm:px-14 sm:py-9"
           @mousemove="onCtaMouseMove"
           @mouseleave="onCtaMouseLeave"
         >
-          <!-- Fill layer — #F9F9F9 sweeps up from bottom on hover -->
+          <!-- Fill layer — #E7DBCB sweeps up from bottom on hover -->
           <span
-            class="pointer-events-none absolute inset-0 rounded-full bg-[#F9F9F9] origin-bottom scale-y-0 transition-transform duration-500 ease-out group-hover:scale-y-100"
+            class="pointer-events-none absolute inset-0 rounded-full bg-[#E7DBCB] origin-bottom scale-y-0 transition-transform duration-500 ease-out group-hover:scale-y-100"
             aria-hidden="true"
           />
 
@@ -322,9 +318,9 @@ onMounted(() => {
     if (titleLine1Ref.value && titleLine2Ref.value) {
       headerTl.to([titleLine1Ref.value, titleLine2Ref.value], {
         yPercent: 0,
-        duration: 1.3,
-        stagger: 0.12,
-        ease: 'expo.out'
+        duration: 1.4,
+        stagger: 0.08,
+        ease: 'power4.out'
       });
     }
 
@@ -340,19 +336,19 @@ onMounted(() => {
     if (lineRef.value) {
       headerTl.to(lineRef.value, {
         scaleX: 1,
-        duration: 1.2,
-        ease: 'expo.out'
-      }, '-=0.8');
+        duration: 1.4,
+        ease: 'power3.out'
+      }, '-=1.0');
     }
 
     // 2. Accordion items cascade
     const items = accordionRefs.value.filter(Boolean);
     if (items.length) {
       gsap.from(items, {
-        y: 60,
+        y: 80,
         opacity: 0,
         duration: 1.4,
-        stagger: 0.12,
+        stagger: 0.06,
         ease: 'power4.out',
         scrollTrigger: {
           trigger: items[0],
@@ -368,8 +364,8 @@ onMounted(() => {
         y: 80,
         scale: 0.96,
         opacity: 0,
-        duration: 1.4,
-        ease: 'back.out(1.2)',
+        duration: 1.6,
+        ease: 'elastic.out(1, 0.4)',
         scrollTrigger: {
           trigger: ctaRef.value,
           start: 'top 90%',

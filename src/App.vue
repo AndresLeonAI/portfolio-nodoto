@@ -7,10 +7,10 @@
 
   <div class="pointer-events-none fixed inset-0 z-50">
     <svg
-      class="h-[150vh] w-full object-cover object-center"
+      class="h-[150vh] w-[100vw] object-cover object-center"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <filter id="noise">
+      <filter id="noise-base">
         <feTurbulence
           type="fractalNoise"
           baseFrequency="0.65"
@@ -19,91 +19,45 @@
         />
         <feBlend mode="screen" />
       </filter>
-      <rect ref="noise" class="size-full" filter="url(#noise)" opacity="0.15" />
+      <rect class="h-[150vh] w-[100vw]" filter="url(#noise-base)" opacity="0.15" />
 
-      <filter id="noise">
+      <filter id="noise-dense">
         <feTurbulence
           type="fractalNoise"
-          base-frequency="0.8"
+          baseFrequency="0.8"
           numOctaves="1"
           stitchTiles="stitch"
         />
         <feBlend mode="screen" />
       </filter>
       <rect
-        ref="noise"
-        class="size-full"
-        filter="url(#noise)"
+        class="h-[150vh] w-[100vw]"
+        filter="url(#noise-dense)"
         opacity="-0.88"
       />
     </svg>
   </div>
 
   <Cursor />
-  <Navbar @isLocked="LockeScroll" />
+  <Navbar @isLocked="lockScroll" />
 
-  <main class="relative min-h-full">
-    <Hero />
-    <div class="relative w-full z-10 bg-[#0B0B0A] rounded-b-3xl">
-      <div class="sticky bottom-0 w-full overflow-hidden">
-        <div id="authority-scale-target" class="w-full relative origin-bottom rounded-[2.5rem] border-[0.5px] border-white/10 overflow-hidden will-change-transform">
-          <AuthorityBridge />
-          <!-- SOTD Dark Overlay (Performance Safe) -->
-          <div id="authority-dark-overlay" class="absolute inset-0 bg-[#0B0B0A] opacity-0 pointer-events-none z-50"></div>
-        </div>
-      </div>
-      <TheDiagnosis />
-    </div>
-
-    <div
-      class="text-flax-smoke-200 relative rounded-t-3xl bg-[#0B0B0A] py-[5%]"
-    >
-      <Services />
-      <Marquee />
-      <CinematicHero />
-      <Works />
-    </div>
-
-    <aboutMe />
-    <TestimonialsGrid />
-    <FAQS />
-    <Contact />
-  </main>
-
-  <Footer />
+  <router-view />
 </template>
 
 <script setup lang="ts">
-  import {
-    Hero,
-    Services,
-    Works,
-    aboutMe,
-    Contact,
-    TestimonialsGrid,
-    AuthorityBridge,
-    TheDiagnosis,
-    FAQS,
-  } from '@/components/sections';
-  import CinematicHero from '@/components/ui/CinematicPhoneSection.vue';
-  import { onMounted, type Ref, ref, watch } from 'vue';
+  import { onMounted } from 'vue';
   import {
     LoadingScreen,
-    Marquee,
     SamsungError,
-    Footer,
     Cursor,
   } from '@/components/design';
-  import { useWindowSize } from '@vueuse/core';
 
   import { Navbar } from './components/common';
-  import { lenis, raf } from '@/lib/lenis';
-  const { width, height } = useWindowSize();
-  const noise: Ref<HTMLElement | null> = ref(null);
+  import { lenis } from '@/lib/lenis';
 
   const isSamsungBrowser = /samsung/i.test(navigator.userAgent);
 
-  const LockeScroll = (isLocked: boolean) => {
+  const lockScroll = (isLocked: boolean) => {
     if (isLocked) {
       lenis.stop();
     } else {
@@ -111,21 +65,10 @@
     }
   };
 
-  watch([width, height], () => {
-    if (noise.value) {
-      noise.value.style.height = `${height.value * 2}px`;
-      noise.value.style.width = `${width.value}px`;
-    }
-  });
-
   onMounted(() => {
     document.body.classList.add('stop-scrolling');
     // TODO:
     // window.scrollTo(0, 0);
-
-    setTimeout(() => {
-      requestAnimationFrame(raf);
-    }, 2000);
   });
 </script>
 

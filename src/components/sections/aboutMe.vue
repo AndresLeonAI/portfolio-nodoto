@@ -113,7 +113,7 @@
         <!-- ═══════════════════════════════════════════════════════ -->
         <div
           :ref="(el) => { if (el) bentoCards[1] = el as HTMLElement }"
-          class="bento-card group relative flex flex-col justify-between overflow-hidden rounded-[clamp(1.5rem,4vw,2.5rem)] border border-black/5 bg-[#F9F9F9]/90 backdrop-blur-[16px] p-10 sm:p-12 lg:col-span-7 shadow-[inset_0_1px_1px_rgba(255,255,255,0.8),_0_8px_32px_rgba(0,0,0,0.05)] opacity-0 translate-y-4"
+          class="bento-card group relative flex flex-col justify-between overflow-hidden rounded-[clamp(1.5rem,4vw,2.5rem)] border border-black/5 bg-[#E7DBCB]/90 backdrop-blur-[16px] p-10 sm:p-12 lg:col-span-7 shadow-[inset_0_1px_1px_rgba(255,255,255,0.8),_0_8px_32px_rgba(0,0,0,0.05)] opacity-0 translate-y-4"
         >
           <!-- Textura de Ruido (Premium Density) -->
           <div class="absolute inset-0 z-0 opacity-[0.05] mix-blend-overlay pointer-events-none">
@@ -248,10 +248,9 @@
       >
         <a
           ref="ctaBtnRef"
-          href="https://wa.me/967775367671"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="cta-btn group relative max-w-3xl w-full overflow-hidden rounded-full bg-[#E5E5E5] px-10 py-7 sm:px-14 sm:py-9 text-center cursor-pointer select-none block"
+          href="/discovery"
+          @click.prevent="$router.push('/discovery')"
+          class="cta-btn group relative max-w-3xl w-full overflow-hidden rounded-full bg-[#E7DBCB] px-10 py-7 sm:px-14 sm:py-9 text-center cursor-pointer select-none block"
           @mousemove="onCtaMouseMove"
           @mouseleave="onCtaMouseLeave"
         >
@@ -276,7 +275,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeMount, onUnmounted, ref } from 'vue';
+import { onMounted, onBeforeMount, ref } from 'vue';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { useGsap } from '@/composables/useGsap';

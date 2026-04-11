@@ -17,7 +17,7 @@ layer(base);
   --font-body: 'body';
 
   /* Colors */
-  --color-flax-smoke-50: #f4f4f1;
+  --color-flax-smoke-50: #e7dbcb;
   --color-flax-smoke-100: #e8e8df;
   --color-flax-smoke-200: #d2d3c3;
   --color-flax-smoke-300: #b6b79f;
@@ -28,6 +28,11 @@ layer(base);
   --color-flax-smoke-800: #404133;
   --color-flax-smoke-900: #38392e;
   --color-flax-smoke-950: #1c1d16;
+
+  /* Semantic Theme Tokens */
+  --color-void: #0b0b0a;
+  --color-surface: #e7dbcb;
+  --color-accent: #111111;
 
   /* Screens */
   --breakpoint-2xs: 420px;
@@ -66,6 +71,15 @@ layer(base);
 
 @utility light-theme {
   @apply bg-flax-smoke-50 text-flax-smoke-800;
+}
+
+@utility layer-atmosphere {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.75%22 numOctaves=%221%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E");
+  opacity: 0.025;
+  mix-blend-mode: overlay;
+  pointer-events: none;
 }
 
 @utility flex-center {

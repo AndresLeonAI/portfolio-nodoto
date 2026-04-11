@@ -4,7 +4,7 @@
       <div
         v-for="(testimonial, i) in duplicatedTestimonials"
         :key="i"
-        class="testimonial-card border-flax-smoke-300/50 bg-white/90 p-10 rounded-3xl border shadow-lg shadow-flax-smoke-950/5 max-w-xs w-full backdrop-blur-md"
+        class="testimonial-card border-flax-smoke-300/50 bg-[#E7DBCB]/90 p-10 rounded-3xl border shadow-lg shadow-flax-smoke-950/5 max-w-xs w-full backdrop-blur-md"
       >
         <p class="text-flax-smoke-950/85 leading-relaxed text-base tracking-tight">{{ testimonial.text }}</p>
         <div class="flex items-center gap-3 mt-5">

@@ -1,7 +1,7 @@
 <template>
   <section
     id="work-process-section"
-    class="relative w-full bg-[#F9F9F9] py-24 sm:py-32 lg:py-40 overflow-hidden"
+    class="relative w-full bg-[#E7DBCB] py-24 sm:py-32 lg:py-40 overflow-hidden"
   >
     <div class="container mx-auto px-gutter max-w-[90rem]">
       <!-- Encabezado Masivo -->
@@ -13,7 +13,7 @@
       <div id="bento-container" class="grid grid-cols-12 gap-5 lg:gap-6 w-full">
         
         <!-- Celda 01: Inmersión -->
-        <div class="process-card col-span-12 lg:col-span-5 lg:row-span-2 flex flex-col justify-between bg-white rounded-[2.5rem] p-10 lg:p-14 shadow-sm border border-gray-100 will-change-transform">
+        <div class="process-card col-span-12 lg:col-span-5 lg:row-span-2 flex flex-col justify-between bg-[#E7DBCB] rounded-[2.5rem] p-10 lg:p-14 shadow-sm border border-gray-100 will-change-transform">
           <div class="flex items-center gap-4 mb-24">
             <span class="text-xs font-mono tracking-widest uppercase text-gray-400 bg-gray-50 px-3 py-1.5 rounded-full">01. Estrategia</span>
           </div>
@@ -21,7 +21,7 @@
         </div>
 
         <!-- Celda 02: Arquitectura -->
-        <div class="process-card col-span-12 lg:col-span-7 flex flex-col justify-between bg-white rounded-[2.5rem] p-10 lg:p-14 shadow-sm border border-gray-100 will-change-transform">
+        <div class="process-card col-span-12 lg:col-span-7 flex flex-col justify-between bg-[#E7DBCB] rounded-[2.5rem] p-10 lg:p-14 shadow-sm border border-gray-100 will-change-transform">
           <div class="flex items-center gap-4 mb-20">
             <span class="text-xs font-mono tracking-widest uppercase text-gray-400 bg-gray-50 px-3 py-1.5 rounded-full">02. Psicología de Conversión</span>
           </div>
@@ -37,7 +37,7 @@
         </div>
 
         <!-- Celda 04: Despliegue -->
-        <div class="process-card col-span-12 lg:col-span-3 flex flex-col justify-between bg-white rounded-[2.5rem] p-10 lg:p-14 shadow-sm border border-gray-100 will-change-transform">
+        <div class="process-card col-span-12 lg:col-span-3 flex flex-col justify-between bg-[#E7DBCB] rounded-[2.5rem] p-10 lg:p-14 shadow-sm border border-gray-100 will-change-transform">
           <div class="flex items-center gap-4 mb-16">
             <span class="text-xs font-mono tracking-widest uppercase text-gray-400 bg-gray-50 px-3 py-1.5 rounded-full">04. Lanzamiento</span>
           </div>
@@ -51,13 +51,13 @@
         <div 
           id="monolithic-cta"
           ref="ctaRef"
-          class="relative overflow-hidden group flex items-center justify-center bg-[#E5E5E5] rounded-[3rem] py-16 md:py-20 lg:py-24 px-6 text-center cursor-pointer will-change-transform border border-gray-200/50 transition-all duration-[800ms]"
+          class="relative overflow-hidden group flex items-center justify-center bg-[#E7DBCB] rounded-[3rem] py-16 md:py-20 lg:py-24 px-6 text-center cursor-pointer will-change-transform border border-gray-200/50 transition-all duration-[800ms]"
           @mouseenter="onHoverEnter"
-          @mouseleave="onHoverLeave"
-          @mousemove="onHoverMove"
+          @mouseleave="onHoverLeaveWrapper"
+          @mousemove="onCtaMouseMove"
         >
           <!-- Hover Background Overlay -->
-          <div class="absolute inset-0 bg-[#0B0B0A] origin-bottom scale-y-0 transition-transform duration-[800ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-y-100 pointer-events-none"></div>
+          <div class="absolute inset-0 bg-void origin-bottom scale-y-0 transition-transform duration-[600ms] ease-out group-hover:scale-y-100 pointer-events-none"></div>
           
           <!-- Content -->
           <h3 class="relative z-10 text-3xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-bold text-[#111] tracking-tighter leading-none transition-colors duration-[600ms] group-hover:text-white" v-html="ctaHtml"></h3>
@@ -73,6 +73,7 @@
   import gsap from 'gsap';
   import ScrollTrigger from 'gsap/ScrollTrigger';
   import { useGsap } from '@/composables/useGsap';
+  import { useMagnetic } from '@/composables/useMagnetic';
   import { textSplitterIntoChar } from '@/functions';
 
   gsap.registerPlugin(ScrollTrigger);
@@ -128,9 +129,9 @@
         y: '0%',
         rotateX: 0,
         opacity: 1,
-        stagger: 0.012,
-        duration: 1.2,
-        ease: 'expo.out',
+        stagger: 0.05,
+        duration: 1.4,
+        ease: 'power4.out',
         scrollTrigger: {
           trigger: '#process-title',
           start: 'top 85%',
@@ -143,9 +144,9 @@
       gsap.from(bentoCards, {
         y: 100,
         opacity: 0,
-        stagger: 0.15,
-        duration: 1.5,
-        ease: 'expo.out',
+        stagger: 0.1,
+        duration: 1.4,
+        ease: 'power3.out',
         willChange: 'transform, opacity',
         scrollTrigger: {
           trigger: '#bento-container',
@@ -163,9 +164,9 @@
             y: '0%',
             rotateX: 0,
             opacity: 1,
-            stagger: 0.012,
+            stagger: 0.03,
             duration: 1.2,
-            ease: 'expo.out',
+            ease: 'power3.out',
             scrollTrigger: {
               trigger: card, // Lanza la cinética del texto cuando la tarjeta en sí entre
               start: 'top 75%',
@@ -195,9 +196,9 @@
           y: '0%',
           rotateX: 0,
           opacity: 1,
-          stagger: 0.012,
-          duration: 1.2,
-          ease: 'expo.out',
+          stagger: 0.04,
+          duration: 1.4,
+          ease: 'power4.out',
           scrollTrigger: {
             trigger: '#monolithic-cta',
             start: 'top 85%',
@@ -208,35 +209,18 @@
     });
   });
 
-  // Efecto useMagnetic personalizado (Física Suave Hover)
-  const onHoverMove = (e: MouseEvent) => {
-    if (!ctaRef.value) return;
-    const { clientX, clientY } = e;
-    const { left, top, width, height } = ctaRef.value.getBoundingClientRect();
-    
-    // Calcula el centro
-    const x = clientX - (left + width / 2);
-    const y = clientY - (top + height / 2);
-
-    // Fuerza de atracción
-    gsap.to(ctaRef.value, {
-      x: x * 0.15,
-      y: y * 0.15,
-      duration: 1,
-      ease: 'power3.out',
-    });
-  };
+  // ─── Magnetic CTA Abstraction ──────────────────────────────────────────────
+  const { onMouseMove: onCtaMouseMove, onMouseLeave: onCtaMouseLeave } = useMagnetic(ctaRef, 0.15);
 
   const onHoverEnter = () => {
     // Escalar un poco todo el bloque y activar el imán
     gsap.to(ctaRef.value, { scale: 1.02, duration: 0.6, ease: 'expo.out' });
   };
 
-  const onHoverLeave = () => {
-    // Regresa a su estado base e inercia original
+  const onHoverLeaveWrapper = () => {
+    onCtaMouseLeave(); // Llama a la física del composable
+    // Regresa a su estado base la escala con efecto muelle premium
     gsap.to(ctaRef.value, {
-      x: 0,
-      y: 0,
       scale: 1,
       duration: 1.2,
       ease: 'elastic.out(1, 0.3)',

@@ -28,7 +28,7 @@
         {{ ctaDescription }}
       </p>
       <div class="flex justify-center w-full">
-        <a href="#" aria-label="Request Access" class="cinematic-btn-modern-light flex flex-col items-center justify-center px-10 py-5 sm:px-14 sm:py-6 rounded-[1.75rem] group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+        <a href="/discovery" @click.prevent="$router.push('/discovery')" aria-label="Request Access" class="cinematic-btn-modern-light flex flex-col items-center justify-center px-10 py-5 sm:px-14 sm:py-6 rounded-[1.75rem] group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
           <div class="text-center">
             <div class="text-xs sm:text-sm font-bold tracking-wider text-neutral-500 uppercase mb-1">SOLICITAR ACCESO</div>
             <div class="text-2xl sm:text-3xl font-bold leading-none tracking-tight">Círculo Privado</div>
