@@ -6,7 +6,7 @@
     <!-- SECTION 1: Split Hero — Light / Calendar -->
     <section
       ref="sectionRef"
-      class="relative z-10 min-h-screen w-full overflow-hidden bg-[#E7DBCB] pt-32 pb-20 lg:pt-40 lg:pb-28 rounded-b-[2rem] sm:rounded-b-[4rem] shadow-[0_20px_60px_rgba(0,0,0,0.15)]"
+      class="relative z-10 min-h-screen w-full overflow-hidden bg-[#E7DBCB] pt-32 pb-20 lg:pt-40 lg:pb-28 rounded-b-[2rem] sm:rounded-b-[4rem] shadow-[0_20px_60px_rgba(0,0,0,0.15)] mb-[100vh]"
     >
       <!-- Atmospheric noise (ultra-subtle on light) -->
       <div
@@ -117,7 +117,7 @@
     <!-- ═══════════════════════════════════════════════════════════════════════ -->
     <footer
       ref="footerRef"
-      class="sticky bottom-0 h-screen w-full bg-[#0B0B0A] flex flex-col justify-end -z-10 py-12 sm:py-20"
+      class="fixed left-0 bottom-0 h-screen w-full bg-[#0B0B0A] flex flex-col justify-end -z-10 py-12 sm:py-20"
     >
       <!-- Atmospheric mesh gradient -->
       <div class="pointer-events-none absolute inset-0">
