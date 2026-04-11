@@ -38,26 +38,26 @@
           <!-- ═══════════════════════════════════════════════ -->
           <!-- LEFT: Copy Column                              -->
           <!-- ═══════════════════════════════════════════════ -->
-          <div class="lg:col-span-5 lg:sticky lg:top-[20vh]">
+          <div class="col-span-1 lg:col-span-5 lg:sticky lg:top-[20vh] flex flex-col gap-6">
             
-            <div ref="heroTextRef" class="hero-text overflow-hidden">
+            <div ref="heroTextRef" class="bg-white rounded-[2.5rem] p-10 lg:p-12 border border-black/[0.04] shadow-[0_20px_40px_rgba(0,0,0,0.02)] relative overflow-hidden">
               <!-- Eyebrow -->
               <p
-                class="mb-6 font-mono text-[0.7rem] tracking-[0.45em] text-[#111111]/30 uppercase sm:text-xs"
+                class="mb-8 font-mono text-[0.65rem] tracking-[0.3em] text-[#111111]/40 uppercase"
               >
                 ( Discovery Session )
               </p>
 
               <!-- Title -->
               <h1
-                class="kinetic-hero-text mb-8 font-fancy text-[clamp(2.5rem,5vw,4.5rem)] font-extrabold leading-[0.92] tracking-tight text-[#111111]"
+                class="kinetic-hero-text mb-6 font-fancy text-[clamp(2.5rem,5vw,4.5rem)] lg:text-[4rem] font-extrabold leading-[0.92] tracking-tight text-[#111111]"
                 style="perspective: 1000px;"
                 v-html="heroTitleHtml"
               ></h1>
 
               <!-- Body copy -->
               <p
-                class="kinetic-hero-text mt-8 max-w-[38ch] text-[clamp(0.95rem,1.15vw,1.15rem)] leading-[1.75] text-[#111111]/50"
+                class="kinetic-hero-text text-[clamp(0.95rem,1.15vw,1.15rem)] leading-relaxed text-[#111111]/50 max-w-md"
                 style="perspective: 1000px;"
                 v-html="heroDesc1Html"
               ></p>
@@ -69,16 +69,12 @@
               ></p>
             </div>
 
-            <!-- Trust anchors -->
-            <div ref="trustRef" class="mt-10 flex items-center gap-4">
-              <span class="inline-block h-px w-8 bg-[#111111]/15" />
-              <p class="font-mono text-[0.65rem] tracking-[0.25em] text-[#111111]/30 uppercase sm:text-[0.7rem]">
-                Sin compromiso · 30 min · 100% estratégico
+            <!-- Specs Pill -->
+            <div ref="heroSpecsRef" class="hero-specs bg-[#111111] text-white rounded-full px-8 py-6 flex items-center justify-center border border-white/10 shadow-2xl">
+              <p class="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-white/70 text-center">
+                Sin Compromiso <span class="mx-3 text-white/30">·</span> 30 MIN <span class="mx-3 text-white/30">·</span> 100% Estratégico
               </p>
             </div>
-
-            <!-- Decorative line -->
-            <div ref="lineRef" class="mt-8 h-px w-16 bg-[#111111]/10 origin-left" />
           </div>
 
           <!-- ═══════════════════════════════════════════════ -->
@@ -235,8 +231,7 @@ const updateClock = () => {
 const sectionRef = ref<HTMLElement | null>(null);
 const backRef = ref<HTMLElement | null>(null);
 const heroTextRef = ref<HTMLElement | null>(null);
-const trustRef = ref<HTMLElement | null>(null);
-const lineRef = ref<HTMLElement | null>(null);
+const heroSpecsRef = ref<HTMLElement | null>(null);
 const calendarWrapperRef = ref<HTMLElement | null>(null);
 const calendarCaptionRef = ref<HTMLElement | null>(null);
 
@@ -310,14 +305,14 @@ onMounted(() => {
       }, "-=0.6");
     }
 
-    // Entrance: Trust anchors & Line & caption
-    tl.from([trustRef.value, lineRef.value, calendarCaptionRef.value], {
+    // Entrance: Specs pill & caption
+    tl.from([heroSpecsRef.value, calendarCaptionRef.value], {
       opacity: 0,
-      y: 20,
-      duration: 0.8,
-      stagger: 0.1,
-      ease: 'power3.out'
-    }, "-=0.8");
+      y: 30,
+      duration: 1,
+      stagger: 0.2,
+      ease: 'expo.out'
+    }, "-=0.6");
 
     // Entrance: Calendar wrapper
     tl.from(calendarWrapperRef.value, { 
