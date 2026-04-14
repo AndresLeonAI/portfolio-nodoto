@@ -1,9 +1,10 @@
 <template>
   <component  :is="url ? 'a' : 'button'" 
-    @click="()=>{
+    @click="(e)=>{
       if (url) {
         gotoSection(url);
       }
+      $emit('click', e);
     }"
     id="button"
     class="leading-base group pointer-events-auto relative h-full max-w-full transform-none overflow-clip rounded-full bg-flax-smoke-950 px-5 py-2 text-[1rem] font-semibold uppercase tracking-normal text-flax-smoke-100 sm:text-sm"
@@ -40,6 +41,8 @@ import { gotoSection } from '@/functions';
       required: false,
     },
   });
+
+  defineEmits(['click']);
 </script>
 
 <style scoped>

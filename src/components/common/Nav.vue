@@ -95,13 +95,13 @@
           <a
             href="/discovery"
             @click.prevent="goToDiscovery"
-            class="group inline-flex items-center gap-4 bg-white/5 border border-white/10 rounded-full px-8 py-4 backdrop-blur-md transition-all duration-500 hover:bg-white hover:text-[#0B0B0A]"
+            class="group inline-flex items-center gap-4 bg-white text-black font-bold uppercase tracking-widest rounded-full px-8 py-4 hover:scale-105 transition-all duration-300 shadow-2xl relative z-[9999]"
           >
-            <span class="font-mono text-xs tracking-[0.2em] font-medium uppercase text-white/70 group-hover:text-[#0B0B0A]">
+            <span class="font-mono text-[0.7rem] text-black">
               {{ ctaData.label }}
             </span>
-            <div class="flex items-center justify-center bg-white/10 rounded-full p-2 group-hover:bg-[#0B0B0A]/10 transition-colors">
-              <svg class="size-3 text-white group-hover:text-[#0B0B0A]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <div class="flex items-center justify-center bg-black/10 rounded-full p-2 transition-colors">
+              <svg class="size-3 text-black group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M7 17L17 7" />
                 <path d="M7 7h10v10" />
               </svg>
@@ -224,10 +224,9 @@
     // CASE 1: "Inicio" (url === '/') — navigate to home or scroll to top
     if (url === '/') {
       if (isOnHome) {
-        // Already on home — just close menu and scroll to top
+        // Already on home — just close menu and scroll to top with curtain
+        window.dispatchEvent(new CustomEvent('nav-curtain-trigger', { detail: { url: 0 } }));
         toggleBtnClickAnimation();
-        lenis.start();
-        lenis.scrollTo(0, { duration: 2 });
       } else {
         // On another route — navigate to home via router (triggers PageTransition)
         toggleBtnClickAnimation();
@@ -238,11 +237,10 @@
       return;
     }
 
-    // CASE 2: Hash link and already on Home — smooth scroll
+    // CASE 2: Hash link and already on Home — smooth scroll with curtain
     if (isHomeHash && isOnHome) {
+      window.dispatchEvent(new CustomEvent('nav-curtain-trigger', { detail: { url } }));
       toggleBtnClickAnimation();
-      lenis.start();
-      lenis.scrollTo(url, { duration: 3 });
       return;
     }
 

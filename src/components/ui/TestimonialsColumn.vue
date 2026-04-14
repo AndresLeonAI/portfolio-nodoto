@@ -1,6 +1,6 @@
 <template>
   <div :class="className" class="overflow-hidden">
-    <div ref="columnRef" class="flex flex-col gap-6 pb-6">
+    <div ref="columnRef" class="flex flex-col gap-6 pb-6 will-change-transform transform-gpu">
       <div
         v-for="(testimonial, i) in duplicatedTestimonials"
         :key="i"

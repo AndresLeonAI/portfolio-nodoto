@@ -20,7 +20,7 @@
     </div>
 
     <!-- BACKGROUND LAYER 2: Tactile CTA Buttons -->
-    <div class="cta-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-full px-4 cinematic-gsap-reveal pointer-events-auto will-change-transform">
+    <div class="cta-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-full px-4 cinematic-gsap-reveal pointer-events-auto will-change-transform transform-gpu">
       <h2 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight cinematic-text-silver-matte">
         {{ ctaHeading }}
       </h2>
@@ -28,7 +28,7 @@
         {{ ctaDescription }}
       </p>
       <div class="flex justify-center w-full">
-        <a href="/discovery" @click.prevent="$router.push('/discovery')" aria-label="Request Access" class="flex flex-col items-center justify-center px-10 py-5 sm:px-14 sm:py-6 rounded-[2rem] bg-white/5 backdrop-blur-xl border border-white/10 hover:bg-white/10 hover:border-white/20 hover:scale-105 transition-all duration-500 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] group focus:outline-none focus:ring-2 focus:ring-white/20">
+        <a href="/discovery" @click.prevent="$router.push('/discovery')" aria-label="Request Access" class="flex flex-col items-center justify-center px-10 py-5 sm:px-14 sm:py-6 rounded-[2rem] bg-white/5 backdrop-blur-sm md:backdrop-blur-xl border border-white/10 hover:bg-white/10 hover:border-white/20 hover:scale-105 transition-all duration-500 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] group focus:outline-none focus:ring-2 focus:ring-white/20">
           <div class="text-center flex flex-col items-center">
             <div class="text-[10px] sm:text-xs font-bold tracking-[0.2em] text-white/40 uppercase mb-2 transition-colors duration-500 group-hover:text-white/70">Cero Fricción</div>
             <div class="text-2xl sm:text-3xl font-bold leading-none tracking-tight text-white drop-shadow-md group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-all duration-500 select-none">Iniciar Evolución</div>
@@ -41,7 +41,7 @@
     <div class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none" style="perspective: 1500px;">
       <div
         ref="mainCardRef"
-        class="main-card cinematic-premium-depth-card relative overflow-hidden cinematic-gsap-reveal flex items-center justify-center pointer-events-auto w-[92vw] md:w-[85vw] h-[92vh] md:h-[85vh] rounded-[32px] md:rounded-[40px]"
+        class="main-card cinematic-premium-depth-card relative overflow-hidden cinematic-gsap-reveal flex items-center justify-center pointer-events-auto w-[92vw] md:w-[85vw] h-[92vh] md:h-[85vh] rounded-[32px] md:rounded-[40px] will-change-transform transform-gpu"
       >
         <div class="cinematic-card-sheen" aria-hidden="true" />
 
@@ -61,7 +61,7 @@
               <!-- The iPhone Bezel -->
               <div
                 ref="mockupRef"
-                class="relative w-[280px] h-[580px] rounded-[3rem] cinematic-iphone-bezel flex flex-col will-change-transform"
+                class="relative w-[280px] h-[580px] rounded-[3rem] cinematic-iphone-bezel flex flex-col will-change-transform transform-gpu"
                 style="transform-style: preserve-3d;"
               >
                 <!-- Physical Hardware Buttons -->

@@ -123,6 +123,28 @@
 
   onMounted(() => {
     document.body.classList.add('stop-scrolling');
+
+    // ─── Internal Hash Trigger ────────────────────────────────────────────────
+    window.addEventListener('nav-curtain-trigger', async (e: any) => {
+      if (isTransitioning) return;
+      isTransitioning = true;
+      try {
+        if (pageTransitionRef.value) {
+          await pageTransitionRef.value.executeTransitionOut();
+        }
+        lenis.start();
+        lenis.scrollTo(e.detail.url, { duration: 0, immediate: true });
+        
+        // Brief pause to allow DOM rendering flush at new scroll position
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        
+        if (pageTransitionRef.value) {
+          await pageTransitionRef.value.executeTransitionIn();
+        }
+      } finally {
+        isTransitioning = false;
+      }
+    });
   });
 </script>
 
