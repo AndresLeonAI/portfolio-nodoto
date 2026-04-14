@@ -9,6 +9,7 @@ import Slider from './Slider.vue';
 import Footer from './Footer.vue';
 
 import Cursor from './Cursor.vue';
+import PageTransition from './PageTransition.vue';
 
 export {
   Circles,
@@ -20,4 +21,5 @@ export {
   Slider,
   Footer,
   Cursor,
+  PageTransition,
 };

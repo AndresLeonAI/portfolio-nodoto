@@ -14,32 +14,60 @@
         
         <!-- Celda 01: Inmersión -->
         <div class="process-card col-span-12 lg:col-span-5 lg:row-span-2 flex flex-col justify-between bg-[#E7DBCB] rounded-[2.5rem] p-10 lg:p-14 shadow-sm border border-gray-100 will-change-transform">
-          <div class="flex items-center gap-4 mb-24">
-            <span class="text-xs font-mono tracking-widest uppercase text-gray-400 bg-gray-50 px-3 py-1.5 rounded-full">01. Estrategia</span>
+          <div>
+            <div class="flex items-center gap-4 mb-6">
+              <span class="text-xs font-mono tracking-widest uppercase text-gray-400 bg-gray-50 px-3 py-1.5 rounded-full">01. Estrategia</span>
+            </div>
+            <img 
+              src="" 
+              alt="01. Estrategia" 
+              class="w-full aspect-[4/3] mb-8 rounded-xl object-cover border border-white/10 opacity-90 shadow-lg bg-black/5 mix-blend-multiply"
+            />
           </div>
           <p class="text-2xl lg:text-3xl xl:text-4xl leading-tight font-medium text-[#111] text-balance" v-html="cell01Html"></p>
         </div>
 
         <!-- Celda 02: Arquitectura -->
         <div class="process-card col-span-12 lg:col-span-7 flex flex-col justify-between bg-[#E7DBCB] rounded-[2.5rem] p-10 lg:p-14 shadow-sm border border-gray-100 will-change-transform">
-          <div class="flex items-center gap-4 mb-20">
-            <span class="text-xs font-mono tracking-widest uppercase text-gray-400 bg-gray-50 px-3 py-1.5 rounded-full">02. Psicología de Conversión</span>
+          <div>
+            <div class="flex items-center gap-4 mb-6">
+              <span class="text-xs font-mono tracking-widest uppercase text-gray-400 bg-gray-50 px-3 py-1.5 rounded-full">02. Psicología de Conversión</span>
+            </div>
+            <img 
+              src="" 
+              alt="02. Psicología de Conversión" 
+              class="w-full aspect-[21/9] mb-8 rounded-xl object-cover border border-white/10 opacity-90 shadow-lg bg-black/5 mix-blend-multiply"
+            />
           </div>
           <p class="text-2xl lg:text-3xl xl:text-[2.5rem] leading-[1.1] font-medium text-[#111] text-balance" v-html="cell02Html"></p>
         </div>
 
         <!-- Celda 03: Ingeniería (DARK) -->
         <div class="process-card col-span-12 lg:col-span-4 flex flex-col justify-between bg-[#0B0B0A] rounded-[2.5rem] p-10 lg:p-14 shadow-2xl border border-gray-800 will-change-transform">
-          <div class="flex items-center gap-4 mb-16">
-            <span class="text-xs font-mono tracking-widest uppercase text-gray-400/80 bg-gray-800 px-3 py-1.5 rounded-full">03. Alta Costura Digital</span>
+          <div>
+            <div class="flex items-center gap-4 mb-6">
+              <span class="text-xs font-mono tracking-widest uppercase text-gray-400/80 bg-gray-800 px-3 py-1.5 rounded-full">03. Alta Costura Digital</span>
+            </div>
+            <img 
+              src="" 
+              alt="03. Alta Costura Digital" 
+              class="w-full aspect-square md:aspect-[4/3] lg:aspect-[3/4] mb-8 rounded-xl object-cover border border-white/10 opacity-90 shadow-lg bg-white/5 mix-blend-lighten"
+            />
           </div>
           <p class="text-xl lg:text-2xl xl:text-3xl leading-tight font-medium text-white text-balance" v-html="cell03Html"></p>
         </div>
 
         <!-- Celda 04: Despliegue -->
         <div class="process-card col-span-12 lg:col-span-3 flex flex-col justify-between bg-[#E7DBCB] rounded-[2.5rem] p-10 lg:p-14 shadow-sm border border-gray-100 will-change-transform">
-          <div class="flex items-center gap-4 mb-16">
-            <span class="text-xs font-mono tracking-widest uppercase text-gray-400 bg-gray-50 px-3 py-1.5 rounded-full">04. Lanzamiento</span>
+          <div>
+            <div class="flex items-center gap-4 mb-6">
+              <span class="text-xs font-mono tracking-widest uppercase text-gray-400 bg-gray-50 px-3 py-1.5 rounded-full">04. Lanzamiento</span>
+            </div>
+            <img 
+              src="" 
+              alt="04. Lanzamiento" 
+              class="w-full aspect-[4/3] lg:aspect-square mb-8 rounded-xl object-cover border border-white/10 opacity-90 shadow-lg bg-black/5 mix-blend-multiply"
+            />
           </div>
           <p class="text-xl lg:text-2xl leading-tight font-medium text-[#111] text-balance" v-html="cell04Html"></p>
         </div>

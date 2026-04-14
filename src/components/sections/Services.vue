@@ -34,6 +34,7 @@
           :body="card.body"
           :headings="card.headings"
           :shape="card.shape"
+          :image="card.image"
           class="border-flax-smoke-500/50 sticky border-t bg-[#0B0B0A]"
           :class="getStyle(index)"
         />
@@ -48,6 +49,11 @@
   import { onBeforeMount, onMounted, ref } from 'vue';
   import { ServicesCard } from '..';
 
+  // Service images
+  import imgUxDesign from '@/assets/images/services/ux-design.png';
+  import imgCustomBespoke from '@/assets/images/services/custom-bespoke.png';
+  import imgDevVanguard from '@/assets/images/services/dev-vanguard.png';
+
   const whatIDo = ref('My services /');
 
   const servicesCardProps = [
@@ -59,6 +65,7 @@
   <path d="M100 0C103.395 53.7596 146.24 96.6052 200 100C146.24 103.395 103.395 146.24 100 200C96.6052 146.24 53.7596 103.395 0 100C53.7596 96.6052 96.6052 53.7596 100 0Z"/>
   </svg>
   `,
+      image: imgUxDesign,
     },
     {
       title: 'Personalización Absoluta',
@@ -72,6 +79,7 @@
   <path d="M127.14 200C99.9942 200 99.9943 167.423 72.8487 167.423C41.6048 167.423 0 158.386 0 127.133C0 99.9885 32.5678 99.9885 32.5678 72.8445C32.5678 41.6139 41.6048 0 72.8602 0C100.006 0 100.006 32.5774 127.151 32.5774C158.384 32.5774 200 41.6139 200 72.8675C200 100.012 167.421 100.012 167.421 127.156C167.409 158.444 158.384 200 127.14 200Z" />
   </svg>
   `,
+      image: imgCustomBespoke,
     },
     {
       title: 'Desarrollo de Vanguardia',
@@ -85,6 +93,7 @@
   <path d="M100 0L170.711 29.2893L200 100L170.711 170.711L100 200L29.2893 170.711L0 100L29.2893 29.2893L100 0Z" />
   </svg>
   `,
+      image: imgDevVanguard,
     },
   ];
 

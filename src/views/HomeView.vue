@@ -31,6 +31,7 @@
 </template>
 
 <script setup lang="ts">
+  import { onMounted, nextTick } from 'vue';
   import {
     Hero,
     Services,
@@ -47,4 +48,15 @@
     Marquee,
     Footer,
   } from '@/components/design';
+  import { animateHeroNav, isFirstLoad } from '@/animations';
+
+  onMounted(async () => {
+    // On first load, LoadingScreen.vue handles the hero entrance animation.
+    // On subsequent route transitions (e.g., /discovery → /), we must
+    // trigger animateHeroNav() ourselves since LoadingScreen won't re-run.
+    if (!isFirstLoad.value) {
+      await nextTick();
+      animateHeroNav();
+    }
+  });
 </script>

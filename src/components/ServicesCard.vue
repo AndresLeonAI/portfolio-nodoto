@@ -14,10 +14,19 @@
     </div>
 
     <div
-      class="relative flex min-h-[35vh] flex-col place-items-start md:grid md:min-h-[40vh] md:grid-cols-12"
+      class="relative flex min-h-[35vh] flex-col place-items-start md:grid md:min-h-[40vh] md:grid-cols-12 md:gap-5"
     >
+      <!-- Service Image — inside grid, below the number area -->
+      <div v-if="image" class="col-span-12 md:col-span-4 mb-8 md:mb-0">
+        <img
+          :src="image"
+          :alt="title + ' — NODOTO'"
+          class="w-full h-auto rounded-2xl border border-white/10 shadow-2xl opacity-90 mix-blend-luminosity hover:mix-blend-normal transition-all duration-500"
+        />
+      </div>
+
       <div
-        class="heading-4 text-heading-4 col-span-7 col-start-5 flex w-full flex-col gap-y-5"
+        class="heading-4 text-heading-4 col-span-12 md:col-span-7 md:col-start-5 flex w-full flex-col gap-y-5"
       >
         <p
           class="text-balance text-base font-medium text-flax-smoke-300/80 sm:max-w-[40ch]"
@@ -103,6 +112,10 @@
     shape: {
       type: String,
       required: true,
+    },
+    image: {
+      type: String,
+      default: '',
     },
   });
 </script>

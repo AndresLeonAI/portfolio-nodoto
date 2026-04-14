@@ -85,7 +85,7 @@
 </template>
 
 <script setup lang="ts">
-  import { navbarLinks, resourceLinks, socialLinks } from '@/data';
+  import { navbarLinks, socialLinks } from '@/data';
   import { Link } from '..';
   import { onMounted, ref } from 'vue';
   import { lenis } from '@/lib/lenis';
@@ -96,7 +96,6 @@
   const footerSections = [
     { title: 'Menu', links: navbarLinks },
     { title: 'Socials', links: socialLinks },
-    { title: 'Resources', links: resourceLinks },
   ];
 
   const myLocalTime = ref('');

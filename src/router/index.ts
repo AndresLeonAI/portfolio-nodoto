@@ -14,9 +14,10 @@ const router = createRouter({
       component: () => import('@/views/DiscoveryView.vue'),
     },
   ],
-  scrollBehavior(_to, _from, savedPosition) {
-    if (savedPosition) return savedPosition
-    return { top: 0, behavior: 'instant' }
+  // Lenis controls scroll — disable native scroll restoration.
+  // PageTransition.vue handles scroll reset via resetScroll().
+  scrollBehavior() {
+    return false
   },
 })
 

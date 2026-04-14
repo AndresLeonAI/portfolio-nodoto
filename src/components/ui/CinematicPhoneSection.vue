@@ -28,10 +28,10 @@
         {{ ctaDescription }}
       </p>
       <div class="flex justify-center w-full">
-        <a href="/discovery" @click.prevent="$router.push('/discovery')" aria-label="Request Access" class="cinematic-btn-modern-light flex flex-col items-center justify-center px-10 py-5 sm:px-14 sm:py-6 rounded-[1.75rem] group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-          <div class="text-center">
-            <div class="text-xs sm:text-sm font-bold tracking-wider text-neutral-500 uppercase mb-1">SOLICITAR ACCESO</div>
-            <div class="text-2xl sm:text-3xl font-bold leading-none tracking-tight">Círculo Privado</div>
+        <a href="/discovery" @click.prevent="$router.push('/discovery')" aria-label="Request Access" class="flex flex-col items-center justify-center px-10 py-5 sm:px-14 sm:py-6 rounded-[2rem] bg-white/5 backdrop-blur-xl border border-white/10 hover:bg-white/10 hover:border-white/20 hover:scale-105 transition-all duration-500 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] group focus:outline-none focus:ring-2 focus:ring-white/20">
+          <div class="text-center flex flex-col items-center">
+            <div class="text-[10px] sm:text-xs font-bold tracking-[0.2em] text-white/40 uppercase mb-2 transition-colors duration-500 group-hover:text-white/70">Cero Fricción</div>
+            <div class="text-2xl sm:text-3xl font-bold leading-none tracking-tight text-white drop-shadow-md group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-all duration-500 select-none">Iniciar Evolución</div>
           </div>
         </a>
       </div>

@@ -201,7 +201,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeMount, onUnmounted, ref } from 'vue';
+import { onMounted, onBeforeMount, onUnmounted, ref, nextTick } from 'vue';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { textSplitterIntoChar } from '@/functions';
@@ -261,10 +261,16 @@ onBeforeMount(() => {
   heroDesc2Html.value = textSplitterIntoChar('Sin compromisos, solo claridad absoluta.', true, false);
 });
 
-onMounted(() => {
+onMounted(async () => {
   // Start clock
   updateClock();
   clockInterval = setInterval(updateClock, 1000);
+
+  // Ensure header is visible on this route
+  // (header starts at -translate-y-full in CSS, animateHeroNav handles it on Home)
+  gsap.to('header', { y: 0, duration: 1, ease: 'power4.inOut' });
+
+  await nextTick();
 
   ctx = gsap.context(() => {
     // ═══════════════════════════════════════════════
@@ -282,7 +288,7 @@ onMounted(() => {
     });
 
     // Entrance: Hero Text block
-    const heroLetters = heroTextRef.value?.querySelectorAll('.kinetic-hero-text .letters');
+    const heroLetters = heroTextRef.value?.querySelectorAll('.letters');
     if (heroLetters && heroLetters.length) {
       gsap.set(heroLetters, { y: '120%', rotateX: -20, opacity: 0, willChange: 'transform, opacity' });
       
@@ -314,14 +320,8 @@ onMounted(() => {
       ease: 'expo.out'
     }, "-=0.6");
 
-    // Entrance: Calendar wrapper
-    tl.from(calendarWrapperRef.value, { 
-      y: 40, 
-      opacity: 0, 
-      scale: 0.98, 
-      duration: 1.5, 
-      ease: 'power4.out' 
-    }, "-=0.8");
+    // Calendar wrapper — NO GSAP animation. Must be visible from ms 1.
+    // Cal.com iframe needs static rendering to avoid race conditions.
 
     // ═══════════════════════════════════════════════
     // MONUMENTAL FOOTER — ScrollTrigger orchestration

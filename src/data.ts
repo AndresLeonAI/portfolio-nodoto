@@ -4,64 +4,46 @@ export type navLinkType = {
   url: string;
 };
 
-// Nav
+// Nav — High-ticket conversion links (CEO-friendly)
 const navLinks = [
   {
-    label: 'Metodología',
+    label: 'El Método',
     url: '#services',
   },
   {
-    label: 'Ingeniería',
-    url: '#works',
-  },
-  {
-    label: 'Manifiesto',
-    url: '#about-me-section',
-  },
-  {
-    label: 'Casos',
+    label: 'Resultados',
     url: '#testimonials-section',
   },
-  {
-    label: 'Contacto',
-    url: '#contact-section',
-  },
 ];
+
 const navbarLinks = [
   {
     label: 'Inicio',
-    url: '#app',
+    url: '/',
   },
-  ...navLinks,
+  {
+    label: 'El Método',
+    url: '#services',
+  },
+  {
+    label: 'Proceso',
+    url: '#work-process-section',
+  },
+  {
+    label: 'Resultados',
+    url: '#testimonials-section',
+  },
+  {
+    label: 'Preguntas',
+    url: '#faq-section',
+  },
 ];
 
+// Social — Instagram only. No distractions.
 const socialLinks = [
-  {
-    label: 'X',
-    url: 'https://x.com/NODOTO',
-  },
   {
     label: 'Instagram',
     url: 'https://www.instagram.com/NODOTO/',
-  },
-  {
-    label: 'Github',
-    url: 'https://github.com/NODOTO',
-  },
-  {
-    label: 'Linkedin',
-    url: 'https://www.linkedin.com/in/NODOTO/',
-  },
-];
-
-const resourceLinks = [
-  {
-    label: 'Pillarstack',
-    url: 'https://www.pillarstack.com',
-  },
-  {
-    label: 'Figma Template',
-    url: 'https://www.figma.com/community/file/1328038510191576951/project-starter-template',
   },
 ];
 
@@ -79,7 +61,6 @@ const dataCalConfig =
 
 export {
   socialLinks,
-  resourceLinks,
   heroText,
   locationPlace,
   locationCountry,

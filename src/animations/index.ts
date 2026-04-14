@@ -1,11 +1,27 @@
 import gsap from 'gsap';
 import MotionPathHelper from 'gsap/MotionPathPlugin';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import { Ref } from 'vue';
+import { Ref, ref } from 'vue';
 import { lenis } from '@/lib/lenis';
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(MotionPathHelper);
+
+// ─── Page Lifecycle Flag ────────────────────────────────────────────────────
+// true on the very first load (LoadingScreen handles hero entrance).
+// Set to false after the first route navigation completes.
+const isFirstLoad = ref(true);
+
+/**
+ * killAllScrollTriggers — Nuclear garbage collection for route transitions.
+ * Kills every ScrollTrigger and active tween to prevent memory corruption
+ * when Vue Router swaps views.
+ */
+const killAllScrollTriggers = () => {
+  ScrollTrigger.getAll().forEach((t) => t.kill());
+  // Don't kill curtain tweens — they're managed by PageTransition
+  ScrollTrigger.clearScrollMemory();
+};
 
 const displayNone = (id: string) => {
   gsap.set(id, { display: 'none' });
@@ -75,7 +91,7 @@ const navbarScale = (selector: string, trigger: string) => {
 };
 
 // ! common animations
-const yToZero = (id: string) => {
+export const yToZero = (id: string) => {
   gsap.to(id, {
     y: 0,
     duration: 0.4,
@@ -97,7 +113,7 @@ const xToZero = (id: string) => {
   });
 };
 
-const yReset = (id: string) => {
+export const yReset = (id: string) => {
   gsap.set(id, {
     y: '100%',
   });
@@ -116,7 +132,7 @@ const fadeIn = (id: string, opacity: number = 1, duration: number = 0.5) => {
   });
 };
 
-const resetOpacity = (id: string, opacity: number = 0) => {
+export const resetOpacity = (id: string, opacity: number = 0) => {
   gsap.set(id, {
     opacity: opacity,
   });
@@ -200,43 +216,77 @@ const resetMagneto = (
 // ! Nav animation
 const navbarEnter = (id: string) => {
   gsap.to(id, {
-    x: '0%',
+    y: '0%',
     opacity: 1,
     duration: 0.7,
-    // ease: 'power1.inOut',
+    ease: 'power3.inOut',
   });
 };
 
-const navbarLeave = (id: string) => {
-  const x = '100%';
+export const navbarLeave = (id: string) => {
   gsap.to(id, {
     opacity: 0,
+    duration: 0.5,
+    ease: 'power2.in',
     onComplete: () => {
-      gsap.set(id, {
-        x: x,
-      });
+      gsap.set(id, { y: '100%', opacity: 1 });
     },
   });
 };
 
 const animateNavbarEnter = (
   navbarSelector: string,
-  navbarLinksSelector: string,
-  contactSelector: string,
+  cardSelector: string,
 ) => {
+  // 1. Panel slides in
   navbarEnter(navbarSelector);
-  yToZero(navbarLinksSelector);
-  fadeIn(contactSelector);
+
+  // 2. Links/Elements cascade in with stagger
+  gsap.fromTo(
+    cardSelector,
+    {
+      y: 40,
+      opacity: 0,
+      scale: 0.95,
+    },
+    {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      duration: 0.8,
+      stagger: 0.1,
+      ease: 'power4.out',
+      delay: 0.3,
+    },
+  );
 };
 
 const animateNavbarLeave = (
   navbarSelector: string,
-  navbarLinksSelector: string,
-  contactSelector: string,
+  cardSelector: string,
 ) => {
-  navbarLeave(navbarSelector);
-  yReset(navbarLinksSelector);
-  resetOpacity(contactSelector);
+  // 1. Links fade out first (reverse stagger)
+  gsap.to(cardSelector, {
+    y: 20,
+    opacity: 0,
+    scale: 0.97,
+    duration: 0.4,
+    stagger: -0.05,
+    ease: 'power2.in',
+  });
+
+  // 2. Panel slides out with delay
+  gsap.to(navbarSelector, {
+    opacity: 0,
+    y: '100%',
+    duration: 0.5,
+    delay: 0.25,
+    ease: 'power2.in',
+    onComplete: () => {
+      gsap.set(navbarSelector, { y: '100%', opacity: 1 });
+      gsap.set(cardSelector, { y: 40, opacity: 0, scale: 0.95 });
+    },
+  });
 };
 
 // ! Loading animation
@@ -406,4 +456,6 @@ export {
   animateHeroNav,
   animateSplitText,
   animateAboutMeSectionLeave,
+  isFirstLoad,
+  killAllScrollTriggers,
 };
