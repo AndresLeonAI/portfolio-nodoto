@@ -155,12 +155,11 @@
               <p class="font-mono text-[0.65rem] tracking-[0.35em] text-white/25 uppercase mb-2">
                 Contacto Directo
               </p>
-              <a
-                href="mailto:contacto@nodoto.agency"
-                class="font-fancy text-[clamp(1rem,1.5vw,1.3rem)] font-medium text-white/50 transition-colors duration-300 hover:text-white/80"
+              <span
+                class="font-fancy text-[clamp(1rem,1.5vw,1.3rem)] font-medium text-white/50"
               >
                 contacto@nodoto.agency
-              </a>
+              </span>
             </div>
             <a
               href="/"

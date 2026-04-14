@@ -68,9 +68,10 @@
           <p class="w-full font-bold uppercase">Contacto Corporativo</p>
           <Link
             class="text-flax-smoke-300 h-6 text-right font-medium tracking-wider lowercase"
-            label="hetari4all@gmail"
+            label="Iniciar Evolución ↗"
             :icon="true"
-            url="mailto:hetari4all@gmail"
+            @click="router.push('/discovery')"
+            url="javascript:void(0)"
           />
         </div>
       </div>

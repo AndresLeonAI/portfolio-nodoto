@@ -17,7 +17,7 @@
       class="relative flex min-h-[35vh] flex-col place-items-start md:grid md:min-h-[40vh] md:grid-cols-12 md:gap-5"
     >
       <!-- Service Image — inside grid, below the number area -->
-      <div v-if="image" class="col-span-12 md:col-span-4 mb-8 md:mb-0">
+      <div v-if="image" class="col-span-12 md:col-span-4 mb-8 md:mb-0 hidden md:block">
         <img
           :src="image"
           :alt="title + ' — NODOTO'"

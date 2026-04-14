@@ -37,6 +37,17 @@
           :duration="20"
         />
       </div>
+
+      <!-- INJECTION: Conversion CTA (Dark Pill) -->
+      <div class="mt-12 sm:mt-16 flex justify-center w-full relative z-20">
+        <button
+          @click="$router.push('/discovery')"
+          class="group bg-[#0B0B0A] text-flax-smoke-50 rounded-full px-8 py-4 font-semibold uppercase tracking-widest text-[0.75rem] hover:scale-[1.02] transition-all duration-500 shadow-2xl border border-flax-smoke-900/20 hover:border-flax-smoke-500/30 flex items-center gap-3"
+        >
+          <span>Únete al Círculo Privado</span>
+          <span class="transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
+        </button>
+      </div>
     </div>
   </section>
 </template>

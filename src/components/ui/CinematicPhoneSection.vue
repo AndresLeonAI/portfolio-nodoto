@@ -1,7 +1,7 @@
 <template>
   <div
     ref="containerRef"
-    :class="cn('relative w-screen h-screen overflow-hidden flex items-center justify-center font-sans antialiased', containerClass)"
+    :class="cn('relative w-full h-screen overflow-hidden flex items-center justify-center font-sans antialiased', containerClass)"
     :style="{ perspective: '1500px', background: '#0B0B0A', color: '#f4f4f1' }"
   >
     <!-- Film Grain Overlay -->
@@ -10,7 +10,7 @@
     <div class="cinematic-bg-grid absolute inset-0 z-0 pointer-events-none opacity-50" aria-hidden="true" />
 
     <!-- BACKGROUND LAYER: Hero Texts -->
-    <div class="hero-text-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-screen px-4 will-change-transform" style="transform-style: preserve-3d;">
+    <div class="hero-text-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-full px-4 will-change-transform" style="transform-style: preserve-3d;">
       <h2 class="text-track cinematic-gsap-reveal cinematic-text-3d-matte text-5xl md:text-7xl lg:text-[6rem] font-bold tracking-tight mb-2">
         {{ tagline1 }}
       </h2>
@@ -20,7 +20,7 @@
     </div>
 
     <!-- BACKGROUND LAYER 2: Tactile CTA Buttons -->
-    <div class="cta-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-screen px-4 cinematic-gsap-reveal pointer-events-auto will-change-transform">
+    <div class="cta-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-full px-4 cinematic-gsap-reveal pointer-events-auto will-change-transform">
       <h2 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight cinematic-text-silver-matte">
         {{ ctaHeading }}
       </h2>

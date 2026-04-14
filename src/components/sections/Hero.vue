@@ -48,14 +48,7 @@
 
             <div class="relative origin-left overflow-hidden sm:scale-150">
               <div id="contact-btn" class="flex -translate-y-full">
-                <!-- <Button
-                  :data-cal-namespace="dataCalNamespace"
-                  :data-cal-link="dataCalLink"
-                  :data-cal-config="dataCalConfig"
-                  class="contact"
-                  label="Get in touch"
-                /> -->
-                <Button label="Inicia el Protocolo de Inmersión" @click="router.push('/discovery')" />
+                <Button label="Inicia tu Evolución" @click="router.push('/discovery')" />
               </div>
             </div>
           </div>

@@ -73,10 +73,11 @@
               Contacto Directo
             </p>
             <a
-              href="mailto:contacto@nodoto.agency"
+              href="/discovery"
+              @click.prevent="goToDiscovery"
               class="font-fancy text-lg text-white/60 transition-colors duration-300 hover:text-white"
             >
-              contacto@nodoto.agency
+              Iniciar Evolución ↗
             </a>
           </div>
           <div class="flex flex-col gap-1">
