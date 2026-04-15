@@ -3,6 +3,7 @@
     v-if="!isLoading"
     id="loading-screen"
     class="flex-center fixed bottom-0 z-99999 size-full cursor-wait"
+    :class="{ 'pointer-events-none': isLoading }"
   >
     <div class="size-full flex-col">
       <svg

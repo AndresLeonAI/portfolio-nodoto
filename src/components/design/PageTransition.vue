@@ -90,7 +90,7 @@ const transitionOut = (): Promise<void> => {
 
     // Reset state
     pathData.value = curvedPathData.value;
-    gsap.set(curtainRef.value, { bottom: '-100%', display: 'flex' });
+    gsap.set(curtainRef.value, { bottom: '-100%', display: 'flex', pointerEvents: 'auto' });
     gsap.set(brandRef.value, { opacity: 0 });
     gsap.set('.transition-text', { y: '100%' });
 
@@ -133,7 +133,7 @@ const transitionIn = (): Promise<void> => {
     const tl = gsap.timeline({
       onComplete: () => {
         // Reset completely for next transition
-        gsap.set(curtainRef.value!, { bottom: '-100%', display: 'none' });
+        gsap.set(curtainRef.value!, { bottom: '-100%', display: 'none', pointerEvents: 'none' });
         gsap.set(brandRef.value!, { opacity: 0 });
         gsap.set('.transition-text', { y: '100%' });
         resolve();
@@ -184,6 +184,14 @@ const executeTransitionIn = async () => {
   // Allow GSAP contexts in new view to initialize
   await new Promise((r) => setTimeout(r, 200));
   await transitionIn();
+
+  // ESCUDO ANTI-BLOQUEO: Fuerza el reset en caso de tweens huérfanos
+  setTimeout(() => {
+    if (curtainRef.value) {
+      curtainRef.value.style.display = 'none';
+      curtainRef.value.style.pointerEvents = 'none';
+    }
+  }, 100);
 };
 
 onMounted(() => {
