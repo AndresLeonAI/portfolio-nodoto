@@ -159,6 +159,7 @@
         <!-- CTA Monolítico (Base Gris) -->
         <div 
           ref="ctaButtonRef"
+          @click="navigateToDiscovery"
           @mousemove="onMouseMove"
           @mouseleave="onMouseLeave"
           @mouseenter="onMouseEnter"
@@ -216,6 +217,13 @@ const onMouseLeave = () => {
 const onMouseEnter = () => {
   gsap.to(ctaButtonRef.value, { scale: 1.05, duration: 0.4, ease: 'back.out(2)' });
   gsap.to(ctaTextRef.value, { letterSpacing: '0.02em', duration: 0.4, ease: 'power3.out' });
+};
+
+// ─── CTA Routing (Global Transition Bus) ───────────────────────────────────
+const navigateToDiscovery = () => {
+  window.dispatchEvent(
+    new CustomEvent('navigate-with-transition', { detail: { route: '/discovery' } })
+  );
 };
 
 const manifestoHtml = ref('');
@@ -293,7 +301,7 @@ onMounted(() => {
     // ═══════════════════════════════════
     // 1. EYEBROW — soft fade in
     // ═══════════════════════════════════
-    gsap.to(eyebrowRef.value, {
+      gsap.to(eyebrowRef.value, {
       opacity: 1,
       y: 0,
       duration: 1,
@@ -302,6 +310,7 @@ onMounted(() => {
         trigger: eyebrowRef.value,
         start: 'top 88%',
         toggleActions: 'play none none reverse',
+        fastScrollEnd: true,
       },
     });
 
@@ -372,6 +381,7 @@ onMounted(() => {
         trigger: manifestoRef.value,
         start: 'top 85%',
         toggleActions: 'play none none reverse',
+        fastScrollEnd: true,
       }
     });
 
@@ -394,6 +404,7 @@ onMounted(() => {
             trigger: manifestoRef.value,
             start: 'top 85%',
             toggleActions: 'play none none reverse',
+            fastScrollEnd: true,
           }
         });
       }
@@ -426,6 +437,7 @@ onMounted(() => {
           trigger: dividerRef.value,
           start: 'top 95%',
           toggleActions: 'play none none reverse',
+          fastScrollEnd: true,
         },
       });
     }
@@ -442,6 +454,7 @@ onMounted(() => {
           trigger: marqueeLabelRef.value,
           start: 'top 95%',
           toggleActions: 'play none none reverse',
+          fastScrollEnd: true,
         },
       });
     }
@@ -551,6 +564,7 @@ onMounted(() => {
           trigger: ctaButtonRef.value,
           start: 'top 95%',
           toggleActions: 'play none none reverse',
+          fastScrollEnd: true,
         }
       });
 

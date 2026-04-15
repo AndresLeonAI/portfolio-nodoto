@@ -178,11 +178,20 @@ const executeTransitionOut = async () => {
 };
 
 /**
+ * executeTransitionOutLight — Covers screen WITHOUT garbage collection.
+ * Used for intra-page hash navigation where ScrollTriggers must survive.
+ * The curtain deploys but ScrollTriggers and scroll position are preserved.
+ */
+const executeTransitionOutLight = async () => {
+  await transitionOut();
+  // No killAllScrollTriggers — animations must survive.
+  // No resetScroll — scroll position will be set by the caller.
+};
+
+/**
  * executeTransitionIn — Reveal new page after DOM hydration
  */
 const executeTransitionIn = async () => {
-  // Allow GSAP contexts in new view to initialize
-  await new Promise((r) => setTimeout(r, 200));
   await transitionIn();
 };
 
@@ -196,6 +205,7 @@ onMounted(() => {
 
 defineExpose({
   executeTransitionOut,
+  executeTransitionOutLight,
   executeTransitionIn,
 });
 </script>

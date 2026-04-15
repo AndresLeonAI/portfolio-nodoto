@@ -48,6 +48,7 @@
 <script setup lang="ts">
   import { onMounted, ref, nextTick } from 'vue';
   import { useRouter } from 'vue-router';
+  import ScrollTrigger from 'gsap/ScrollTrigger';
   import {
     LoadingScreen,
     SamsungError,
@@ -91,7 +92,7 @@
       return;
     }
 
-    // Skip if already mid-transition (prevents double-fire)
+    // Skip if already mid-transition (prevents double-fire from navigate-with-transition)
     if (isTransitioning) {
       next();
       return;
@@ -112,7 +113,10 @@
       await nextTick();
       await nextTick(); // Double tick for nested component mounts
 
-      // 4. Curtain reveals new page
+      // 4. Allow GSAP contexts in new view to initialize
+      await new Promise((r) => setTimeout(r, 200));
+
+      // 5. Curtain reveals new page
       if (pageTransitionRef.value) {
         await pageTransitionRef.value.executeTransitionIn();
       }
@@ -121,23 +125,80 @@
     }
   });
 
+  // ─── Utility: Double requestAnimationFrame for guaranteed paint ─────────────
+  const doubleRAF = (): Promise<void> => {
+    return new Promise((resolve) => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          resolve();
+        });
+      });
+    });
+  };
+
   onMounted(() => {
     document.body.classList.add('stop-scrolling');
 
-    // ─── Internal Hash Trigger ────────────────────────────────────────────────
+    // ─── GLOBAL CTA TRANSITION EVENT ──────────────────────────────────────────
+    // CTAs in child components dispatch this event to navigate with full cinematic
+    // curtain transition. This prevents $router.push from bypassing the curtain.
+    // Flow: Curtain OUT (full GC) → router.push → hydration → Curtain IN
+    window.addEventListener('navigate-with-transition', async (e: any) => {
+      const route = e.detail?.route;
+      if (!route || isTransitioning) return;
+
+      isTransitioning = true;
+      try {
+        // 1. Curtain covers screen + full garbage collection
+        if (pageTransitionRef.value) {
+          await pageTransitionRef.value.executeTransitionOut();
+        }
+
+        // 2. Push route (beforeEach will see isTransitioning=true and skip)
+        await router.push(route);
+
+        // 3. Wait for DOM hydration
+        await nextTick();
+        await nextTick();
+
+        // 4. Allow GSAP contexts in new view to initialize
+        await new Promise((r) => setTimeout(r, 200));
+
+        // 5. Curtain reveals new page
+        if (pageTransitionRef.value) {
+          await pageTransitionRef.value.executeTransitionIn();
+        }
+      } finally {
+        isTransitioning = false;
+      }
+    });
+
+    // ─── INTERNAL HASH TRIGGER (Burger Menu Intra-Page Navigation) ────────────
+    // MANDATO 2: Mathematically precise sequence.
+    // ScrollTriggers MUST NOT be killed — they survive the hash jump.
+    // ScrollTrigger.refresh(true) fires in total darkness between curtain states.
     window.addEventListener('nav-curtain-trigger', async (e: any) => {
       if (isTransitioning) return;
       isTransitioning = true;
       try {
+        // 1. Curtain covers screen (NO garbage collection — STs survive)
         if (pageTransitionRef.value) {
-          await pageTransitionRef.value.executeTransitionOut();
+          await pageTransitionRef.value.executeTransitionOutLight();
         }
+
+        // 2. Lenis jumps instantaneously to anchor
         lenis.start();
         lenis.scrollTo(e.detail.url, { duration: 0, immediate: true });
-        
-        // Brief pause to allow DOM rendering flush at new scroll position
-        await new Promise((resolve) => setTimeout(resolve, 50));
-        
+
+        // 3. Double requestAnimationFrame — guarantees browser has painted
+        //    the new scroll position before we measure bounding rects
+        await doubleRAF();
+
+        // 4. ScrollTrigger.refresh(true) in TOTAL DARKNESS
+        //    Safe = true forces a full recalculation of all trigger positions
+        ScrollTrigger.refresh(true);
+
+        // 5. Curtain reveals the page at the correct scroll position
         if (pageTransitionRef.value) {
           await pageTransitionRef.value.executeTransitionIn();
         }

@@ -247,14 +247,29 @@
     // CASE 3: Hash link but NOT on Home — cross-route navigation
     if (isHomeHash && !isOnHome) {
       toggleBtnClickAnimation();
-      // Navigate home first, then scroll to section after mount
+      // Navigate home first via router (triggers PageTransition guard).
+      // After the route settles, dispatch the hash scroll event.
       setTimeout(async () => {
         await router.push('/');
-        // Wait for PageTransition to complete + DOM hydration
-        setTimeout(() => {
-          lenis.start();
-          lenis.scrollTo(url, { duration: 2 });
-        }, 900); // After curtain reveal (~600ms transition + 150ms delay + buffer)
+        // The PageTransition beforeEach guard handles curtain out/in.
+        // After it completes, the page is revealed. We need to scroll
+        // to the section. Use a watch on route.path to know when we're home.
+        const unwatch = watch(
+          () => route.path,
+          async (path) => {
+            if (path === '/') {
+              unwatch();
+              // Wait for all GSAP contexts to initialize after mount
+              await nextTick();
+              await nextTick();
+              setTimeout(() => {
+                lenis.start();
+                lenis.scrollTo(url, { duration: 2 });
+              }, 600);
+            }
+          },
+          { immediate: true }
+        );
       }, 400);
       return;
     }

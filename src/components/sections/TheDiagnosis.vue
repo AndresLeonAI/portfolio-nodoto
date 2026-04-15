@@ -95,6 +95,7 @@
           <!-- CTA Monolítico (Base Gris) -->
           <div 
             ref="epicCtaRef"
+            @click="navigateToDiscovery"
             @mousemove="epicMouseMove" 
             @mouseleave="epicMouseLeave" 
             class="group relative flex items-center justify-center overflow-hidden rounded-full bg-[#E5E5E5] px-12 py-10 sm:px-16 sm:py-12 shadow-[0_20px_50px_rgba(0,0,0,0.2)] cursor-pointer z-20 w-full"
@@ -131,6 +132,13 @@ const mediocridadPathRef = ref<SVGPathElement | null>(null);
 const epicCtaRef = ref<HTMLElement | null>(null);
 const epicCtaTextRef = ref<HTMLElement | null>(null);
 const titleRef = ref<HTMLElement | null>(null);
+
+// ─── CTA Routing (Global Transition Bus) ───────────────────────────────────
+const navigateToDiscovery = () => {
+  window.dispatchEvent(
+    new CustomEvent('navigate-with-transition', { detail: { route: '/discovery' } })
+  );
+};
 
 const card1DescHtml = ref('');
 const card2TitleHtml = ref('');
@@ -211,7 +219,8 @@ onMounted(() => {
         scrollTrigger: {
           trigger: '#the-diagnosis',
           start: 'top 75%',
-          toggleActions: 'play none none reverse'
+          toggleActions: 'play none none reverse',
+          fastScrollEnd: true,
         }
       });
     }
@@ -240,6 +249,7 @@ onMounted(() => {
             trigger: card,
             start: 'top 85%',
             toggleActions: 'play none none reverse',
+            fastScrollEnd: true,
           },
         });
       }
@@ -255,7 +265,8 @@ onMounted(() => {
         scrollTrigger: {
           trigger: titleRef.value,
           start: 'top 85%',
-          toggleActions: 'play none none reverse'
+          toggleActions: 'play none none reverse',
+          fastScrollEnd: true,
         }
       });
     }
@@ -275,7 +286,8 @@ onMounted(() => {
         scrollTrigger: {
           trigger: titleRef.value,
           start: 'top 85%',
-          toggleActions: 'play none none reverse'
+          toggleActions: 'play none none reverse',
+          fastScrollEnd: true,
         }
       });
     }

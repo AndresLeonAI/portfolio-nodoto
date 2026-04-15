@@ -80,6 +80,7 @@
           id="monolithic-cta"
           ref="ctaRef"
           class="relative overflow-hidden group flex items-center justify-center bg-[#E7DBCB] rounded-[3rem] py-16 md:py-20 lg:py-24 px-6 text-center cursor-pointer will-change-transform border border-gray-200/50 transition-all duration-[800ms]"
+          @click="navigateToDiscovery"
           @mouseenter="onHoverEnter"
           @mouseleave="onHoverLeaveWrapper"
           @mousemove="onCtaMouseMove"
@@ -164,6 +165,7 @@
           trigger: '#process-title',
           start: 'top 85%',
           toggleActions: 'play none none reverse',
+          fastScrollEnd: true,
         }
       });
 
@@ -180,6 +182,7 @@
           trigger: '#bento-container',
           start: 'top 80%',
           toggleActions: 'play none none reverse',
+          fastScrollEnd: true,
         }
       });
 
@@ -199,6 +202,7 @@
               trigger: card, // Lanza la cinética del texto cuando la tarjeta en sí entre
               start: 'top 75%',
               toggleActions: 'play none none reverse',
+              fastScrollEnd: true,
             }
           });
         }
@@ -214,6 +218,7 @@
           trigger: '#monolithic-cta',
           start: 'top 90%',
           toggleActions: 'play none none reverse',
+          fastScrollEnd: true,
         }
       });
 
@@ -231,11 +236,19 @@
             trigger: '#monolithic-cta',
             start: 'top 85%',
             toggleActions: 'play none none reverse',
+            fastScrollEnd: true,
           }
         });
       }
     });
   });
+
+  // ─── CTA Routing (Global Transition Bus) ───────────────────────────────────
+  const navigateToDiscovery = () => {
+    window.dispatchEvent(
+      new CustomEvent('navigate-with-transition', { detail: { route: '/discovery' } })
+    );
+  };
 
   // ─── Magnetic CTA Abstraction ──────────────────────────────────────────────
   const { onMouseMove: onCtaMouseMove, onMouseLeave: onCtaMouseLeave } = useMagnetic(ctaRef, 0.15);
