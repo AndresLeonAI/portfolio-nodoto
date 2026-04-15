@@ -21,7 +21,7 @@
             <img 
               src="" 
               alt="01. Estrategia" 
-              class="hidden md:block w-full aspect-[4/3] mb-8 rounded-xl object-cover border border-white/10 opacity-90 shadow-lg bg-black/5 mix-blend-multiply"
+              class="w-full aspect-[4/3] mb-8 rounded-xl object-cover border border-white/10 opacity-90 shadow-lg bg-black/5 mix-blend-multiply"
             />
           </div>
           <p class="text-2xl lg:text-3xl xl:text-4xl leading-tight font-medium text-[#111] text-balance" v-html="cell01Html"></p>
@@ -36,7 +36,7 @@
             <img 
               src="" 
               alt="02. Psicología de Conversión" 
-              class="hidden md:block w-full aspect-[21/9] mb-8 rounded-xl object-cover border border-white/10 opacity-90 shadow-lg bg-black/5 mix-blend-multiply"
+              class="w-full aspect-[21/9] mb-8 rounded-xl object-cover border border-white/10 opacity-90 shadow-lg bg-black/5 mix-blend-multiply"
             />
           </div>
           <p class="text-2xl lg:text-3xl xl:text-[2.5rem] leading-[1.1] font-medium text-[#111] text-balance" v-html="cell02Html"></p>
@@ -51,7 +51,7 @@
             <img 
               src="" 
               alt="03. Alta Costura Digital" 
-              class="hidden md:block w-full aspect-square md:aspect-[4/3] lg:aspect-[3/4] mb-8 rounded-xl object-cover border border-white/10 opacity-90 shadow-lg bg-white/5 mix-blend-lighten"
+              class="w-full aspect-square md:aspect-[4/3] lg:aspect-[3/4] mb-8 rounded-xl object-cover border border-white/10 opacity-90 shadow-lg bg-white/5 mix-blend-lighten"
             />
           </div>
           <p class="text-xl lg:text-2xl xl:text-3xl leading-tight font-medium text-white text-balance" v-html="cell03Html"></p>
@@ -66,7 +66,7 @@
             <img 
               src="" 
               alt="04. Lanzamiento" 
-              class="hidden md:block w-full aspect-[4/3] lg:aspect-square mb-8 rounded-xl object-cover border border-white/10 opacity-90 shadow-lg bg-black/5 mix-blend-multiply"
+              class="w-full aspect-[4/3] lg:aspect-square mb-8 rounded-xl object-cover border border-white/10 opacity-90 shadow-lg bg-black/5 mix-blend-multiply"
             />
           </div>
           <p class="text-xl lg:text-2xl leading-tight font-medium text-[#111] text-balance" v-html="cell04Html"></p>
@@ -83,7 +83,6 @@
           @mouseenter="onHoverEnter"
           @mouseleave="onHoverLeaveWrapper"
           @mousemove="onCtaMouseMove"
-          @click="goToDiscovery"
         >
           <!-- Hover Background Overlay -->
           <div class="absolute inset-0 bg-void origin-bottom scale-y-0 transition-transform duration-[600ms] ease-out group-hover:scale-y-100 pointer-events-none"></div>
@@ -99,15 +98,11 @@
 
 <script setup lang="ts">
   import { onBeforeMount, onMounted, ref } from 'vue';
-  import { useRouter } from 'vue-router';
   import gsap from 'gsap';
   import ScrollTrigger from 'gsap/ScrollTrigger';
   import { useGsap } from '@/composables/useGsap';
   import { useMagnetic } from '@/composables/useMagnetic';
   import { textSplitterIntoChar } from '@/functions';
-
-  const router = useRouter();
-  const goToDiscovery = () => router.push('/discovery');
 
   gsap.registerPlugin(ScrollTrigger);
 

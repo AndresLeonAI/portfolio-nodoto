@@ -132,12 +132,8 @@
         if (pageTransitionRef.value) {
           await pageTransitionRef.value.executeTransitionOut();
         }
+        lenis.start();
         lenis.scrollTo(e.detail.url, { duration: 0, immediate: true });
-        
-        // RECUPERACIÓN ATÓMICA: Forzar recalibrado de triggers tras salto de scroll
-        import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
-          ScrollTrigger.refresh();
-        });
         
         // Brief pause to allow DOM rendering flush at new scroll position
         await new Promise((resolve) => setTimeout(resolve, 50));

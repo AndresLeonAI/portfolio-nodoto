@@ -162,7 +162,6 @@
           @mousemove="onMouseMove"
           @mouseleave="onMouseLeave"
           @mouseenter="onMouseEnter"
-          @click="goToDiscovery"
           class="group relative flex items-center justify-center overflow-hidden rounded-full bg-[#E7DBCB] px-12 py-6 sm:px-16 sm:py-8 shadow-[0_20px_50px_rgba(0,0,0,0.2)] cursor-pointer z-20"
         >
           <!-- Sweep Reveal Background -->
@@ -186,13 +185,9 @@
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { ref, onMounted, onBeforeMount, onUnmounted } from 'vue';
-import { useRouter } from 'vue-router';
 import { textSplitterIntoChar } from '@/functions';
 import { useGsap } from '@/composables/useGsap';
 import { useMagnetic } from '@/composables/useMagnetic';
-
-const router = useRouter();
-const goToDiscovery = () => router.push('/discovery');
 
 gsap.registerPlugin(ScrollTrigger);
 

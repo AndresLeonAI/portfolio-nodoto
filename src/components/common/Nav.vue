@@ -91,36 +91,22 @@
         </div>
 
         <div class="nav-bottom-item">
-          <!-- TRAMPA MAGNÉTICA BLANCA — Conversion Engine -->
-          <MagneticEffect
-            :magnetoStrengthVal="30"
-            :magnetoTextStrengthVal="15"
-            divId="cta-trap-container"
-            textId="cta-trap-text"
+          <!-- CTA — Conversion Critical -->
+          <a
+            href="/discovery"
+            @click.prevent="goToDiscovery"
+            class="group inline-flex items-center gap-4 bg-white text-black font-bold uppercase tracking-widest rounded-full px-8 py-4 hover:scale-105 transition-all duration-300 shadow-2xl relative z-[9999]"
           >
-            <div id="cta-trap-container" class="p-8 -m-8">
-              <a
-                href="/discovery"
-                id="cta-trap-text"
-                @click.prevent="goToDiscovery"
-                class="group relative flex items-center gap-6 bg-white text-black font-bold uppercase tracking-[0.2em] rounded-full px-10 py-5 hover:scale-105 transition-all duration-500 shadow-[0_20px_50px_rgba(255,255,255,0.15)] overflow-hidden"
-              >
-                <!-- Animated background glow -->
-                <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.05)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                <span class="relative z-10 font-mono text-[0.75rem] text-black">
-                  {{ ctaData.label }}
-                </span>
-                
-                <div class="relative z-10 flex items-center justify-center bg-black/5 rounded-full p-2.5 transition-colors group-hover:bg-black/10">
-                  <svg class="size-4 text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M7 17L17 7" />
-                    <path d="M7 7h10v10" />
-                  </svg>
-                </div>
-              </a>
+            <span class="font-mono text-[0.7rem] text-black">
+              {{ ctaData.label }}
+            </span>
+            <div class="flex items-center justify-center bg-black/10 rounded-full p-2 transition-colors">
+              <svg class="size-3 text-black group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7" />
+                <path d="M7 7h10v10" />
+              </svg>
             </div>
-          </MagneticEffect>
+          </a>
         </div>
       </div>
     </div>
@@ -239,10 +225,8 @@
     if (url === '/') {
       if (isOnHome) {
         // Already on home — just close menu and scroll to top with curtain
+        window.dispatchEvent(new CustomEvent('nav-curtain-trigger', { detail: { url: 0 } }));
         toggleBtnClickAnimation();
-        setTimeout(() => {
-          window.dispatchEvent(new CustomEvent('nav-curtain-trigger', { detail: { url: 0 } }));
-        }, 150);
       } else {
         // On another route — navigate to home via router (triggers PageTransition)
         toggleBtnClickAnimation();
@@ -255,10 +239,8 @@
 
     // CASE 2: Hash link and already on Home — smooth scroll with curtain
     if (isHomeHash && isOnHome) {
+      window.dispatchEvent(new CustomEvent('nav-curtain-trigger', { detail: { url } }));
       toggleBtnClickAnimation();
-      setTimeout(() => {
-        window.dispatchEvent(new CustomEvent('nav-curtain-trigger', { detail: { url } }));
-      }, 150);
       return;
     }
 

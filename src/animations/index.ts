@@ -12,10 +12,14 @@ gsap.registerPlugin(MotionPathHelper);
 // Set to false after the first route navigation completes.
 const isFirstLoad = ref(true);
 
+/**
+ * killAllScrollTriggers — Nuclear garbage collection for route transitions.
+ * Kills every ScrollTrigger and active tween to prevent memory corruption
+ * when Vue Router swaps views.
+ */
 const killAllScrollTriggers = () => {
-  // Nuclear garbage collection
-  gsap.killTweensOf('*');
   ScrollTrigger.getAll().forEach((t) => t.kill());
+  // Don't kill curtain tweens — they're managed by PageTransition
   ScrollTrigger.clearScrollMemory();
 };
 
@@ -304,15 +308,6 @@ const animateLoadingPath = (
         document.body.classList.remove('stop-scrolling');
         window.scrollTo(0, 0);
       }, 120);
-
-      // SAFETY ENGINE: Escudo Anti-Bloqueos (Bug #1 Fix)
-      setTimeout(() => {
-        const ls = document.getElementById('loading-screen');
-        if (ls) {
-          ls.style.display = 'none';
-          ls.style.pointerEvents = 'none';
-        }
-      }, 4500); // TIMELINE MAX DURATION (3s delay + 1s dur = 4s). 4.5s is safe.
     },
   });
 
@@ -323,7 +318,7 @@ const animateLoadingPath = (
       attr: { d: targetPath },
       ease: 'power2.inOut',
       onComplete: () => {
-        gsap.set('#loading-screen', { display: 'none', pointerEvents: 'none' });
+        gsap.set('#loading-screen', { display: 'none' });
       },
     },
     '<20%',
