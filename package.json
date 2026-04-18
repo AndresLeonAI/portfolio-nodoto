@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.14",
+    "@unhead/vue": "^3.0.4",
     "@vueuse/core": "^13.0.0",
     "clsx": "^2.1.1",
     "gsap": "^3.12.7",
@@ -28,7 +29,6 @@
     "prettier-plugin-tailwindcss": "^0.6.11",
     "typescript": "^5.8.2",
     "vite": "^6.2.2",
-    "vite-plugin-robots": "^1.0.5",
     "vite-plugin-sitemap": "^0.7.1",
     "vue-tsc": "^2.2.8"
   },

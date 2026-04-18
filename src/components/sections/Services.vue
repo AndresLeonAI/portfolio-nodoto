@@ -1,23 +1,27 @@
 <template>
-  <section id="services" class="padding-x mb-20">
+  <section
+    ref="sectionRef"
+    id="services"
+    class="padding-x mb-20 overflow-x-clip"
+  >
     <div class="flex w-full flex-col">
       <h3
         id="what-i-do"
         v-html="whatIDo"
-        class="heading-1 font-extrabold uppercase"
+        class="heading-1 font-extrabold uppercase leading-[0.9]"
       ></h3>
 
       <div
         id="services-text"
-        class="grid-gap text-flax-smoke-300 mt-[5%] grid grid-cols-12 justify-end opacity-0 lg:grid"
+        class="grid-gap text-flax-smoke-300 mt-8 sm:mt-[5%] grid grid-cols-12 gap-y-6 justify-end opacity-0 lg:grid"
       >
         <p
-          class="heading-6 text-flax-smoke-300/85 col-span-4 col-start-0 text-center text-nowrap md:col-start-4"
+          class="heading-6 text-flax-smoke-300/85 col-span-full md:col-span-4 md:col-start-4 text-center text-nowrap"
         >
           ( NUESTRA INGENIERÍA )
         </p>
         <p
-          class="heading-4 font-fancy col-span-8 w-full text-balance sm:font-semibold md:col-span-5"
+          class="heading-4 font-fancy col-span-full md:col-span-5 w-full text-balance sm:font-semibold leading-snug"
         >
           Las interfaces de alta conversión no son casualidad; son arquitectura cognitiva. Forjamos ecosistemas digitales donde la fricción muere y el ROI escala.
         </p>
@@ -40,12 +44,42 @@
         />
       </div>
     </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- CTA — Conversion Pillar (Activates Discovery flow)             -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div
+      class="mt-24 sm:mt-32 mb-8 flex w-full justify-center px-4"
+    >
+      <button
+        type="button"
+        @click="navigateToDiscovery"
+        class="group relative inline-flex max-w-xl w-full cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-full bg-[#F9F9F9] px-8 py-5 sm:px-16 sm:py-7 min-h-[56px] transition-transform duration-500 ease-out hover:scale-[1.02] focus:scale-[1.02] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F9F9F9]"
+      >
+        <span
+          class="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[#0B0B0A] transition-transform duration-[600ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-y-100 group-focus:scale-y-100"
+          aria-hidden="true"
+        />
+
+        <span
+          class="relative z-10 flex flex-nowrap items-center gap-2 font-display font-bold uppercase tracking-widest text-[#0B0B0A] transition-colors duration-500 group-hover:text-[#F9F9F9] group-focus:text-[#F9F9F9] text-sm sm:text-lg lg:text-xl"
+        >
+          Activa tu Metodología
+          <span
+            class="font-editorial lowercase tracking-normal translate-y-[1px] transition-colors duration-500 text-xl sm:text-2xl lg:text-3xl"
+          >
+            — discovery
+          </span>
+        </span>
+      </button>
+    </div>
   </section>
 </template>
 
 <script setup lang="ts">
   import { animateSplitText } from '@/animations';
   import { textSplitterIntoChar } from '@/functions';
+  import { useGsap } from '@/composables/useGsap';
   import { onBeforeMount, onMounted, ref } from 'vue';
   import { ServicesCard } from '..';
 
@@ -54,7 +88,10 @@
   import imgCustomBespoke from '@/assets/images/services/custom-bespoke.png';
   import imgDevVanguard from '@/assets/images/services/dev-vanguard.png';
 
+  const sectionRef = ref<HTMLElement | null>(null);
   const whatIDo = ref('My services /');
+
+  const { ctx, initCtx } = useGsap();
 
   const servicesCardProps = [
     {
@@ -97,25 +134,38 @@
     },
   ];
 
+  const navigateToDiscovery = () => {
+    window.dispatchEvent(
+      new CustomEvent('navigate-with-transition', {
+        detail: { route: '/discovery' },
+      })
+    );
+  };
+
   onBeforeMount(() => {
     whatIDo.value = textSplitterIntoChar('Metodología /', true);
   });
 
   onMounted(() => {
-    animateSplitText('#what-i-do .letters', '#services-text', 0.7, 0.01, 0);
+    if (!sectionRef.value) return;
+    initCtx(sectionRef);
+
+    ctx.value!.add(() => {
+      animateSplitText('#what-i-do .letters', '#services-text', 0.7, 0.01, 0);
+    });
   });
 
   const getStyle = (index: number) => {
     if (index === 0) {
-      return 'top-[calc(20vh_+_0em)] mb-[17.25em]';
+      return 'top-[calc(10vh_+_0em)] sm:top-[calc(20vh_+_0em)] mb-[10em] sm:mb-[17.25em]';
     }
 
     if (index === 1) {
-      return 'top-[calc(20vh_+_5.75em)] mb-[11.5em]';
+      return 'top-[calc(10vh_+_4em)] sm:top-[calc(20vh_+_5.75em)] mb-[7em] sm:mb-[11.5em]';
     }
 
     if (index === 2) {
-      return 'top-[calc(20vh_+_11.5em)] mb-[5.75em]';
+      return 'top-[calc(10vh_+_8em)] sm:top-[calc(20vh_+_11.5em)] mb-[4em] sm:mb-[5.75em]';
     }
   };
 </script>

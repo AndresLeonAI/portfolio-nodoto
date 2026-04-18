@@ -128,7 +128,7 @@
 <script setup lang="ts">
   import { profile, profile2 } from '@/assets/images';
   import { Button } from '../common';
-  import { computed, onMounted, ref } from 'vue';
+  import { computed, onMounted, onUnmounted, ref } from 'vue';
   import { useWindowSize } from '@vueuse/core';
   import { textSplitterIntoChar } from '@/functions';
   import gsap from 'gsap';
@@ -254,6 +254,16 @@
         translateY: '100%',
       });
     }
+  });
+
+  onUnmounted(() => {
+    gsap.killTweensOf([
+      '#quote-text .letters',
+      '#quote-author',
+      '#quote-tags',
+      '#current-index',
+      '#quote-overlay',
+    ]);
   });
 
   // data

@@ -158,7 +158,7 @@
 
 <script setup lang="ts">
   import { onMounted, onUnmounted, ref, watch, nextTick } from 'vue';
-  import { useRouter, useRoute } from 'vue-router';
+  import { useRoute } from 'vue-router';
   import gsap from 'gsap';
 
   import { BurgerMenuBtn, MagneticEffect } from '..';
@@ -171,7 +171,6 @@
   import { navbarLinks, locationCountry } from '@/data';
   import { lenis } from '@/lib/lenis';
 
-  const router = useRouter();
   const route = useRoute();
 
   // ─── CTA Data (hardcoded — conversion-critical) ─────────────────────────
@@ -215,62 +214,69 @@
     }
   };
 
-  // ─── Intelligent Cross-Route Navigation ──────────────────────────────────
+  // ─── Intelligent Cross-Route Navigation (unified bus) ───────────────────
   const gotoSection = (url: string) => {
     const isHomeHash = url.startsWith('#');
     const isAbsoluteRoute = url.startsWith('/') && !url.startsWith('/#');
     const isOnHome = route.path === '/';
 
-    // CASE 1: "Inicio" (url === '/') — navigate to home or scroll to top
+    // CASE 1: "Inicio" (url === '/')
     if (url === '/') {
       if (isOnHome) {
-        // Already on home — just close menu and scroll to top with curtain
-        window.dispatchEvent(new CustomEvent('nav-curtain-trigger', { detail: { url: 0 } }));
-        toggleBtnClickAnimation();
-      } else {
-        // On another route — navigate to home via router (triggers PageTransition)
+        // Already on home — scroll to top with curtain
         toggleBtnClickAnimation();
         setTimeout(() => {
-          router.push('/');
-        }, 400);
+          window.dispatchEvent(
+            new CustomEvent('nav-curtain-trigger', { detail: { url: 0 } })
+          );
+        }, 450);
+      } else {
+        // Cross-route navigation via cinematic transition bus
+        toggleBtnClickAnimation();
+        setTimeout(() => {
+          window.dispatchEvent(
+            new CustomEvent('navigate-with-transition', { detail: { route: '/' } })
+          );
+        }, 450);
       }
       return;
     }
 
-    // CASE 2: Hash link and already on Home — smooth scroll with curtain
+    // CASE 2: Hash link, already on Home — smooth scroll with curtain
     if (isHomeHash && isOnHome) {
-      window.dispatchEvent(new CustomEvent('nav-curtain-trigger', { detail: { url } }));
       toggleBtnClickAnimation();
+      setTimeout(() => {
+        window.dispatchEvent(
+          new CustomEvent('nav-curtain-trigger', { detail: { url } })
+        );
+      }, 450);
       return;
     }
 
-    // CASE 3: Hash link but NOT on Home — cross-route navigation
+    // CASE 3: Hash link, NOT on Home — go home then scroll
     if (isHomeHash && !isOnHome) {
       toggleBtnClickAnimation();
-      // Navigate home first via router (triggers PageTransition guard).
-      // After the route settles, dispatch the hash scroll event.
-      setTimeout(async () => {
-        await router.push('/');
-        // The PageTransition beforeEach guard handles curtain out/in.
-        // After it completes, the page is revealed. We need to scroll
-        // to the section. Use a watch on route.path to know when we're home.
+      setTimeout(() => {
+        window.dispatchEvent(
+          new CustomEvent('navigate-with-transition', { detail: { route: '/' } })
+        );
+        // After cinematic transition completes, scroll to hash.
         const unwatch = watch(
           () => route.path,
           async (path) => {
             if (path === '/') {
               unwatch();
-              // Wait for all GSAP contexts to initialize after mount
               await nextTick();
               await nextTick();
+              // PageTransition + ST.refresh take ~700ms — safe buffer.
               setTimeout(() => {
                 lenis.start();
                 lenis.scrollTo(url, { duration: 2 });
-              }, 600);
+              }, 700);
             }
-          },
-          { immediate: true }
+          }
         );
-      }, 400);
+      }, 450);
       return;
     }
 
@@ -278,22 +284,25 @@
     if (isAbsoluteRoute) {
       toggleBtnClickAnimation();
       setTimeout(() => {
-        router.push(url);
-      }, 400);
+        window.dispatchEvent(
+          new CustomEvent('navigate-with-transition', { detail: { route: url } })
+        );
+      }, 450);
       return;
     }
   };
 
   const goToDiscovery = () => {
-    // If already on Discovery, just close the menu
     if (route.path === '/discovery') {
       toggleBtnClickAnimation();
       return;
     }
     toggleBtnClickAnimation();
     setTimeout(() => {
-      router.push(ctaData.route);
-    }, 400);
+      window.dispatchEvent(
+        new CustomEvent('navigate-with-transition', { detail: { route: ctaData.route } })
+      );
+    }, 450);
   };
 
   // ─── Burger Visibility Management ─────────────────────────────────────────

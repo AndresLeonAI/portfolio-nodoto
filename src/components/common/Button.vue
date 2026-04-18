@@ -1,21 +1,17 @@
 <template>
-  <component  :is="url ? 'a' : 'button'" 
-    @click="(e)=>{
-      if (url) {
-        gotoSection(url);
-      }
-      $emit('click', e);
-    }"
+  <component
+    :is="url ? 'a' : 'button'"
+    @click="handleClick"
     id="button"
-    class="leading-base group pointer-events-auto relative h-full max-w-full transform-none overflow-clip rounded-full bg-flax-smoke-950 px-5 py-2 text-[1rem] font-semibold uppercase tracking-normal text-flax-smoke-100 sm:text-sm"
+    class="leading-base group pointer-events-auto relative h-full max-w-full transform-none overflow-clip rounded-full bg-flax-smoke-950 px-5 py-2 text-[1rem] font-semibold uppercase tracking-normal text-flax-smoke-100 sm:text-sm min-h-[44px] min-w-[44px] inline-flex items-center justify-center"
     :class="$attrs.class"
     :href="url"
   >
     <span
       class="ease-expo flex-center absolute bottom-0 left-0 z-10 my-auto size-full w-full will-change-auto translate-y-full text-nowrap rounded-t-[15rem] bg-flax-smoke-500 font-fancy transition-all duration-700 group-hover:translate-y-0 group-hover:rounded-none"
     >
-      {{ label }}</span
-    >
+      {{ label }}
+    </span>
 
     <span
       class="after:ease-expo flex-center relative z-20 overflow-hidden transition-all after:absolute after:left-0 after:inline-block after:will-change-auto after:translate-y-0 after:text-flax-smoke-200 after:transition-all after:duration-700 after:content-[attr(after)] group-hover:after:-translate-y-[100%]"
@@ -25,13 +21,13 @@
         >{{ label }}</span
       >
     </span>
-  </component :is="url ? 'a' : 'button'"">
+  </component>
 </template>
 
 <script setup lang="ts">
-import { gotoSection } from '@/functions';
+  import { gotoSection } from '@/functions';
 
-  defineProps({
+  const props = defineProps({
     label: {
       type: String,
       required: true,
@@ -42,7 +38,26 @@ import { gotoSection } from '@/functions';
     },
   });
 
-  defineEmits(['click']);
+  const emit = defineEmits(['click']);
+
+  const handleClick = (e: MouseEvent) => {
+    if (props.url) {
+      // Absolute route → use global cinematic transition bus
+      if (props.url.startsWith('/')) {
+        e.preventDefault();
+        window.dispatchEvent(
+          new CustomEvent('navigate-with-transition', {
+            detail: { route: props.url },
+          })
+        );
+      } else if (props.url.startsWith('#')) {
+        // Hash → smooth scroll within current page
+        e.preventDefault();
+        gotoSection(props.url);
+      }
+    }
+    emit('click', e);
+  };
 </script>
 
 <style scoped>

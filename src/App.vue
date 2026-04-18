@@ -198,7 +198,11 @@
         //    Safe = true forces a full recalculation of all trigger positions
         ScrollTrigger.refresh(true);
 
-        // 5. Curtain reveals the page at the correct scroll position
+        // 5. Buffer for Lenis to settle and any pending raf-driven layout
+        //    to finish before we reveal — prevents text/layout snap on reveal.
+        await new Promise((r) => setTimeout(r, 80));
+
+        // 6. Curtain reveals the page at the correct scroll position
         if (pageTransitionRef.value) {
           await pageTransitionRef.value.executeTransitionIn();
         }

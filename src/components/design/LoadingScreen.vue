@@ -3,6 +3,7 @@
     v-if="!isLoading"
     id="loading-screen"
     class="flex-center fixed bottom-0 z-99999 size-full cursor-wait"
+    :style="{ pointerEvents: hasFinished ? 'none' : 'auto' }"
   >
     <div class="size-full flex-col">
       <svg
@@ -64,6 +65,7 @@
   const emit = defineEmits(['isLoading']);
 
   const isLoading = ref(false);
+  const hasFinished = ref(false);
   const index = ref(-1);
   const pathData = ref('');
   const path = ref<SVGPathElement>();
@@ -104,6 +106,18 @@
       targetPath.value,
       isSamsungBrowser,
     );
+
+    // ─── Safety net ───────────────────────────────────────────────────────
+    // If the loading timeline somehow fails (paint stall, dropped tween),
+    // forcibly release the screen after 6s so the page is interactive.
+    setTimeout(() => {
+      hasFinished.value = true;
+      const el = document.getElementById('loading-screen');
+      if (el && el.style.display !== 'none') {
+        el.style.display = 'none';
+      }
+      document.body.classList.remove('stop-scrolling');
+    }, 6000);
   });
 
   // TODO: remove it

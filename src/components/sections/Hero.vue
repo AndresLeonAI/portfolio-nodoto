@@ -48,7 +48,7 @@
 
             <div class="relative origin-left overflow-hidden sm:scale-150">
               <div id="contact-btn" class="flex -translate-y-full">
-                <Button label="Inicia tu Evolución" @click="router.push('/discovery')" />
+                <Button label="Inicia tu Evolución" url="/discovery" />
               </div>
             </div>
           </div>
@@ -95,14 +95,10 @@
 
 <script setup lang="ts">
   import { onBeforeMount, ref } from 'vue';
-  import { useRouter } from 'vue-router';
   import { MyName, Star } from '../design';
   import { Button } from '@/components/common';
   import { leonUiMockup } from '@/assets/images';
   import { getAvailableForWorkDate, textSplitterIntoChar } from '@/functions';
-  // import { dataCalConfig, dataCalLink, dataCalNamespace } from '@/data';
-
-  const router = useRouter();
 
   const whoAmI = ref(
     'EN NODOTO diseñamos webs que convierten visitantes en clientes. Arquitectura digital estratégica, experiencias ultra-personalizadas y resultados medibles para negocios que dominan su industria.',

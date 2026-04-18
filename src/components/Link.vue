@@ -3,10 +3,7 @@
     :is="tag"
     class="h-[2ch] w-fit overflow-y-hidden select-none max-md:h-5"
   >
-    <a @click="(e) => {
-      gotoSection(url);
-      $emit('click', e);
-    }" :href="url" class="group">
+    <a @click="handleClick" :href="url" class="group">
       <p
         class="font-fancy -translate-y-0 transition-all duration-300 ease-in-out will-change-auto group-hover:translate-y-[-100%]"
         :class="{ flex: icon }"
@@ -52,10 +49,10 @@
 <script setup lang="ts">
   import { gotoSection } from '@/functions';
 
-  defineProps({
+  const props = defineProps({
     tag: {
       type: String,
-      default: 'p', // Default tag if not provided
+      default: 'p',
     },
     label: {
       type: String,
@@ -71,5 +68,20 @@
     },
   });
 
-  defineEmits(['click']);
+  const emit = defineEmits(['click']);
+
+  const handleClick = (e: MouseEvent) => {
+    if (props.url.startsWith('/')) {
+      e.preventDefault();
+      window.dispatchEvent(
+        new CustomEvent('navigate-with-transition', {
+          detail: { route: props.url },
+        })
+      );
+    } else if (props.url.startsWith('#')) {
+      e.preventDefault();
+      gotoSection(props.url);
+    }
+    emit('click', e);
+  };
 </script>

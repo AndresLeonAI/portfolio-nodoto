@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Block crawlers from indexing the legacy demo URL
+Disallow: /*?*
+
+Sitemap: https://nodoto.agency/sitemap.xml

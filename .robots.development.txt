@@ -1,6 +1,0 @@
-User-agent: *
-Disallow: /private/
-Allow: /
-
-# Specify the location of your sitemap if you have one
-Sitemap: https://hetari.github.io/portfolio/sitemap.xml

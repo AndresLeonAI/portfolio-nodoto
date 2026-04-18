@@ -65,7 +65,10 @@
 
 <script setup lang="ts">
   import gsap from 'gsap';
-  import { onMounted } from 'vue';
+  import { onMounted, onUnmounted } from 'vue';
+
+  const tweens: gsap.core.Tween[] = [];
+  let mountTimeout: ReturnType<typeof setTimeout> | null = null;
 
   const createMarquee = (
     selector: string,
@@ -73,7 +76,7 @@
   ): void => {
     const container = document.querySelector(selector) as HTMLElement;
     if (!container) return;
-    
+
     const items = Array.from(container.children) as HTMLElement[];
 
     const cloneCount = 2;
@@ -87,31 +90,37 @@
     const itemWidth = items[0].clientWidth;
     const totalWidth = itemWidth * items.length * cloneCount;
 
-    // Dynamic duration: constant visual speed (~35px/s)
-    const MARQUEE_SPEED = 35;
+    // Mobile speed reduction: less dizzy on small viewports.
+    const isMobile = window.innerWidth < 768;
+    const MARQUEE_SPEED = isMobile ? 24 : 35;
     const dynamicDuration = totalWidth / MARQUEE_SPEED;
 
-    // Set initial position based on direction
     const startPosition = direction === 1 ? 0 : totalWidth;
 
     gsap.set(container, {
       x: -startPosition,
     });
 
-    gsap.to(container, {
+    const tween = gsap.to(container, {
       x: direction === 1 ? -totalWidth : 0,
       duration: dynamicDuration,
       ease: 'none',
       repeat: -1,
     });
+    tweens.push(tween);
   };
-  
+
   onMounted(() => {
-    // Delay creation slightly to ensure layout metrics are accurate
-    setTimeout(() => {
+    mountTimeout = setTimeout(() => {
       createMarquee('#marquee-1', 1);
       createMarquee('#marquee-2', -1);
     }, 100);
+  });
+
+  onUnmounted(() => {
+    if (mountTimeout) clearTimeout(mountTimeout);
+    tweens.forEach((t) => t.kill());
+    tweens.length = 0;
   });
 </script>
 

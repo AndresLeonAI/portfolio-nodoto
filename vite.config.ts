@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import sitemap from 'vite-plugin-sitemap';
-import { robots } from 'vite-plugin-robots';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://vitejs.dev/config/
@@ -9,17 +8,17 @@ export default defineConfig({
   base: '/',
   build: {
     sourcemap: true,
-    // terserOptions:
     chunkSizeWarningLimit: 1600,
   },
   plugins: [
     tailwindcss(),
     vue(),
-    robots(),
     sitemap({
-      hostname: 'https://nodoto.vercel.app/',
-      changefreq: 'hourly', // default: 'daily'
+      hostname: 'https://nodoto.agency',
+      dynamicRoutes: ['/discovery'],
+      changefreq: 'weekly',
       priority: 1,
+      generateRobotsTxt: false,
     }),
   ],
   resolve: {

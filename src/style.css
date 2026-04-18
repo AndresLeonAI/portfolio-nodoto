@@ -212,9 +212,42 @@ layer(base);
 
   html {
     @apply overflow-x-clip;
+    /* iOS Safari: prevent overscroll bounce that can reveal layout cracks */
+    overscroll-behavior-y: none;
+    /* Prevent text auto-zoom on landscape rotation */
+    -webkit-text-size-adjust: 100%;
   }
   body {
     @apply light-theme overflow-x-clip;
+    /* Tap highlight: match brand instead of default blue */
+    -webkit-tap-highlight-color: rgba(131, 133, 102, 0.15);
+  }
+
+  /* Touch-target floor for all interactive elements on mobile */
+  @media (max-width: 768px) {
+    button,
+    a,
+    [role='button'] {
+      min-height: 44px;
+    }
+    /* Re-allow inline links inside paragraphs to ignore the floor */
+    p a,
+    p button,
+    li a {
+      min-height: auto;
+    }
+  }
+
+  /* Images can never push viewport horizontally */
+  img,
+  svg,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+  svg {
+    /* SVGs intentionally use width attrs sometimes — only constrain height for img-like cases */
+    height: revert;
   }
 
   /* body::before,

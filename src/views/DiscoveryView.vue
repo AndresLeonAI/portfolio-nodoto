@@ -204,8 +204,48 @@ import { onMounted, onBeforeMount, onUnmounted, ref, nextTick } from 'vue';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { textSplitterIntoChar } from '@/functions';
+import {
+  useSeo,
+  useJsonLd,
+  ORGANIZATION_SCHEMA,
+  SITE_URL,
+} from '@/composables/useSeo';
 
 gsap.registerPlugin(ScrollTrigger);
+
+useSeo({
+  title: 'Discovery Session — Agenda tu Auditoría Estratégica Gratuita',
+  description:
+    'Reserva tu Discovery Session con NODOTO: 30 minutos de auditoría estratégica para tu arquitectura digital. Sin compromisos, claridad absoluta para escalar tu marca High-Ticket.',
+  path: '/discovery',
+});
+
+useJsonLd([
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: `${SITE_URL}/` },
+      { '@type': 'ListItem', position: 2, name: 'Discovery', item: `${SITE_URL}/discovery` },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'Discovery Session — Auditoría Estratégica',
+    provider: { '@id': `${SITE_URL}/#organization` },
+    description:
+      'Sesión de 30 minutos para auditar tu arquitectura digital y trazar la hoja de ruta hacia tu dominancia en el mercado. Sin compromisos.',
+    areaServed: 'Worldwide',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+    },
+  },
+  ORGANIZATION_SCHEMA,
+]);
 
 // ─── Reactive Text HTML ──────────────────────────────────────────────────────
 const heroTitleHtml = ref('');
