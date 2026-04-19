@@ -28,7 +28,7 @@
         {{ ctaDescription }}
       </p>
       <div class="flex justify-center w-full">
-        <a href="/discovery" @click.prevent="$router.push('/discovery')" aria-label="Request Access" class="flex flex-col items-center justify-center px-10 py-5 sm:px-14 sm:py-6 rounded-[2rem] bg-white/5 backdrop-blur-sm md:backdrop-blur-xl border border-white/10 hover:bg-white/10 hover:border-white/20 hover:scale-105 transition-all duration-500 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] group focus:outline-none focus:ring-2 focus:ring-white/20">
+        <a href="/discovery" @click.prevent="$router.push('/discovery')" aria-label="Request Access" class="flex flex-col items-center justify-center px-10 py-5 sm:px-14 sm:py-6 rounded-[2rem] bg-white/5 md:backdrop-blur-sm md:backdrop-blur-xl border border-white/10 hover:bg-white/10 hover:border-white/20 hover:scale-105 transition-all duration-500 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] group focus:outline-none focus:ring-2 focus:ring-white/20">
           <div class="text-center flex flex-col items-center">
             <div class="text-[10px] sm:text-xs font-bold tracking-[0.2em] text-white/40 uppercase mb-2 transition-colors duration-500 group-hover:text-white/70">Cero Fricción</div>
             <div class="text-2xl sm:text-3xl font-bold leading-none tracking-tight text-white drop-shadow-md group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-all duration-500 select-none">Iniciar Evolución</div>
@@ -205,62 +205,55 @@ const containerRef = ref<HTMLDivElement | null>(null);
 const mainCardRef = ref<HTMLDivElement | null>(null);
 const mockupRef = ref<HTMLDivElement | null>(null);
 let requestId = 0;
-let gsapCtx: gsap.Context | null = null;
+let mouseHandler: ((e: MouseEvent) => void) | null = null;
+const mm = gsap.matchMedia();
 
-// 1. High-Performance Mouse Interaction Logic
-function setupMouseInteraction() {
-  const handleMouseMove = (e: MouseEvent) => {
-    if (window.scrollY > window.innerHeight * 2) return;
-    cancelAnimationFrame(requestId);
-    requestId = requestAnimationFrame(() => {
-      if (mainCardRef.value && mockupRef.value) {
-        const rect = mainCardRef.value.getBoundingClientRect();
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-        mainCardRef.value.style.setProperty('--mouse-x', `${mouseX}px`);
-        mainCardRef.value.style.setProperty('--mouse-y', `${mouseY}px`);
+onMounted(() => {
+  // ─── DESKTOP (≥768px): Full cinematic pin/scrub/3D timeline + mouse parallax
+  mm.add('(min-width: 768px)', () => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (window.scrollY > window.innerHeight * 2) return;
+      cancelAnimationFrame(requestId);
+      requestId = requestAnimationFrame(() => {
+        if (mainCardRef.value && mockupRef.value) {
+          const rect = mainCardRef.value.getBoundingClientRect();
+          const mouseX = e.clientX - rect.left;
+          const mouseY = e.clientY - rect.top;
+          mainCardRef.value.style.setProperty('--mouse-x', `${mouseX}px`);
+          mainCardRef.value.style.setProperty('--mouse-y', `${mouseY}px`);
 
-        const xVal = (e.clientX / window.innerWidth - 0.5) * 2;
-        const yVal = (e.clientY / window.innerHeight - 0.5) * 2;
-        gsap.to(mockupRef.value, {
-          rotationY: xVal * 12,
-          rotationX: -yVal * 12,
-          ease: 'power3.out',
-          duration: 1.2,
-        });
-      }
-    });
-  };
-  window.addEventListener('mousemove', handleMouseMove);
-  return handleMouseMove;
-}
+          const xVal = (e.clientX / window.innerWidth - 0.5) * 2;
+          const yVal = (e.clientY / window.innerHeight - 0.5) * 2;
+          gsap.to(mockupRef.value, {
+            rotationY: xVal * 12,
+            rotationX: -yVal * 12,
+            ease: 'power3.out',
+            duration: 1.2,
+          });
+        }
+      });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    mouseHandler = handleMouseMove;
 
-// 2. Complex Cinematic Scroll Timeline
-function setupScrollTimeline() {
-  const isMobile = window.innerWidth < 768;
-
-  gsapCtx = gsap.context(() => {
-    // Initial states
     gsap.set('.text-track', { autoAlpha: 0, y: 60, scale: 0.85, filter: 'blur(20px)', rotationX: -20 });
     gsap.set('.text-days', { autoAlpha: 1, clipPath: 'inset(0 100% 0 0)' });
     gsap.set('.main-card', { y: window.innerHeight + 200, autoAlpha: 1 });
     gsap.set(['.card-left-text', '.card-right-text', '.mockup-scroll-wrapper', '.floating-badge', '.phone-widget'], { autoAlpha: 0 });
     gsap.set('.cta-wrapper', { autoAlpha: 0, scale: 0.8, filter: 'blur(30px)' });
 
-    // Intro animation
     const introTl = gsap.timeline({ delay: 0.3 });
     introTl
       .to('.text-track', { duration: 1.8, autoAlpha: 1, y: 0, scale: 1, filter: 'blur(0px)', rotationX: 0, ease: 'expo.out' })
       .to('.text-days', { duration: 1.4, clipPath: 'inset(0 0% 0 0)', ease: 'power4.inOut' }, '-=1.0');
 
-    // Main scroll timeline
     const scrollTl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.value,
         start: 'top top',
-        end: () => isMobile ? '+=2500' : '+=3500', // <--- Drastically shortened for snappier mobile smooth scroll response
+        end: '+=3500',
         pin: true,
-        scrub: 1.2, // Increased scrub smoothing slightly for a buttery feel
+        scrub: 1.2,
         anticipatePin: 1,
       },
     });
@@ -296,32 +289,56 @@ function setupScrollTimeline() {
         scale: 0.9, y: -40, z: -200, autoAlpha: 0, ease: 'power3.in', duration: 1.2, stagger: 0.05,
       })
       .to('.main-card', {
-        width: isMobile ? '92vw' : '85vw',
-        height: isMobile ? '92vh' : '85vh',
-        borderRadius: isMobile ? '32px' : '40px',
-        ease: 'expo.inOut',
-        duration: 1.8,
+        width: '85vw', height: '85vh', borderRadius: '40px',
+        ease: 'expo.inOut', duration: 1.8,
       }, 'pullback')
       .to('.cta-wrapper', { scale: 1, filter: 'blur(0px)', ease: 'expo.inOut', duration: 1.8 }, 'pullback')
       .to('.main-card', { y: -window.innerHeight - 300, ease: 'power3.in', duration: 1.5 });
-  }, containerRef.value!);
-}
 
-let mouseHandler: ((e: MouseEvent) => void) | null = null;
+    return () => {
+      if (mouseHandler) {
+        window.removeEventListener('mousemove', mouseHandler);
+        mouseHandler = null;
+      }
+      cancelAnimationFrame(requestId);
+    };
+  });
 
-onMounted(() => {
-  mouseHandler = setupMouseInteraction();
-  setupScrollTimeline();
+  // ─── MOBILE (<768px): Light fade-in only — no pin, no scrub, no blur, no 3D
+  mm.add('(max-width: 767px)', () => {
+    gsap.set(['.text-track', '.text-days', '.cta-wrapper', '.main-card', '.card-left-text', '.card-right-text', '.mockup-scroll-wrapper', '.floating-badge', '.phone-widget'], { autoAlpha: 1, clearProps: 'clipPath,filter,scale,rotationX,rotationY,y,x' });
+
+    gsap.from('.main-card', {
+      autoAlpha: 0,
+      y: 60,
+      duration: 1.2,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: containerRef.value, start: 'top 75%', once: true },
+    });
+
+    gsap.to('.cinematic-progress-ring', {
+      strokeDashoffset: 60,
+      duration: 2,
+      ease: 'power3.inOut',
+      scrollTrigger: { trigger: '.main-card', start: 'top 60%', once: true },
+    });
+
+    gsap.to('.counter-val', {
+      innerHTML: props.metricValue,
+      snap: { innerHTML: 1 },
+      duration: 2,
+      ease: 'expo.out',
+      scrollTrigger: { trigger: '.main-card', start: 'top 60%', once: true },
+    });
+  });
 });
 
 onUnmounted(() => {
+  mm.revert();
   if (mouseHandler) {
     window.removeEventListener('mousemove', mouseHandler);
   }
   cancelAnimationFrame(requestId);
-  if (gsapCtx) {
-    gsapCtx.revert();
-  }
 });
 </script>
 

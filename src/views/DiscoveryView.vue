@@ -40,7 +40,7 @@
           <!-- ═══════════════════════════════════════════════ -->
           <div class="col-span-1 lg:col-span-5 lg:sticky lg:top-[20vh] flex flex-col gap-6">
             
-            <div ref="heroTextRef" class="bg-white/40 backdrop-blur-2xl rounded-[2.5rem] p-10 lg:p-12 border border-black/5 shadow-[0_30px_60px_rgba(0,0,0,0.03)] relative overflow-hidden">
+            <div ref="heroTextRef" class="bg-white/85 md:bg-white/40 md:backdrop-blur-2xl rounded-[2.5rem] p-10 lg:p-12 border border-black/5 shadow-[0_30px_60px_rgba(0,0,0,0.03)] relative overflow-hidden">
               <!-- Eyebrow -->
               <p
                 class="mb-8 font-mono text-[0.65rem] tracking-[0.3em] text-[#111111]/40 uppercase"
@@ -158,7 +158,7 @@
               <span
                 class="font-fancy text-[clamp(1rem,1.5vw,1.3rem)] font-medium text-white/50"
               >
-                contacto@nodoto.agency
+                contacto@nodoto.com
               </span>
             </div>
             <a

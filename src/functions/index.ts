@@ -72,4 +72,29 @@ const gotoSection = (url: string) => {
   lenis.scrollTo(url, { duration: 3 });
 };
 
-export { textSplitterIntoChar, getAvailableForWorkDate, gotoSection };
+/**
+ * preloadImage — resolve when image is fully decoded (or fail-soft).
+ * Used by LoadingScreen to gate the curtain reveal on the hero LCP asset
+ * so we never lift the preloader before the page is visually ready.
+ */
+const preloadImage = (src: string): Promise<void> =>
+  new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      const decoded = img.decode?.();
+      if (decoded && typeof decoded.then === 'function') {
+        decoded.then(() => resolve()).catch(() => resolve());
+      } else {
+        resolve();
+      }
+    };
+    img.onerror = () => resolve(); // Never block on a missing/broken asset
+    img.src = src;
+  });
+
+export {
+  textSplitterIntoChar,
+  getAvailableForWorkDate,
+  gotoSection,
+  preloadImage,
+};

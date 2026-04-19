@@ -353,6 +353,9 @@ onMounted(() => {
   if (!sectionRef.value) return;
   initCtx(sectionRef);
 
+  // Desktop-only flag: scrub-driven animations are too heavy on mobile
+  const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+
   ctx.value!.add(() => {
     // ═══════════════════════════════════
     // 1. EYEBROW — soft fade in
@@ -388,12 +391,18 @@ onMounted(() => {
         stagger: 0.008,
         duration: 1.4,
         ease: 'expo.out',
-        scrollTrigger: {
-          trigger: headerTitleRef.value,
-          start: 'top 85%',
-          end: 'bottom 60%',
-          scrub: 1.2,
-        },
+        scrollTrigger: isDesktop
+          ? {
+              trigger: headerTitleRef.value,
+              start: 'top 85%',
+              end: 'bottom 60%',
+              scrub: 1.2,
+            }
+          : {
+              trigger: headerTitleRef.value,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse',
+            },
       });
     }
 
@@ -449,23 +458,25 @@ onMounted(() => {
       });
 
       // ═══════════════════════════════════
-      // 4. PARALLAX on glass cards (01 & 04)
+      // 4. PARALLAX on glass cards (01 & 04) — desktop only (scrub kills mobile)
       // ═══════════════════════════════════
-      const glassCards = [cards[0], cards[3]].filter(Boolean);
-      if (glassCards.length) {
-        gsap.fromTo(glassCards,
-          { yPercent: -10 },
-          {
-            yPercent: 10,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: sectionRef.value,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: 1,
-            },
-          }
-        );
+      if (isDesktop) {
+        const glassCards = [cards[0], cards[3]].filter(Boolean);
+        if (glassCards.length) {
+          gsap.fromTo(glassCards,
+            { yPercent: -10 },
+            {
+              yPercent: 10,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: sectionRef.value,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1,
+              },
+            }
+          );
+        }
       }
     }
 

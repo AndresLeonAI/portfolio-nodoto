@@ -79,7 +79,9 @@
 
     const items = Array.from(container.children) as HTMLElement[];
 
-    const cloneCount = 2;
+    // Mobile: half the clones → less DOM, less repaint
+    const isMobile = window.innerWidth < 768;
+    const cloneCount = isMobile ? 1 : 2;
     for (let i = 0; i < cloneCount; i++) {
       Array.from(items).forEach((item) => {
         let clone = item.cloneNode(true) as HTMLElement;
@@ -91,8 +93,7 @@
     const totalWidth = itemWidth * items.length * cloneCount;
 
     // Mobile speed reduction: less dizzy on small viewports.
-    const isMobile = window.innerWidth < 768;
-    const MARQUEE_SPEED = isMobile ? 24 : 35;
+    const MARQUEE_SPEED = isMobile ? 20 : 35;
     const dynamicDuration = totalWidth / MARQUEE_SPEED;
 
     const startPosition = direction === 1 ? 0 : totalWidth;

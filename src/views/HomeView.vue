@@ -49,6 +49,8 @@
     Footer,
   } from '@/components/design';
   import { animateHeroNav, isFirstLoad } from '@/animations';
+  import { useHead } from '@unhead/vue';
+  import { leonUiMockup } from '@/assets/images';
   import {
     useSeo,
     useJsonLd,
@@ -62,6 +64,18 @@
     description:
       'NODOTO Agency: arquitectura digital y máquinas de conversión para marcas premium. Neuro-diseño + ingeniería CRO con estética luxury y fricción cero.',
     path: '/',
+  });
+
+  // Hero LCP preload — Vite hashes the asset, so we can't hardcode in index.html
+  useHead({
+    link: [
+      {
+        rel: 'preload',
+        as: 'image',
+        href: leonUiMockup,
+        fetchpriority: 'high',
+      },
+    ],
   });
 
   const FAQ_SCHEMA = {

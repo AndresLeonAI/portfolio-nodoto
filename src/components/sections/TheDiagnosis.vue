@@ -35,7 +35,7 @@
         </div>
 
         <!-- Celda Der-Arriba (lg:col-span-7) -->
-        <div class="diagnosis-card hover-scale col-span-1 bg-[#1A1A1A]/40 border border-white/10 backdrop-blur-[12px] p-8 sm:p-10 lg:col-span-7 rounded-3xl flex flex-col justify-end min-h-[250px] relative overflow-hidden shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),_0_8px_30px_rgb(0,0,0,0.2)] transition-transform duration-500 ease-out hover:scale-[1.01]">
+        <div class="diagnosis-card hover-scale col-span-1 bg-[#1A1A1A]/90 md:bg-[#1A1A1A]/40 border border-white/10 md:backdrop-blur-[12px] p-8 sm:p-10 lg:col-span-7 rounded-3xl flex flex-col justify-end min-h-[250px] relative overflow-hidden shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),_0_8px_30px_rgb(0,0,0,0.2)] transition-transform duration-500 ease-out hover:scale-[1.01]">
           
           <!-- Atmósfera Cinética (Light Trail) -->
           <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.35] mix-blend-luminosity grayscale">
@@ -63,7 +63,7 @@
         </div>
 
         <!-- Celda Der-Abajo (lg:col-span-5) -->
-        <div class="diagnosis-card hover-scale col-span-1 bg-[#1A1A1A]/40 border border-white/10 backdrop-blur-[12px] p-8 sm:p-10 lg:col-span-5 lg:translate-y-12 rounded-3xl flex flex-col justify-end min-h-[250px] relative overflow-hidden shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),_0_8px_30px_rgb(0,0,0,0.2)] transition-transform duration-500 ease-out hover:scale-[1.01]">
+        <div class="diagnosis-card hover-scale col-span-1 bg-[#1A1A1A]/90 md:bg-[#1A1A1A]/40 border border-white/10 md:backdrop-blur-[12px] p-8 sm:p-10 lg:col-span-5 lg:translate-y-12 rounded-3xl flex flex-col justify-end min-h-[250px] relative overflow-hidden shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),_0_8px_30px_rgb(0,0,0,0.2)] transition-transform duration-500 ease-out hover:scale-[1.01]">
           
           <!-- Atmósfera Cinética -->
           <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.35] mix-blend-luminosity grayscale">
@@ -181,12 +181,15 @@ const epicMouseLeave = () => {
 onMounted(() => {
   initCtx(diagnosisSection);
 
+  // Desktop-only: heavy scrub-driven cross-section interpolation
+  const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+
   ctx.value!.add(() => {
 
     // 1. Interpolación de AuthorityBridge (Card Stacking Termodinámico CERO PINNING SOTD)
     const prevSectionWrapper = document.getElementById('authority-scale-target');
     const darkOverlay = document.getElementById('authority-dark-overlay');
-    if (prevSectionWrapper && darkOverlay && diagnosisSection.value) {
+    if (isDesktop && prevSectionWrapper && darkOverlay && diagnosisSection.value) {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: diagnosisSection.value,

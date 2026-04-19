@@ -61,6 +61,8 @@
     animateLoadingText,
     animateLoadingTextContainer,
   } from '@/animations';
+  import { preloadImage } from '@/functions';
+  import { leonUiMockup } from '@/assets/images';
 
   const emit = defineEmits(['isLoading']);
 
@@ -95,29 +97,37 @@
 
   const isSamsungBrowser = /samsung/i.test(navigator.userAgent);
 
-  onMounted(() => {
+  onMounted(async () => {
+    // 1. Initial paint — show the loader chrome immediately
     index.value++;
     pathData.value = initialPath.value;
     animateLoadingTextContainer();
     animateLoadingText('span.loading-text');
 
+    // 2. ASSET-READY GATE — wait for fonts + hero LCP image with a 4s ceiling.
+    // This eliminates the FOUT/layout-shift cascade where the curtain rose
+    // before Bricolage swapped in or the 1MB hero image decoded.
+    const fontsReady = (document as any).fonts?.ready ?? Promise.resolve();
+    const heroReady = preloadImage(leonUiMockup);
+    const idleTick = new Promise<void>((r) => {
+      const ric = (window as any).requestIdleCallback as
+        | ((cb: () => void) => number)
+        | undefined;
+      if (ric) ric(() => r());
+      else setTimeout(r, 50);
+    });
+
+    await Promise.race([
+      Promise.all([fontsReady, heroReady, idleTick]),
+      new Promise((r) => setTimeout(r, 4000)), // Hard ceiling — never block UX
+    ]);
+
+    // 3. Lift the curtain — assets are visually ready
     animateLoadingPath(
       path as Ref<SVGPathElement>,
       targetPath.value,
       isSamsungBrowser,
     );
-
-    // ─── Safety net ───────────────────────────────────────────────────────
-    // If the loading timeline somehow fails (paint stall, dropped tween),
-    // forcibly release the screen after 6s so the page is interactive.
-    setTimeout(() => {
-      hasFinished.value = true;
-      const el = document.getElementById('loading-screen');
-      if (el && el.style.display !== 'none') {
-        el.style.display = 'none';
-      }
-      document.body.classList.remove('stop-scrolling');
-    }, 6000);
   });
 
   // TODO: remove it

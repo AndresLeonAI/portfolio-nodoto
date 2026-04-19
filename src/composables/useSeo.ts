@@ -9,7 +9,7 @@ export interface SeoConfig {
   noindex?: boolean;
 }
 
-const SITE_URL = 'https://nodoto.agency';
+const SITE_URL = 'https://www.nodoto.com';
 const DEFAULT_OG_IMAGE = `${SITE_URL}/og-pic.png`;
 const SITE_NAME = 'NODOTO Agency';
 
@@ -70,7 +70,7 @@ export const ORGANIZATION_SCHEMA = {
   sameAs: ['https://github.com/NODOTO'],
   contactPoint: {
     '@type': 'ContactPoint',
-    email: 'contacto@nodoto.agency',
+    email: 'contacto@nodoto.com',
     contactType: 'sales',
     availableLanguage: ['Spanish', 'English'],
   },

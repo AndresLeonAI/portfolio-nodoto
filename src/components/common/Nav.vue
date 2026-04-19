@@ -7,7 +7,7 @@
 
   <div
     @click="toggleBtnClickAnimation"
-    class="fixed inset-0 z-9998 size-full bg-black/60 select-none backdrop-blur-sm transition-all duration-500 ease-in-out"
+    class="fixed inset-0 z-9998 size-full bg-black/85 md:bg-black/60 select-none md:backdrop-blur-sm transition-all duration-500 ease-in-out"
     :class="isNavbarOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'"
   ></div>
 

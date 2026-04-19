@@ -4,9 +4,17 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Touch-device detection — mobile gets native scroll, desktop gets Lenis cinema
+const isTouch =
+  typeof window !== 'undefined' &&
+  window.matchMedia('(pointer: coarse)').matches;
+
 // Smooth scroll singleton
 const lenis = new Lenis({
-  lerp: 0.08, // Physics premium (smoothWheel implícito)
+  lerp: isTouch ? 0.15 : 0.08,
+  smoothWheel: !isTouch,
+  syncTouch: false,
+  touchMultiplier: 1,
 });
 
 // Integración arquitectónica: GSAP manda, Lenis obedece

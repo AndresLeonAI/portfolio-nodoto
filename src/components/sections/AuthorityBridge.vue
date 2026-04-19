@@ -24,7 +24,7 @@
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-12 sm:gap-6">
         
         <!-- Celda Principal: Manifiesto (Col 1-8) -->
-        <div class="authority-bento-card col-span-1 flex flex-col justify-between border border-black/5 bg-[#E7DBCB]/90 backdrop-blur-[16px] p-8 sm:p-12 lg:col-span-8 lg:p-16 relative overflow-hidden shadow-[inset_0_1px_1px_rgba(255,255,255,0.8),_0_8px_32px_rgba(0,0,0,0.05)]">
+        <div class="authority-bento-card col-span-1 flex flex-col justify-between border border-black/5 bg-[#E7DBCB] md:bg-[#E7DBCB]/90 md:backdrop-blur-[16px] p-8 sm:p-12 lg:col-span-8 lg:p-16 relative overflow-hidden shadow-[inset_0_1px_1px_rgba(255,255,255,0.8),_0_8px_32px_rgba(0,0,0,0.05)]">
           
           <!-- Textura de Ruido (Densidad Premium) -->
           <div class="absolute inset-0 z-0 opacity-[0.05] mix-blend-overlay pointer-events-none">
@@ -51,7 +51,7 @@
         <div class="col-span-1 flex flex-col gap-4 lg:col-span-4 sm:gap-6">
           
           <!-- Glass Card 1: Nuestra Obsesión (120 FPS Sostenidos) -->
-          <div ref="card1Ref" class="authority-bento-card flex flex-1 flex-col justify-between border border-white/10 bg-[#1A1A1A]/40 backdrop-blur-[12px] p-8 sm:p-10 relative overflow-hidden opacity-0 translate-y-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
+          <div ref="card1Ref" class="authority-bento-card flex flex-1 flex-col justify-between border border-white/10 bg-[#1A1A1A]/90 md:bg-[#1A1A1A]/40 md:backdrop-blur-[12px] p-8 sm:p-10 relative overflow-hidden opacity-0 translate-y-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
             
             <!-- Atmósfera Cinética (Glass Frame) -->
             <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.35] mix-blend-luminosity grayscale">
@@ -85,7 +85,7 @@
           </div>
 
           <!-- Glass Card 2: Filosofía Técnica -->
-          <div ref="card2Ref" class="authority-bento-card flex flex-1 flex-col justify-between border border-white/10 bg-[#1A1A1A]/40 backdrop-blur-[12px] p-8 sm:p-10 relative overflow-hidden opacity-0 translate-y-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
+          <div ref="card2Ref" class="authority-bento-card flex flex-1 flex-col justify-between border border-white/10 bg-[#1A1A1A]/90 md:bg-[#1A1A1A]/40 md:backdrop-blur-[12px] p-8 sm:p-10 relative overflow-hidden opacity-0 translate-y-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
             
             <!-- Atmósfera Cinética (Light Trail) -->
             <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.35] mix-blend-luminosity grayscale">
@@ -297,6 +297,9 @@ onMounted(() => {
   if (!sectionRef.value) return;
   initCtx(sectionRef);
 
+  // Desktop-only: parallax + velocity-reactive marquee (GPU killers on mobile)
+  const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+
   ctx.value!.add(() => {
     // ═══════════════════════════════════
     // 1. EYEBROW — soft fade in
@@ -410,20 +413,22 @@ onMounted(() => {
       }
     });
 
-    // PARALLAX ON NIGREDO CARDS
-    gsap.fromTo(nigredoCards, 
-      { yPercent: -10 }, 
-      {
-        yPercent: 10,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.value,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1,
+    // PARALLAX ON NIGREDO CARDS — desktop only (scrub kills mobile GPU)
+    if (isDesktop) {
+      gsap.fromTo(nigredoCards,
+        { yPercent: -10 },
+        {
+          yPercent: 10,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.value,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1,
+          }
         }
-      }
-    );
+      );
+    }
 
     // ═══════════════════════════════════
     // 3. DIVIDER — line width reveal
@@ -463,8 +468,8 @@ onMounted(() => {
     // 5. INFINITE MARQUEE — with velocity-reactive timeScale & Parallax
     // ═══════════════════════════════════
     
-    // PARALLAX ON MARQUEE CONTAINER
-    if (marqueeCardRef.value) {
+    // PARALLAX ON MARQUEE CONTAINER — desktop only
+    if (isDesktop && marqueeCardRef.value) {
       gsap.fromTo(marqueeCardRef.value,
         { yPercent: -5 },
         {
@@ -508,30 +513,33 @@ onMounted(() => {
           },
         });
 
-        ScrollTrigger.create({
-          trigger: sectionRef.value,
-          start: 'top bottom',
-          end: 'bottom top',
-          onUpdate: (self) => {
-            const velocity = Math.abs(self.getVelocity());
-            const clampedVelocity = gsap.utils.clamp(0, 3000, velocity);
-            const targetTimeScale = gsap.utils.mapRange(0, 3000, 1, 5, clampedVelocity);
+        // Velocity-reactive timeScale — desktop only (per-frame onUpdate kills mobile)
+        if (isDesktop) {
+          ScrollTrigger.create({
+            trigger: sectionRef.value,
+            start: 'top bottom',
+            end: 'bottom top',
+            onUpdate: (self) => {
+              const velocity = Math.abs(self.getVelocity());
+              const clampedVelocity = gsap.utils.clamp(0, 3000, velocity);
+              const targetTimeScale = gsap.utils.mapRange(0, 3000, 1, 5, clampedVelocity);
 
-            velocityProxy.value = targetTimeScale;
+              velocityProxy.value = targetTimeScale;
 
-            if (velocityTween) velocityTween.kill();
-            if (marqueeTl) marqueeTl.timeScale(targetTimeScale);
+              if (velocityTween) velocityTween.kill();
+              if (marqueeTl) marqueeTl.timeScale(targetTimeScale);
 
-            velocityTween = gsap.to(velocityProxy, {
-              value: 1,
-              duration: 1.8,
-              ease: 'power3.out',
-              onUpdate: () => {
-                if (marqueeTl) marqueeTl.timeScale(velocityProxy.value);
-              },
-            });
-          },
-        });
+              velocityTween = gsap.to(velocityProxy, {
+                value: 1,
+                duration: 1.8,
+                ease: 'power3.out',
+                onUpdate: () => {
+                  if (marqueeTl) marqueeTl.timeScale(velocityProxy.value);
+                },
+              });
+            },
+          });
+        }
       }
     }
 

@@ -14,7 +14,7 @@ export default defineConfig({
     tailwindcss(),
     vue(),
     sitemap({
-      hostname: 'https://nodoto.agency',
+      hostname: 'https://www.nodoto.com',
       dynamicRoutes: ['/discovery'],
       changefreq: 'weekly',
       priority: 1,
