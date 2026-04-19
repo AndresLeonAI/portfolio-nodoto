@@ -336,12 +336,18 @@ onMounted(() => {
         stagger: 0.008,
         duration: 1.4,
         ease: 'expo.out',
-        scrollTrigger: {
-          trigger: manifestoRef.value,
-          start: 'top 85%',
-          end: 'bottom 60%',
-          scrub: 1.2,
-        },
+        scrollTrigger: isDesktop
+          ? {
+              trigger: manifestoRef.value,
+              start: 'top 85%',
+              end: 'bottom 60%',
+              scrub: 1.2,
+            }
+          : {
+              trigger: manifestoRef.value,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse',
+            },
       });
     }
 
@@ -546,15 +552,18 @@ onMounted(() => {
     // ═══════════════════════════════════
     // 6. SHIMMER DE CRISTAL (Right Cards)
     // ═══════════════════════════════════
-    const glassShimmers = document.querySelectorAll('.shimmer-glass-effect');
-    if (glassShimmers.length) {
-      gsap.to(glassShimmers, {
-        x: '250%',
-        duration: 2.5,
-        ease: 'power2.inOut',
-        repeat: -1,
-        repeatDelay: 5
-      });
+    // Shimmer: desktop only (infinite repeat burns mobile GPU budget)
+    if (isDesktop) {
+      const glassShimmers = document.querySelectorAll('.shimmer-glass-effect');
+      if (glassShimmers.length) {
+        gsap.to(glassShimmers, {
+          x: '250%',
+          duration: 2.5,
+          ease: 'power2.inOut',
+          repeat: -1,
+          repeatDelay: 5
+        });
+      }
     }
 
     // ═══════════════════════════════════

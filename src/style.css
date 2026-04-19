@@ -102,6 +102,11 @@ layer(base);
   @apply pt-5 sm:pt-12 lg:pt-14;
 }
 
+@utility gpu-isolate {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
 @utility hide-on-mobile {
   @apply hidden sm:block;
 }

@@ -1,7 +1,7 @@
 <template>
   <section
     id="contact-section"
-    class="relative min-h-svh w-full overflow-y-clip p-[4vh] select-none"
+    class="gpu-isolate relative min-h-svh w-full overflow-y-clip p-[4vh] select-none"
   >
     <div
       class="flex-center relative h-[92vh] w-full flex-col rounded-lg bg-black uppercase"
@@ -84,7 +84,8 @@
   import { Button } from '../common';
   import { Vue3Lottie } from 'vue3-lottie';
   import Link from '../Link.vue';
-  import { contact } from '@/assets/videos';
+  // Video served from /public/ — removed from Vite bundle (218KB saved)
+  const contact = '/videos/contact.mp4';
   import { onBeforeMount, onMounted, ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { textSplitterIntoChar } from '@/functions';

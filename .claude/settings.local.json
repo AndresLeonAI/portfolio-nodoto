@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/Users/Andres/Desktop/portfolio/src/components/sections -name \"*.vue\" -exec basename {} \\\\;)",
+      "Bash(find /c/Users/Andres/Desktop/portfolio/src/components/sections -name \"*.vue\" -exec grep -l \"<h1\\\\|<h2\" {} \\\\;)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(npm uninstall *)",
+      "Bash(git add *)",
+      "Bash(git rm *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
+    ]
+  }
+}

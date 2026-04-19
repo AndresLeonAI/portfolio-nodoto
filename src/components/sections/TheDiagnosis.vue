@@ -295,16 +295,18 @@ onMounted(() => {
       });
     }
 
-    // Shimmer Metálico Cíclico en Tarjetas Nigredo
-    const glassShimmers = diagnosisSection.value?.querySelectorAll('.shimmer-glass-effect');
-    if (glassShimmers && glassShimmers.length) {
-      gsap.to(glassShimmers, {
-        x: '250%',
-        duration: 2.5,
-        ease: 'power2.inOut',
-        repeat: -1,
-        repeatDelay: 5
-      });
+    // Shimmer Metálico Cíclico: desktop only (infinite repeat kills mobile GPU)
+    if (isDesktop) {
+      const glassShimmers = diagnosisSection.value?.querySelectorAll('.shimmer-glass-effect');
+      if (glassShimmers && glassShimmers.length) {
+        gsap.to(glassShimmers, {
+          x: '250%',
+          duration: 2.5,
+          ease: 'power2.inOut',
+          repeat: -1,
+          repeatDelay: 5
+        });
+      }
     }
 
     // Shimmer y Efecto quickTo (CTA Panorámico)
@@ -312,15 +314,18 @@ onMounted(() => {
       // Ensure we don't snap to integer pixels for smoother results
     });
 
-    const epicShimmers = diagnosisSection.value?.querySelectorAll('.epic-cta-shimmer');
-    if (epicShimmers && epicShimmers.length) {
-      gsap.to(epicShimmers, {
-        x: '350%',
-        duration: 3,
-        ease: 'power2.inOut',
-        repeat: -1,
-        repeatDelay: 4
-      });
+    // Epic CTA shimmer: desktop only
+    if (isDesktop) {
+      const epicShimmers = diagnosisSection.value?.querySelectorAll('.epic-cta-shimmer');
+      if (epicShimmers && epicShimmers.length) {
+        gsap.to(epicShimmers, {
+          x: '350%',
+          duration: 3,
+          ease: 'power2.inOut',
+          repeat: -1,
+          repeatDelay: 4
+        });
+      }
     }
 
   });

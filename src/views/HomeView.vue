@@ -1,6 +1,9 @@
 <template>
   <main class="relative min-h-full">
     <Hero />
+    <!-- ═══ Hydration Sentinel: triggers below-fold lazy loading ═══ -->
+    <div ref="sentinelRef" class="h-0 w-full" aria-hidden="true" />
+    <template v-if="belowFoldReady">
     <div class="relative w-full z-10 bg-[#0B0B0A] rounded-b-3xl">
       <div class="sticky bottom-0 w-full overflow-hidden">
         <div id="authority-scale-target" class="w-full relative origin-bottom rounded-[2.5rem] border-[0.5px] border-white/10 overflow-hidden will-change-transform">
@@ -25,29 +28,50 @@
     <TestimonialsGrid />
     <FAQS />
     <Contact />
+    </template>
   </main>
 
-  <Footer />
+  <Footer v-if="belowFoldReady" />
 </template>
 
 <script setup lang="ts">
-  import { onMounted, nextTick } from 'vue';
-  import {
-    Hero,
-    Services,
-    Works,
-    aboutMe,
-    Contact,
-    TestimonialsGrid,
-    AuthorityBridge,
-    TheDiagnosis,
-    FAQS,
-  } from '@/components/sections';
-  import CinematicHero from '@/components/ui/CinematicPhoneSection.vue';
-  import {
-    Marquee,
-    Footer,
-  } from '@/components/design';
+  import { ref, onMounted, nextTick, defineAsyncComponent, onUnmounted } from 'vue';
+  import { Hero } from '@/components/sections';
+
+  // ─── Below-fold: Async Chunks (Vite auto-splits each into its own JS file) ──
+  const AuthorityBridge = defineAsyncComponent(() => import('@/components/sections/AuthorityBridge.vue'));
+  const TheDiagnosis = defineAsyncComponent(() => import('@/components/sections/TheDiagnosis.vue'));
+  const Services = defineAsyncComponent(() => import('@/components/sections/Services.vue'));
+  const Marquee = defineAsyncComponent(() => import('@/components/design/Marquee.vue'));
+  const CinematicHero = defineAsyncComponent(() => import('@/components/ui/CinematicPhoneSection.vue'));
+  const Works = defineAsyncComponent(() => import('@/components/sections/Works.vue'));
+  const aboutMe = defineAsyncComponent(() => import('@/components/sections/aboutMe.vue'));
+  const TestimonialsGrid = defineAsyncComponent(() => import('@/components/sections/TestimonialsGrid.vue'));
+  const FAQS = defineAsyncComponent(() => import('@/components/sections/FAQS.vue'));
+  const Contact = defineAsyncComponent(() => import('@/components/sections/Contact.vue'));
+  const Footer = defineAsyncComponent(() => import('@/components/design/Footer.vue'));
+
+  // ─── Below-fold Lazy Hydration ───────────────────────────────────────────────
+  const belowFoldReady = ref(false);
+  const sentinelRef = ref<HTMLElement | null>(null);
+  let _hydrationTimer: ReturnType<typeof setTimeout> | undefined;
+
+  onMounted(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          belowFoldReady.value = true;
+          observer.disconnect();
+          if (_hydrationTimer) clearTimeout(_hydrationTimer);
+        }
+      },
+      { rootMargin: '400px 0px' },
+    );
+    if (sentinelRef.value) observer.observe(sentinelRef.value);
+    _hydrationTimer = setTimeout(() => { belowFoldReady.value = true; }, 2000);
+  });
+  onUnmounted(() => { if (_hydrationTimer) clearTimeout(_hydrationTimer); });
+
   import { animateHeroNav, isFirstLoad } from '@/animations';
   import { useHead } from '@unhead/vue';
   import { leonUiMockup } from '@/assets/images';

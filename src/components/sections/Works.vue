@@ -109,7 +109,6 @@
   import { useGsap } from '@/composables/useGsap';
   import gsap from 'gsap';
   import { useWindowSize } from '@vueuse/core';
-  import { work1, work2, work3, work4, work5 } from '@/assets/videos';
   import { workBg1, workBg2, workBg3, workBg4, workBg5 } from '@/assets/images';
   const videoRefs = useTemplateRef<HTMLVideoElement[]>('videoRefs');
 
@@ -144,7 +143,7 @@
       name: 'Madar',
       category: 'Arquitectura B2B',
       tags: ['Vue.js', 'Neuromarketing', 'Gsap'],
-      videoSrc: work5,
+      videoSrc: '/videos/work5.webm',
       imageBg: workBg5,
       url: 'https://madar.services/',
       year: '2025',
@@ -153,7 +152,7 @@
       name: 'Iphone 15 Clone',
       category: 'Ingeniería 3D & E-commerce',
       tags: ['WebGL', 'Conversión'],
-      videoSrc: work2,
+      videoSrc: '/videos/work2.webm',
       imageBg: workBg2,
       url: 'https://github.com/NODOTO/iphone15-pro-clone',
       year: '2024',
@@ -162,7 +161,7 @@
       name: 'Axon',
       category: 'Sistemas Complejos',
       tags: ['Vue.js', 'Machine Learning', 'AI'],
-      videoSrc: work3,
+      videoSrc: '/videos/work3.webm',
       imageBg: workBg3,
       url: 'https://github.com/NODOTO/axon',
 
@@ -172,7 +171,7 @@
       name: 'Blogy',
       category: 'Plataforma de Contenidos',
       tags: ['Vue.js', 'Escalabilidad'],
-      videoSrc: work4,
+      videoSrc: '/videos/work4.webm',
       imageBg: workBg4,
       url: 'https://github.com/NODOTO/blog',
       year: '2023',
@@ -181,7 +180,7 @@
       name: 'Pyutube',
       category: 'Infraestructura CLI',
       tags: ['Python', 'Precisión', 'Youtube'],
-      videoSrc: work1,
+      videoSrc: '/videos/work1.webm',
       imageBg: workBg1,
       url: 'https://github.com/NODOTO/pyutube',
       year: '2024',

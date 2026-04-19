@@ -58,7 +58,7 @@
         <!-- ═══════════════════════════════════════════════════════ -->
         <div
           :ref="(el) => { if (el) bentoCards[0] = el as HTMLElement }"
-          class="bento-card group relative flex flex-col justify-between overflow-hidden rounded-[clamp(1.5rem,4vw,2.5rem)] border border-white/10 bg-[#1A1A1A]/40 backdrop-blur-[12px] p-10 sm:p-12 lg:col-span-5 lg:row-span-2 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] opacity-0 translate-y-4"
+          class="bento-card group relative flex flex-col justify-between overflow-hidden rounded-[clamp(1.5rem,4vw,2.5rem)] border border-white/10 bg-[#1A1A1A]/90 md:bg-[#1A1A1A]/40 md:backdrop-blur-[12px] p-10 sm:p-12 lg:col-span-5 lg:row-span-2 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] opacity-0 translate-y-4"
         >
           <!-- Layer 1: Atmósfera Cinética -->
           <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.35] mix-blend-luminosity grayscale">
@@ -113,7 +113,7 @@
         <!-- ═══════════════════════════════════════════════════════ -->
         <div
           :ref="(el) => { if (el) bentoCards[1] = el as HTMLElement }"
-          class="bento-card group relative flex flex-col justify-between overflow-hidden rounded-[clamp(1.5rem,4vw,2.5rem)] border border-black/5 bg-[#E7DBCB]/90 backdrop-blur-[16px] p-10 sm:p-12 lg:col-span-7 shadow-[inset_0_1px_1px_rgba(255,255,255,0.8),_0_8px_32px_rgba(0,0,0,0.05)] opacity-0 translate-y-4"
+          class="bento-card group relative flex flex-col justify-between overflow-hidden rounded-[clamp(1.5rem,4vw,2.5rem)] border border-black/5 bg-[#E7DBCB] md:bg-[#E7DBCB]/90 md:backdrop-blur-[16px] p-10 sm:p-12 lg:col-span-7 shadow-[inset_0_1px_1px_rgba(255,255,255,0.8),_0_8px_32px_rgba(0,0,0,0.05)] opacity-0 translate-y-4"
         >
           <!-- Textura de Ruido (Premium Density) -->
           <div class="absolute inset-0 z-0 opacity-[0.05] mix-blend-overlay pointer-events-none">
@@ -192,7 +192,7 @@
         <!-- ═══════════════════════════════════════════════════════ -->
         <div
           :ref="(el) => { if (el) bentoCards[3] = el as HTMLElement }"
-          class="bento-card group relative flex flex-col justify-between overflow-hidden rounded-[clamp(1.5rem,4vw,2.5rem)] border border-white/10 bg-[#1A1A1A]/40 backdrop-blur-[12px] p-10 sm:p-12 lg:col-span-3 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] opacity-0 translate-y-4"
+          class="bento-card group relative flex flex-col justify-between overflow-hidden rounded-[clamp(1.5rem,4vw,2.5rem)] border border-white/10 bg-[#1A1A1A]/90 md:bg-[#1A1A1A]/40 md:backdrop-blur-[12px] p-10 sm:p-12 lg:col-span-3 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] opacity-0 translate-y-4"
         >
           <!-- Layer 1: Atmósfera Cinética (Light Trail) -->
           <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.35] mix-blend-luminosity grayscale">
@@ -483,15 +483,18 @@ onMounted(() => {
     // ═══════════════════════════════════
     // 5. SHIMMER DE CRISTAL (Glass Cards)
     // ═══════════════════════════════════
-    const glassShimmers = sectionRef.value?.querySelectorAll('.shimmer-glass-effect');
-    if (glassShimmers && glassShimmers.length) {
-      gsap.to(glassShimmers, {
-        x: '250%',
-        duration: 2.5,
-        ease: 'power2.inOut',
-        repeat: -1,
-        repeatDelay: 5,
-      });
+    // Shimmer: desktop only (infinite repeat burns mobile GPU budget)
+    if (isDesktop) {
+      const glassShimmers = sectionRef.value?.querySelectorAll('.shimmer-glass-effect');
+      if (glassShimmers && glassShimmers.length) {
+        gsap.to(glassShimmers, {
+          x: '250%',
+          duration: 2.5,
+          ease: 'power2.inOut',
+          repeat: -1,
+          repeatDelay: 5,
+        });
+      }
     }
 
     // ═══════════════════════════════════

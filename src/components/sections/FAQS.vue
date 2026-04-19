@@ -2,7 +2,7 @@
   <section
     ref="sectionRef"
     id="faq-section"
-    class="relative w-full overflow-hidden bg-[#E7DBCB] py-24 sm:py-32 lg:py-40"
+    class="gpu-isolate relative w-full overflow-hidden bg-[#E7DBCB] py-24 sm:py-32 lg:py-40"
   >
     <!-- Atmospheric noise layer (ultra-subtle on light) -->
     <div class="layer-atmosphere pointer-events-none z-0"></div>
