@@ -46,8 +46,8 @@
               class="who-am-i heading-5 w-full max-w-[30ch] overflow-clip leading-snug font-medium text-balance sm:max-w-[37ch] lg:text-start"
             ></p>
 
-            <div class="relative origin-left overflow-hidden sm:scale-150">
-              <div id="contact-btn" class="flex -translate-y-full">
+            <div class="relative z-[100] origin-left overflow-hidden sm:scale-150 pointer-events-auto">
+              <div id="contact-btn" class="flex -translate-y-full will-change-transform">
                 <Button label="Inicia tu Evolución" url="/discovery" />
               </div>
             </div>

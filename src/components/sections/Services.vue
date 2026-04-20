@@ -166,6 +166,7 @@
 
     if (index === 2) {
       return 'top-[calc(10vh_+_8em)] sm:top-[calc(20vh_+_11.5em)] mb-[4em] sm:mb-[5.75em]';
+
     }
   };
 </script>
