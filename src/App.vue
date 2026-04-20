@@ -46,15 +46,16 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref, nextTick } from 'vue';
+  import { onMounted, ref, nextTick, defineAsyncComponent } from 'vue';
   import { useRouter } from 'vue-router';
   import ScrollTrigger from 'gsap/ScrollTrigger';
   import {
     LoadingScreen,
-    SamsungError,
-    Cursor,
     PageTransition,
   } from '@/components/design';
+  
+  const SamsungError = defineAsyncComponent(() => import('@/components/design/SamsungError.vue'));
+  const Cursor = defineAsyncComponent(() => import('@/components/design/Cursor.vue'));
 
   import { Navbar } from './components/common';
   import { lenis } from '@/lib/lenis';
