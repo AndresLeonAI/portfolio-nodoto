@@ -41,7 +41,7 @@
       <div
         class="absolute bottom-5 flex w-full items-center justify-center px-5 md:justify-between"
       >
-        <div class="hidden md:flex">
+        <div v-if="isDesktop" class="flex">
           <div class="border-flax-smoke-300 relative border">
             <Vue3Lottie
               ref="customControl"
@@ -84,8 +84,9 @@
   import { Button } from '../common';
   import { Vue3Lottie } from 'vue3-lottie';
   import Link from '../Link.vue';
-  // Video served from /public/ — removed from Vite bundle (218KB saved)
   const contact = '/videos/contact.mp4';
+  // Mobile: prevent Lottie canvas from mounting entirely (saves ~15ms/frame rAF)
+  const isDesktop = typeof window !== 'undefined' && window.matchMedia('(min-width: 768px)').matches;
   import { onBeforeMount, onMounted, ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { textSplitterIntoChar } from '@/functions';

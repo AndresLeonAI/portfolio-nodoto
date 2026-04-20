@@ -55,22 +55,33 @@
   const belowFoldReady = ref(false);
   const sentinelRef = ref<HTMLElement | null>(null);
   let _hydrationTimer: ReturnType<typeof setTimeout> | undefined;
+  let _hydrationObserver: IntersectionObserver | null = null;
 
   onMounted(() => {
-    const observer = new IntersectionObserver(
+    _hydrationObserver = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           belowFoldReady.value = true;
-          observer.disconnect();
+          _hydrationObserver?.disconnect();
+          _hydrationObserver = null;
           if (_hydrationTimer) clearTimeout(_hydrationTimer);
         }
       },
       { rootMargin: '400px 0px' },
     );
-    if (sentinelRef.value) observer.observe(sentinelRef.value);
-    _hydrationTimer = setTimeout(() => { belowFoldReady.value = true; }, 2000);
+    if (sentinelRef.value) _hydrationObserver.observe(sentinelRef.value);
+    // Fallback: hydrate after 2s regardless (safety net for non-scrollers)
+    _hydrationTimer = setTimeout(() => {
+      belowFoldReady.value = true;
+      _hydrationObserver?.disconnect();
+      _hydrationObserver = null;
+    }, 2000);
   });
-  onUnmounted(() => { if (_hydrationTimer) clearTimeout(_hydrationTimer); });
+  onUnmounted(() => {
+    if (_hydrationTimer) clearTimeout(_hydrationTimer);
+    _hydrationObserver?.disconnect();
+    _hydrationObserver = null;
+  });
 
   import { animateHeroNav, isFirstLoad } from '@/animations';
   import { useHead } from '@unhead/vue';

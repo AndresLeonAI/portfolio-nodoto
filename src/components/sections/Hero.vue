@@ -58,12 +58,19 @@
             class="relative col-span-6 mt-10 h-[30vh] flex-col rounded-lg select-none sm:mt-0 sm:h-full md:flex md:h-[65vh]"
           >
             <div class="overlay bg-flax-smoke-50 absolute inset-0 z-2"></div>
-            <img
-              id="profile-img"
-              :src="leonUiMockup"
-              alt="NODOTO Agency Showcase"
-              class="size-full rounded-lg object-contain object-center"
-            />
+            <picture>
+              <source
+                media="(max-width: 768px)"
+                srcset="/images/leon-ui-mockup-mobile.webp"
+                type="image/webp"
+              />
+              <img
+                id="profile-img"
+                :src="leonUiMockup"
+                alt="NODOTO Agency Showcase"
+                class="size-full rounded-lg object-contain object-center"
+              />
+            </picture>
           </div>
 
           <!-- content-end justify-self-end  -->
