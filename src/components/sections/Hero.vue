@@ -46,19 +46,19 @@
               class="who-am-i heading-5 w-full max-w-[30ch] overflow-clip leading-snug font-medium text-balance sm:max-w-[37ch] lg:text-start"
             ></p>
 
-            <div class="relative z-[100] origin-left overflow-hidden sm:scale-150 pointer-events-auto">
-              <div id="contact-btn" class="flex -translate-y-full will-change-transform">
-                <Button label="Inicia tu Evolución" url="/discovery" />
+            <div class="relative z-[100] origin-left overflow-hidden sm:scale-150 pointer-events-auto pt-2 mt-4 sm:mt-0">
+              <div id="contact-btn" class="flex will-change-transform translate-y-full">
+                <Button label="Agendar Reunión" url="/discovery" class="!bg-white !text-black shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:!bg-gray-200" />
               </div>
             </div>
           </div>
 
           <div
             id="profile-container"
-            class="relative col-span-6 mt-10 h-[30vh] flex-col rounded-lg select-none sm:mt-0 sm:h-full md:flex md:h-[65vh]"
+            class="relative col-span-full mt-10 flex h-[35vh] flex-col rounded-lg select-none sm:col-span-6 sm:mt-0 sm:h-full md:h-[65vh]"
           >
-            <div class="overlay bg-flax-smoke-50 absolute inset-0 z-2"></div>
-            <picture>
+            <div class="overlay bg-flax-smoke-50 absolute inset-0 z-10"></div>
+            <picture class="w-full h-full block relative z-0">
               <source
                 media="(max-width: 768px)"
                 srcset="/images/leon-ui-mockup-mobile.webp"

@@ -1,5 +1,5 @@
 <template>
-  <section id="works" class="common-padding mb-20">
+  <section id="works" class="common-padding relative z-10 bg-[#0B0B0A] pb-12">
     <div class="flex flex-col">
       <h3
         id="selectedWorks"
@@ -108,8 +108,12 @@
   import { computed, onBeforeMount, onMounted, ref, useTemplateRef } from 'vue';
   import { useGsap } from '@/composables/useGsap';
   import gsap from 'gsap';
+  import ScrollTrigger from 'gsap/ScrollTrigger';
   import { useWindowSize } from '@vueuse/core';
   import { workBg1, workBg2, workBg3, workBg4, workBg5 } from '@/assets/images';
+
+  gsap.registerPlugin(ScrollTrigger);
+
   const videoRefs = useTemplateRef<HTMLVideoElement[]>('videoRefs');
 
   const isSmallScreen = computed(() => {
@@ -285,8 +289,11 @@
     ctx.value!.add(() => {
       // 1. Animación del Header (Despliegues + Subtitles)
       const introLetters = document.querySelectorAll('#selectedWorks .letters, #selected-works-text .letters');
+      const subtitleContainer = document.querySelector('#selected-works-text') as HTMLElement;
       if (introLetters.length) {
         gsap.set(introLetters, { y: '120%', rotateX: -20, opacity: 0, willChange: 'transform, opacity' });
+        // Reveal the subtitle container (Tailwind opacity-0) when animation fires
+        if (subtitleContainer) gsap.set(subtitleContainer, { opacity: 1 });
         gsap.to(introLetters, {
           y: '0%',
           rotateX: 0,
@@ -325,18 +332,15 @@
       });
     });
 
-    // Apply GSAP animations to each div
+    // Apply GSAP counter animations — DESKTOP ONLY (counter is hidden on mobile)
     if (!isSmallScreen.value)
       gsap.utils.toArray('.work-card').forEach((div: any, i: any) => {
         gsap.timeline({ defaults: { duration: 0.7 } }).to(div, {
           scrollTrigger: {
             trigger: div,
-            // start: 'top 40%',
             start: 'top 25%',
-            // end: 'bottom 40%',
             end: 'bottom 25%',
             scrub: 0.01,
-            // markers: true,
             onLeaveBack: () => {
               // Backward scroll animation
               if (index.value !== 0) {

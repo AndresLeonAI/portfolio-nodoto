@@ -1,5 +1,5 @@
 <template>
-  <section id="testimonials-section" class="gpu-isolate relative pt-32 lg:pt-48 pb-section overflow-hidden">
+  <section id="testimonials-section" class="gpu-isolate relative pt-32 lg:pt-48 pb-section overflow-hidden bg-[#E7DBCB]">
     <div class="container relative z-10 mx-auto px-gutter">
       <div
         ref="headerRef"

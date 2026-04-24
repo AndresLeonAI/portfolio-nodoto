@@ -2,7 +2,7 @@
   <section
     ref="sectionRef"
     id="work-process-section"
-    class="relative w-full overflow-hidden bg-[#0B0B0A] py-24 sm:py-32 z-10 rounded-b-3xl shadow-2xl will-change-auto"
+    class="relative w-full overflow-hidden bg-[#111111] py-24 sm:py-32 z-10 rounded-b-3xl shadow-2xl will-change-auto"
   >
     <!-- ═══════════════════════════════════════════════════════ -->
     <!-- PROFUNDIDAD TÁCTIL: Definición de filtro SVG de ruido  -->
@@ -280,7 +280,6 @@ import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { useGsap } from '@/composables/useGsap';
 import { useMagnetic } from '@/composables/useMagnetic';
-import { animateAboutMeSectionLeave } from '@/animations';
 import { textSplitterIntoChar } from '@/functions';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -514,8 +513,8 @@ onMounted(() => {
     });
   });
 
-  // Re-apply the exit transition for the overlapping effect
-  animateAboutMeSectionLeave('#work-process-section');
+    // We've removed animateAboutMeSectionLeave here as it was causing overlap and gaps
+    // with the newly positioned Works and Testimonials sections.
 });
 </script>
 

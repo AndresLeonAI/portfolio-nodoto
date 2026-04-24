@@ -41,6 +41,7 @@
   <Cursor />
   <PageTransition ref="pageTransitionRef" />
   <Navbar @isLocked="lockScroll" />
+  <WhatsAppFloat />
 
   <router-view />
 </template>
@@ -56,6 +57,7 @@
   
   const SamsungError = defineAsyncComponent(() => import('@/components/design/SamsungError.vue'));
   const Cursor = defineAsyncComponent(() => import('@/components/design/Cursor.vue'));
+  const WhatsAppFloat = defineAsyncComponent(() => import('@/components/ui/WhatsAppFloat.vue'));
 
   import { Navbar } from './components/common';
   import { lenis } from '@/lib/lenis';

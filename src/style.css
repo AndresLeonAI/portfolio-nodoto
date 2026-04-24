@@ -103,8 +103,10 @@ layer(base);
 }
 
 @utility gpu-isolate {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 800px;
+  /* Removed content-visibility: auto — it caused the browser to skip rendering
+     sections pushed far down by CinematicPhoneSection's 3500px pin-spacer.
+     isolation: isolate preserves compositing isolation without blocking paint. */
+  isolation: isolate;
 }
 
 @utility hide-on-mobile {

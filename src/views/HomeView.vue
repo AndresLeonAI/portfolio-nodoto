@@ -15,8 +15,10 @@
       <TheDiagnosis />
     </div>
 
+    <!-- SECTION WRAPPER: Services -> Works -->
+    <!-- Added z-20, rounded-b-[3rem], and border to ensure it visually overlaps 'aboutMe' like a curtain -->
     <div
-      class="text-flax-smoke-200 relative rounded-t-3xl bg-[#0B0B0A] py-[5%]"
+      class="text-flax-smoke-200 relative bg-[#0B0B0A] py-[5%] z-20 rounded-b-[3rem] border-b border-white/5 shadow-2xl"
     >
       <Services />
       <Marquee />
@@ -24,10 +26,17 @@
       <Works />
     </div>
 
-    <aboutMe />
-    <TestimonialsGrid />
-    <FAQS />
-    <Contact />
+    <!-- SECTION: El Método NODOTO (aboutMe) -->
+    <!-- z-20 ensures aboutMe's rounded-b-3xl overlaps TestimonialsGrid below (curtain effect) -->
+    <div class="relative z-20 -mt-10 pt-10 bg-[#111111]">
+      <aboutMe />
+    </div>
+    <!-- SECTION: Testimonials → Contact (z-10 tucks under aboutMe's rounded bottom) -->
+    <div class="relative z-10 -mt-10 pt-10">
+      <TestimonialsGrid />
+      <FAQS />
+      <Contact />
+    </div>
     </template>
   </main>
 
