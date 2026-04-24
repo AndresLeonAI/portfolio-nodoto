@@ -3,7 +3,7 @@
     :is="url ? 'a' : 'button'"
     @click="handleClick"
     id="button"
-    class="leading-base group pointer-events-auto relative h-full max-w-full transform-none overflow-clip rounded-full bg-flax-smoke-950 px-5 py-2 text-[1rem] font-semibold uppercase tracking-normal text-flax-smoke-100 sm:text-sm min-h-[44px] min-w-[44px] inline-flex items-center justify-center"
+    class="leading-base group pointer-events-auto relative h-full max-w-full transform-none overflow-clip rounded-full bg-flax-smoke-950 px-[1.5em] py-[0.75em] text-[1rem] font-semibold uppercase tracking-normal text-flax-smoke-100 sm:text-sm min-h-[44px] min-w-[44px] inline-flex items-center justify-center"
     :class="$attrs.class"
     :href="url"
   >

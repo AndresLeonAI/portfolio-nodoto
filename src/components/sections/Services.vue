@@ -54,7 +54,7 @@
       <button
         type="button"
         @click="navigateToDiscovery"
-        class="group relative inline-flex max-w-xl w-full cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-full bg-[#F9F9F9] px-8 py-5 sm:px-16 sm:py-7 min-h-[56px] transition-transform duration-500 ease-out hover:scale-[1.02] focus:scale-[1.02] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F9F9F9]"
+        class="group relative inline-flex max-w-[90vw] sm:max-w-xl w-full cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-full bg-[#F9F9F9] px-6 py-4 sm:px-16 sm:py-7 min-h-[56px] transition-transform duration-500 ease-out hover:scale-[1.02] focus:scale-[1.02] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F9F9F9]"
       >
         <span
           class="pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-[#0B0B0A] transition-transform duration-[600ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-y-100 group-focus:scale-y-100"
@@ -62,7 +62,7 @@
         />
 
         <span
-          class="relative z-10 flex flex-nowrap items-center gap-2 font-display font-bold uppercase tracking-widest text-[#0B0B0A] transition-colors duration-500 group-hover:text-[#F9F9F9] group-focus:text-[#F9F9F9] text-sm sm:text-lg lg:text-xl"
+          class="relative z-10 flex flex-wrap items-center justify-center gap-1 sm:gap-2 font-display font-bold uppercase tracking-widest text-[#0B0B0A] transition-colors duration-500 group-hover:text-[#F9F9F9] group-focus:text-[#F9F9F9] text-sm sm:text-lg lg:text-xl"
         >
           Activa tu Metodología
           <span

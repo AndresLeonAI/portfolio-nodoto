@@ -250,7 +250,7 @@
           ref="ctaBtnRef"
           href="/discovery"
           @click.prevent="$router.push('/discovery')"
-          class="cta-btn group relative max-w-3xl w-full overflow-hidden rounded-full bg-[#E7DBCB] px-10 py-7 sm:px-14 sm:py-9 text-center cursor-pointer select-none block"
+          class="cta-btn group relative max-w-[90vw] sm:max-w-3xl w-full overflow-hidden rounded-full bg-[#E7DBCB] px-6 py-5 sm:px-14 sm:py-9 text-center cursor-pointer select-none block"
           @mousemove="onCtaMouseMove"
           @mouseleave="onCtaMouseLeave"
         >

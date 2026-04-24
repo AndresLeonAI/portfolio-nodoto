@@ -4,7 +4,7 @@
     class="gpu-isolate relative min-h-svh w-full overflow-y-clip p-[4vh] select-none"
   >
     <div
-      class="flex-center relative h-[92vh] w-full flex-col rounded-lg bg-black uppercase"
+      class="flex-center relative h-[92dvh] w-full flex-col rounded-lg bg-black uppercase"
     >
       <video
         class="absolute bottom-0 left-0 size-full rounded-lg object-cover object-bottom brightness-50"
@@ -27,7 +27,7 @@
           v-html="makeItHappen"
         ></h3>
         <div
-          class="mt-[5%] flex scale-150 items-center lg:scale-[1.5] xl:scale-[3] 2xl:scale-[3.5]"
+          class="mt-[5%] flex items-center"
         >
           <!-- <Button
             :data-cal-namespace="dataCalNamespace"
@@ -35,7 +35,7 @@
             :data-cal-config="dataCalConfig"
             label="Get in touch"
           /> -->
-          <Button label="Agenda un Discovery Estratégico" @click="router.push('/discovery')" />
+          <Button label="Agenda un Discovery" @click="router.push('/discovery')" />
         </div>
       </div>
       <div

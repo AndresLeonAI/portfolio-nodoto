@@ -1,12 +1,12 @@
 <template>
   <div :class="$attrs.class">
     <div
-      class="heading-2 max-sm:heading-3 flex grid-cols-12 items-center justify-start gap-5 py-6 text-left font-semibold sm:py-5 md:grid md:justify-between"
+      class="heading-2 max-sm:heading-3 flex grid-cols-12 items-center justify-start gap-3 sm:gap-5 py-6 text-left font-semibold sm:py-5 md:grid md:justify-between"
     >
       <span class="col-span-2 self-center text-nowrap">
         ( {{ `0${number}` }} )
       </span>
-      <h3 class="col-span-6 col-start-5 text-nowrap">{{ title }}</h3>
+      <h3 class="col-span-6 col-start-5 max-sm:text-balance">{{ title }}</h3>
       <div
         v-html="shape"
         class="heading-size-3 hidden animate-[spin_10s_linear_infinite] fill-flax-smoke-400/50 lg:block"
