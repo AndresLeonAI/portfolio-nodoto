@@ -15,7 +15,7 @@
         playsinline
       ></video>
       <!-- :style="'background-image: url(' + contact + ') !important; '" -->
-      <div class="flex-center z-10 flex-col gap-y-10">
+      <div class="flex-center z-10 min-w-0 flex-col gap-y-10 px-4">
         <p
           class="heading-4 text-flax-smoke-300 max-w-[30ch] text-center font-mono"
         >

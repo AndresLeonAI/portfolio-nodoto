@@ -244,13 +244,13 @@
       <!-- CTA Monolítico -->
       <div
         ref="ctaWrapperRef"
-        class="mt-14 flex w-full justify-center sm:mt-20"
+        class="mt-14 flex min-w-0 w-full justify-center sm:mt-20 px-4"
       >
         <a
           ref="ctaBtnRef"
           href="/discovery"
           @click.prevent="$router.push('/discovery')"
-          class="cta-btn group relative max-w-[90vw] sm:max-w-3xl w-full overflow-hidden rounded-full bg-[#E7DBCB] px-6 py-5 sm:px-14 sm:py-9 text-center cursor-pointer select-none block"
+          class="cta-btn group relative min-w-0 max-w-3xl w-full overflow-hidden rounded-full bg-[#E7DBCB] px-6 py-5 sm:px-14 sm:py-9 text-center cursor-pointer select-none block"
           @mousemove="onCtaMouseMove"
           @mouseleave="onCtaMouseLeave"
         >

@@ -3,10 +3,10 @@
     id="work-process-section"
     class="relative w-full bg-[#E7DBCB] py-24 sm:py-32 lg:py-40 overflow-hidden"
   >
-    <div class="container mx-auto px-gutter max-w-[90rem]">
+    <div class="container mx-auto px-gutter min-w-0 max-w-[90rem]">
       <!-- Encabezado Masivo -->
       <div class="mb-16 lg:mb-24 flex justify-between items-end flex-wrap gap-8">
-        <h2 id="process-title" class="text-4xl sm:text-6xl md:text-7xl lg:text-[7rem] leading-[0.85] font-extrabold tracking-tighter text-[#111] uppercase will-change-transform" v-html="titleHtml"></h2>
+        <h2 id="process-title" class="leading-[0.85] font-extrabold tracking-tighter text-[#111] uppercase will-change-transform" style="font-size: var(--font-fluid-process)" v-html="titleHtml"></h2>
       </div>
 
       <!-- Bento Grid 12 Columnas -->
@@ -24,7 +24,7 @@
               class="w-full aspect-[4/3] mb-8 rounded-xl object-cover border border-white/10 opacity-90 shadow-lg bg-black/5 mix-blend-multiply"
             />
           </div>
-          <p class="text-2xl lg:text-3xl xl:text-4xl leading-tight font-medium text-[#111] text-balance" v-html="cell01Html"></p>
+          <p class="leading-tight font-medium text-[#111] text-balance" style="font-size: var(--font-fluid-card-body)" v-html="cell01Html"></p>
         </div>
 
         <!-- Celda 02: Arquitectura -->
@@ -39,7 +39,7 @@
               class="w-full aspect-[21/9] mb-8 rounded-xl object-cover border border-white/10 opacity-90 shadow-lg bg-black/5 mix-blend-multiply"
             />
           </div>
-          <p class="text-2xl lg:text-3xl xl:text-[2.5rem] leading-[1.1] font-medium text-[#111] text-balance" v-html="cell02Html"></p>
+          <p class="leading-[1.1] font-medium text-[#111] text-balance" style="font-size: var(--font-fluid-card-body)" v-html="cell02Html"></p>
         </div>
 
         <!-- Celda 03: Ingeniería (DARK) -->
@@ -54,7 +54,7 @@
               class="w-full aspect-square md:aspect-[4/3] lg:aspect-[3/4] mb-8 rounded-xl object-cover border border-white/10 opacity-90 shadow-lg bg-white/5 mix-blend-lighten"
             />
           </div>
-          <p class="text-xl lg:text-2xl xl:text-3xl leading-tight font-medium text-white text-balance" v-html="cell03Html"></p>
+          <p class="leading-tight font-medium text-white text-balance" style="font-size: clamp(1.125rem, 0.9rem + 1vw, 2rem)" v-html="cell03Html"></p>
         </div>
 
         <!-- Celda 04: Despliegue -->
@@ -69,7 +69,7 @@
               class="w-full aspect-[4/3] lg:aspect-square mb-8 rounded-xl object-cover border border-white/10 opacity-90 shadow-lg bg-black/5 mix-blend-multiply"
             />
           </div>
-          <p class="text-xl lg:text-2xl leading-tight font-medium text-[#111] text-balance" v-html="cell04Html"></p>
+          <p class="leading-tight font-medium text-[#111] text-balance" style="font-size: clamp(1.125rem, 0.9rem + 1vw, 1.75rem)" v-html="cell04Html"></p>
         </div>
 
       </div>
@@ -89,7 +89,7 @@
           <div class="absolute inset-0 bg-void origin-bottom scale-y-0 transition-transform duration-[600ms] ease-out group-hover:scale-y-100 pointer-events-none"></div>
           
           <!-- Content -->
-          <h3 class="relative z-10 text-3xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-bold text-[#111] tracking-tighter leading-none transition-colors duration-[600ms] group-hover:text-white" v-html="ctaHtml"></h3>
+          <h3 class="relative z-10 font-bold text-[#111] tracking-tighter leading-none transition-colors duration-[600ms] group-hover:text-white" style="font-size: var(--font-fluid-process)" v-html="ctaHtml"></h3>
         </div>
       </div>
 

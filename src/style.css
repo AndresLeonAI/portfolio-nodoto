@@ -57,6 +57,16 @@ layer(base);
   --heading-display: clamp(4rem, 1.203rem + 10.0714vw, 10.25rem);
   --heading-body: clamp(1rem, 0.6071rem + 1.0143vw, 2.25rem);
   --heading-1--alt: clamp(3rem, 2.25rem + 3.75vw, 5.625rem);
+
+  /* ═══ Fluid Typography Matrix — Intrinsic Viewport Scaling ═══ */
+  /* CTA buttons: never smaller than 14px, never larger than 20px */
+  --font-fluid-cta: clamp(0.875rem, 0.75rem + 0.5vw, 1.25rem);
+  /* Process section massive title: 40px → 112px continuous */
+  --font-fluid-process: clamp(2.5rem, 1.5rem + 4.5vw, 7rem);
+  /* Bento card body text: 20px → 40px continuous */
+  --font-fluid-card-body: clamp(1.25rem, 1rem + 1.2vw, 2.5rem);
+  /* Service card title: bridges heading-3 to heading-2 smoothly */
+  --font-fluid-service-title: clamp(1.375rem, 0.9rem + 2vw, 3rem);
 }
 
 @utility font-fancy {
@@ -278,11 +288,6 @@ layer(base);
     @apply font-fancy!;
   }
 
-  /* Safety net: prevent any heading from pushing viewport on mobile */
-  h1, h2, h3, h4, h5, h6 {
-    overflow-wrap: break-word;
-    word-break: break-word;
-  }
 
   a {
     @apply font-body;
