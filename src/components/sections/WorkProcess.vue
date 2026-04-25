@@ -153,7 +153,7 @@
     ctx.value!.add(() => {
       // 1. Título General
       const titleLetters = document.querySelectorAll('#process-title .letters');
-      gsap.set(titleLetters, { y: '120%', rotateX: -20, opacity: 0, willChange: 'transform, opacity' });
+      gsap.set(titleLetters, { y: '120%', rotateX: -20, opacity: 0 });
       gsap.to(titleLetters, {
         y: '0%',
         rotateX: 0,
@@ -177,7 +177,7 @@
         stagger: 0.1,
         duration: 1.4,
         ease: 'power3.out',
-        willChange: 'transform, opacity',
+
         scrollTrigger: {
           trigger: '#bento-container',
           start: 'top 80%',
@@ -190,7 +190,7 @@
       bentoCards.forEach((card: any) => {
         const letters = card.querySelectorAll('p .letters');
         if (letters && letters.length) {
-          gsap.set(letters, { y: '120%', rotateX: -20, opacity: 0, willChange: 'transform, opacity' });
+          gsap.set(letters, { y: '120%', rotateX: -20, opacity: 0 });
           gsap.to(letters, {
             y: '0%',
             rotateX: 0,

@@ -326,7 +326,6 @@ onMounted(() => {
         y: '120%',
         rotateX: -20,
         opacity: 0,
-        willChange: 'transform, opacity',
       });
 
       gsap.to(letters, {
@@ -398,7 +397,7 @@ onMounted(() => {
       if (!card) return;
       const cardLetters = card.querySelectorAll('.letters');
       if (cardLetters.length) {
-        gsap.set(cardLetters, { y: '120%', rotateX: -20, opacity: 0, willChange: 'transform, opacity' });
+        gsap.set(cardLetters, { y: '120%', rotateX: -20, opacity: 0 });
         
         gsap.to(cardLetters, {
           y: '0%',

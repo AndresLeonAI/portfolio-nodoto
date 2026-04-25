@@ -260,7 +260,7 @@
   };
   onBeforeMount(() => {
     selectedWorks.value = textSplitterIntoChar('Despliegues / ', true, false);
-    casesSubtitle.value = textSplitterIntoChar(`( <span class="inline sm:hidden">${selectedWorksProps.length} </span> CASOS DE ESTUDIO )`, true, false);
+    casesSubtitle.value = textSplitterIntoChar(`( ${selectedWorksProps.length} CASOS DE ESTUDIO )`, true, false);
     casesDesc.value = textSplitterIntoChar('Arquitecturas de conversión desplegadas para marcas élite. Precisión clínica, estética suprema y fricción cero.', true, false);
   });
 
@@ -291,7 +291,7 @@
       const introLetters = document.querySelectorAll('#selectedWorks .letters, #selected-works-text .letters');
       const subtitleContainer = document.querySelector('#selected-works-text') as HTMLElement;
       if (introLetters.length) {
-        gsap.set(introLetters, { y: '120%', rotateX: -20, opacity: 0, willChange: 'transform, opacity' });
+        gsap.set(introLetters, { y: '120%', rotateX: -20, opacity: 0 });
         // Reveal the subtitle container (Tailwind opacity-0) when animation fires
         if (subtitleContainer) gsap.set(subtitleContainer, { opacity: 1 });
         gsap.to(introLetters, {
@@ -314,7 +314,7 @@
       worksCards.forEach(card => {
         const textElements = card.querySelectorAll('.letters');
         if (textElements.length) {
-          gsap.set(textElements, { y: '120%', rotateX: -20, opacity: 0, willChange: 'transform, opacity' });
+          gsap.set(textElements, { y: '120%', rotateX: -20, opacity: 0 });
           gsap.to(textElements, {
             y: '0%',
             rotateX: 0,

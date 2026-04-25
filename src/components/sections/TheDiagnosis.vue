@@ -237,7 +237,6 @@ onMounted(() => {
           y: '120%',
           rotateX: -20,
           opacity: 0,
-          willChange: 'transform, opacity',
         });
 
         gsap.to(letters, {

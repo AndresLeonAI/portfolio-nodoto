@@ -329,7 +329,7 @@ onMounted(async () => {
     // Entrance: Hero Text block
     const heroLetters = heroTextRef.value?.querySelectorAll('.letters');
     if (heroLetters && heroLetters.length) {
-      gsap.set(heroLetters, { y: '120%', rotateX: -20, opacity: 0, willChange: 'transform, opacity' });
+      gsap.set(heroLetters, { y: '120%', rotateX: -20, opacity: 0 });
       
       tl.to(heroLetters, {
         y: '0%',
