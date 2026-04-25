@@ -153,7 +153,7 @@
     ctx.value!.add(() => {
       // 1. Título General
       const titleLetters = document.querySelectorAll('#process-title .letters');
-      gsap.set(titleLetters, { y: '120%', rotateX: -20, opacity: 0 });
+      gsap.set(titleLetters, { y: '120%', rotateX: -20, opacity: 0, willChange: 'transform, opacity' });
       gsap.to(titleLetters, {
         y: '0%',
         rotateX: 0,
@@ -161,6 +161,7 @@
         stagger: 0.05,
         duration: 1.4,
         ease: 'power4.out',
+        onComplete: () => gsap.set(titleLetters, { clearProps: 'will-change' }),
         scrollTrigger: {
           trigger: '#process-title',
           start: 'top 85%',
@@ -177,7 +178,8 @@
         stagger: 0.1,
         duration: 1.4,
         ease: 'power3.out',
-
+        willChange: 'transform, opacity',
+        onComplete: () => gsap.set(bentoCards, { clearProps: 'will-change' }),
         scrollTrigger: {
           trigger: '#bento-container',
           start: 'top 80%',
@@ -190,7 +192,7 @@
       bentoCards.forEach((card: any) => {
         const letters = card.querySelectorAll('p .letters');
         if (letters && letters.length) {
-          gsap.set(letters, { y: '120%', rotateX: -20, opacity: 0 });
+          gsap.set(letters, { y: '120%', rotateX: -20, opacity: 0, willChange: 'transform, opacity' });
           gsap.to(letters, {
             y: '0%',
             rotateX: 0,
@@ -198,6 +200,7 @@
             stagger: 0.03,
             duration: 1.2,
             ease: 'power3.out',
+            onComplete: () => gsap.set(letters, { clearProps: 'will-change' }),
             scrollTrigger: {
               trigger: card, // Lanza la cinética del texto cuando la tarjeta en sí entre
               start: 'top 75%',

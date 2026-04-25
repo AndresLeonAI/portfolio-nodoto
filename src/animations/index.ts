@@ -67,6 +67,7 @@ const animateSplitText = (
       trigger: id,
       toggleActions: 'play none none reverse',
       start: 'top bottom',
+      fastScrollEnd: true,
     },
     delay: delay,
     duration: duration,
@@ -74,6 +75,8 @@ const animateSplitText = (
     autoAlpha: 1,
     stagger: stagger,
     ease: 'power4.inOut',
+    willChange: 'transform, opacity',
+    onComplete: () => gsap.set(id, { clearProps: 'will-change' }),
   });
 };
 const navbarScale = (selector: string, trigger: string) => {

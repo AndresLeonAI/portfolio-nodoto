@@ -329,7 +329,7 @@ onMounted(async () => {
     // Entrance: Hero Text block
     const heroLetters = heroTextRef.value?.querySelectorAll('.letters');
     if (heroLetters && heroLetters.length) {
-      gsap.set(heroLetters, { y: '120%', rotateX: -20, opacity: 0 });
+      gsap.set(heroLetters, { y: '120%', rotateX: -20, opacity: 0, willChange: 'transform, opacity' });
       
       tl.to(heroLetters, {
         y: '0%',
@@ -338,6 +338,7 @@ onMounted(async () => {
         stagger: 0.015,
         duration: 1.2,
         ease: 'power4.out',
+        onComplete: () => gsap.set(heroLetters, { clearProps: 'will-change' }),
       }, "-=0.4");
     } else {
       // Fallback
@@ -411,10 +412,12 @@ onMounted(async () => {
       yPercent: 0,
       duration: 1.8,
       ease: 'expo.out',
+      onComplete: () => gsap.set(massiveTextRef.value, { clearProps: 'will-change' }),
       scrollTrigger: {
         trigger: massiveTextWrapper.value,
         start: 'bottom bottom', // Ajustado para un reveal más dramático al final
         toggleActions: 'play none none reverse',
+        fastScrollEnd: true,
       },
     });
   });

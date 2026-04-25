@@ -291,20 +291,22 @@
       const introLetters = document.querySelectorAll('#selectedWorks .letters, #selected-works-text .letters');
       const subtitleContainer = document.querySelector('#selected-works-text') as HTMLElement;
       if (introLetters.length) {
-        gsap.set(introLetters, { y: '120%', rotateX: -20, opacity: 0 });
+        gsap.set(introLetters, { y: '120%', rotateX: -20, opacity: 0, willChange: 'transform, opacity' });
         // Reveal the subtitle container (Tailwind opacity-0) when animation fires
         if (subtitleContainer) gsap.set(subtitleContainer, { opacity: 1 });
         gsap.to(introLetters, {
           y: '0%',
           rotateX: 0,
           opacity: 1,
-          stagger: 0.012,
-          duration: 1.2,
+          stagger: isSmallScreen.value ? 0.02 : 0.012,
+          duration: isSmallScreen.value ? 1 : 1.2,
           ease: 'expo.out',
+          onComplete: () => gsap.set(introLetters, { clearProps: 'will-change' }),
           scrollTrigger: {
             trigger: '#selectedWorks',
             start: 'top 85%',
             toggleActions: 'play none none reverse',
+            fastScrollEnd: true,
           }
         });
       }
@@ -314,18 +316,20 @@
       worksCards.forEach(card => {
         const textElements = card.querySelectorAll('.letters');
         if (textElements.length) {
-          gsap.set(textElements, { y: '120%', rotateX: -20, opacity: 0 });
+          gsap.set(textElements, { y: '120%', rotateX: -20, opacity: 0, willChange: 'transform, opacity' });
           gsap.to(textElements, {
             y: '0%',
             rotateX: 0,
             opacity: 1,
-            stagger: 0.012,
-            duration: 1.2,
+            stagger: isSmallScreen.value ? 0.02 : 0.012,
+            duration: isSmallScreen.value ? 1 : 1.2,
             ease: 'expo.out',
+            onComplete: () => gsap.set(textElements, { clearProps: 'will-change' }),
             scrollTrigger: {
               trigger: card,
               start: 'top 85%',
               toggleActions: 'play none none reverse',
+              fastScrollEnd: true,
             }
           });
         }

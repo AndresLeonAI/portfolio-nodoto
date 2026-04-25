@@ -176,7 +176,7 @@
       // 2. Title and desc text animation
       const textElements = headerRef.value!.querySelectorAll('.letters');
       if (textElements.length > 0) {
-        gsap.set(textElements, { y: '120%', rotateX: -20, opacity: 0 });
+        gsap.set(textElements, { y: '120%', rotateX: -20, opacity: 0, willChange: 'transform, opacity' });
         gsap.to(textElements, {
           y: '0%',
           rotateX: 0,
