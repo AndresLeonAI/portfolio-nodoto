@@ -18,8 +18,9 @@
       >
         <p
           class="heading-6 text-flax-smoke-300/85 col-span-4 text-center text-nowrap lg:col-start-2"
-          v-html="casesSubtitle"
         >
+          <span class="letters inline sm:hidden">( {{ selectedWorksProps.length }} )&nbsp;</span>
+          <span v-html="casesSubtitle"></span>
         </p>
         <p
           class="heading-4 font-fancy col-span-8 w-full text-balance sm:font-semibold lg:col-span-7"
@@ -260,7 +261,7 @@
   };
   onBeforeMount(() => {
     selectedWorks.value = textSplitterIntoChar('Despliegues / ', true, false);
-    casesSubtitle.value = textSplitterIntoChar(`( ${selectedWorksProps.length} CASOS DE ESTUDIO )`, true, false);
+    casesSubtitle.value = textSplitterIntoChar('CASOS DE ESTUDIO', true, false);
     casesDesc.value = textSplitterIntoChar('Arquitecturas de conversión desplegadas para marcas élite. Precisión clínica, estética suprema y fricción cero.', true, false);
   });
 
